@@ -29,10 +29,13 @@ export default function Header() {
         letterSpacing: '0.07em',
         color: 'var(--text-primary)',
       }}>
-        사이트{' '}
+        실시간 하천 수위 현황
+        {/*
         <span style={{ color: 'var(--accent)' }}>제목</span>
+        */}
       </h1>
-
+      
+      {/*
       <span style={{
         marginLeft: 'auto',
         fontSize: '0.72rem',
@@ -42,6 +45,8 @@ export default function Header() {
       }}>
         실시간 현황
       </span>
+      */}
+      
     </header>
   );
 }

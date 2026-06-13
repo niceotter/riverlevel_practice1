@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '실시간 하천 수위 현황 지도',
+  title: '실시간 하천 수위 현황',
 //  description: '실시간 침수 현황 지도',
   icons: {
     icon: '/favicon.ico',
