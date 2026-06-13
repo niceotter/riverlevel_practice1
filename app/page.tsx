@@ -8,7 +8,7 @@ export default function Page() {
     <div style={{
       display: 'grid',
       gridTemplateRows: '10vh 90vh',
-      gridTemplateColumns: '30% 70%',
+      gridTemplateColumns: '20% 80%',
       height: '100vh',
       width: '100vw',
     }}>
