@@ -181,6 +181,7 @@ export default function MapView() {
       style={{
         gridColumn: '2',
         gridRow:    '2',
+        paddingTop: '10px',
         position:   'relative',
         background: '#111827',
         overflow:   'hidden',

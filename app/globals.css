@@ -1,8 +1,9 @@
 /* app/globals.css */
 
 :root {
-  --bg-deep:      #c2d6f5;
-  --bg-panel:     #c8d0e1;
+  --bg-deep:      #3975f8;
+  --bg-header:    #ffffff;
+  --bg-panel:     #3975f8;
   --bg-hover:     #a5beeb;
   --border:       #ff0000;
   --accent:       #0080ff;
