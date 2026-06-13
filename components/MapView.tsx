@@ -37,6 +37,7 @@ export default function MapView() {
   const [mapReady,   setMapReady]   = useState(false);
 
   // ── 지도 초기화 ─────────────────────────────────
+  {/*
   const initMap = useCallback(() => {
     if (!mapRef.current || mapInstance.current) return;
     if (typeof window.vw === 'undefined') return;
@@ -52,6 +53,32 @@ export default function MapView() {
     setMapReady(true);
     console.log('[MapView] VWorld 지도 초기화 완료');
   }, []);
+  */}
+  const initMap = useCallback(() => {
+  if (!mapRef.current || mapInstance.current) return;
+  if (typeof window.vw === 'undefined') return;
+
+  const vw = window.vw;
+
+  // VWorld 2.0 초기화 방식
+  vw.ol3.MapOptions = {
+    basemapType: vw.ol3.BasemapType.GRAPHIC,
+    controlDensity: vw.ol3.DensityType.EMPTY,
+    interactionDensity: vw.ol3.DensityType.BASIC,
+    controlsAutoArrange: true,
+    homePosition: vw.ol3.CameraPosition,
+    initPosition: vw.ol3.CameraPosition,
+  };
+
+  mapInstance.current = new vw.ol3.Map('vworld-map');
+
+  setMapReady(true);
+  console.log('[MapView] VWorld 지도 초기화 완료');
+  }, []);
+
+
+
+
 
   useEffect(() => {
     // VWorld 스크립트가 이미 로드된 경우
@@ -63,6 +90,9 @@ export default function MapView() {
     window.onVWorldReady = initMap;
   }, [initMap]);
 
+
+
+
   // ── 영역 너비 추적 (FloatWindow 경계 계산용) ────
   useEffect(() => {
     const el = mapRef.current;
@@ -72,6 +102,9 @@ export default function MapView() {
     setAreaWidth(el.offsetWidth);
     return () => ro.disconnect();
   }, []);
+
+
+
 
   // ── 사이드바 관측소 클릭 → 지도 이동 ───────────
   useEffect(() => {
@@ -88,6 +121,9 @@ export default function MapView() {
     return () => window.removeEventListener('siteSelect', handler);
   }, []);
 
+
+
+  
   // ── 마커 생성 (flood 데이터 로드 후 외부에서 호출 가능하도록 노출) ──
   // Sidebar → CustomEvent → 여기서 수신
   useEffect(() => {

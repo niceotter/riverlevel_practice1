@@ -1,16 +1,17 @@
 /* app/globals.css */
 
 :root {
-  --bg-deep:      #0d1117;
-  --bg-panel:     #161b25;
-  --bg-hover:     #1f2736;
-  --border:       #2a3347;
-  --accent:       #c9a84c;
+  --bg-deep:      #c2d6f5;
+  --bg-panel:     #c8d0e1;
+  --bg-hover:     #a5beeb;
+  --border:       #ff0000;
+  --accent:       #0080ff;
   --accent-dim:   rgba(201, 168, 76, 0.12);
   --status-ok:    #3ecf8e;
   --status-warn:  #f59e0b;
   --status-danger:#ef4444;
-  --text-primary: #e8eaf0;
+  --text-header: #0c54e6;
+  --text-body: #083899;
   --text-muted:   #7a8499;
   --shadow-float: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.15);
   --radius:       8px;
