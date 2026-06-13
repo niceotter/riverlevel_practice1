@@ -6,8 +6,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '사이트 제목',
-  description: '실시간 침수 현황 지도',
+  title: '실시간 하천 수위 현황 지도',
+//  description: '실시간 침수 현황 지도',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
