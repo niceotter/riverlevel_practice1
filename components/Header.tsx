@@ -14,7 +14,7 @@ export default function Header() {
       paddingBottom: '1rem',
       paddingLeft: '1rem',
       background: 'var(--bg-header)',
-      borderBottom: '1px none var(--border)',
+      borderBottom: '10px solid var(--bg-deep)',
       position: 'relative',
       zIndex: 100,
     }}>
@@ -55,7 +55,7 @@ export default function Header() {
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
         height: '10px',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='none' fill='%230080ff' stroke-width='2'/%3E%3C/svg%3E")`,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='%230080ff' fill='%230080ff' stroke-width='2'/%3E%3C/svg%3E")`,
 //      data URI 스킴을 사용하여 SVG 패턴을 인라인으로 정의했습니다.
 //      SVG는 40x6 크기의 작은 이미지로, 물결 모양의 선을 그리고 있습니다.
 //      xmlns 속성은 SVG 네임스페이스를 정의하며, 
