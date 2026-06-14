@@ -14,7 +14,7 @@ export default function Header() {
       paddingBottom: '1rem',
       paddingLeft: '1rem',
       background: 'var(--bg-header)',
-      borderBottom: '10px solid var(--bg-deep)',
+      borderBottom: '10px solid #3975f8',
       position: 'relative',
       zIndex: 100,
     }}>
