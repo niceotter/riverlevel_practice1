@@ -15,11 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <head>
-        
-        <script src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=DA227030-273E-37F4-A3DD-73D741FD3A5B">
-        </script>
-        {/*
         <script src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=DA227030-273E-37F4-A3DD-73D741FD3A5B&domain=riverlevel-info.kr">
+        </script>
+        
+        {/*
         
           ╔══════════════════════════════════════════════════╗
           ║  VWorld 지도 API 스크립트                         ║
