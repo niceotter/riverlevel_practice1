@@ -1,11 +1,11 @@
 /* app/globals.css */
 
 :root {
-  --bg-deep:      #3975f8;
+  --bg-deep:      #63adf8;
   --bg-header:    #ffffff;
-  --bg-panel:     #3975f8;
+  --bg-panel:     #0080ff;
   --bg-hover:     #a5beeb;
-  --border:       #ff0000;
+  --border:       #00b7ff;
   --accent:       #0080ff;
   --accent-dim:   rgba(201, 168, 76, 0.12);
   --status-ok:    #3ecf8e;

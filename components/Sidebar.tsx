@@ -185,7 +185,7 @@ export default function Sidebar() {
     <nav style={{
       gridColumn:   '1',
       gridRow:      '2',
-      background:   'var(--bg-panel)',
+      background:   'var(--bg-deep)',
       borderRight:  '1px solid var(--border)',
       overflowY:    'auto',
       overflowX:    'hidden',
