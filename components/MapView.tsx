@@ -121,8 +121,6 @@ export default function MapView() {
     return () => window.removeEventListener('siteSelect', handler);
   }, []);
 
-
-
   
   // ── 마커 생성 (flood 데이터 로드 후 외부에서 호출 가능하도록 노출) ──
   // Sidebar → CustomEvent → 여기서 수신
@@ -181,7 +179,6 @@ export default function MapView() {
       style={{
         gridColumn: '2',
         gridRow:    '2',
-        paddingTop: '10px',
         position:   'relative',
         background: '#111827',
         overflow:   'hidden',
