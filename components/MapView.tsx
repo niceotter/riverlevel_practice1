@@ -37,7 +37,7 @@ export default function MapView() {
   const [mapReady,   setMapReady]   = useState(false);
 
   // ── 지도 초기화 ─────────────────────────────────
-  {/*
+/*
   const initMap = useCallback(() => {
     if (!mapRef.current || mapInstance.current) return;
     if (typeof window.vw === 'undefined') return;
@@ -53,7 +53,9 @@ export default function MapView() {
     setMapReady(true);
     console.log('[MapView] VWorld 지도 초기화 완료');
   }, []);
-  */}
+  */
+
+
   const initMap = useCallback(() => {
   if (!mapRef.current || mapInstance.current) return;
   if (typeof window.vw === 'undefined') return;
@@ -75,8 +77,6 @@ export default function MapView() {
   setMapReady(true);
   console.log('[MapView] VWorld 지도 초기화 완료');
   }, []);
-
-
 
 
 

@@ -2,6 +2,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
+import Script from "next/script";
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -15,26 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <head>
-        {/*
-        <script src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=DA227030-273E-37F4-A3DD-73D741FD3A5B&domain=riverlevel-info.kr">
-        </script>
-        
-      
-        
-          ╔══════════════════════════════════════════════════╗
-          ║  VWorld 지도 API 스크립트                         ║
-          ║  YOUR_VWORLD_API_KEY 를 발급받은 키로 교체 후     ║
-          ║  주석을 해제하세요                                ║
-          ╚══════════════════════════════════════════════════╝
-          <script
-            src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=YOUR_VWORLD_API_KEY"
-          />
-        */}
       </head>
       <body>
         {children}
-        
-        
+        <Script
+          src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=DA227030-273E-37F4-A3DD-73D741FD3A5B&domain=riverlevel-info.kr"
+          strategy="beforeInteractive"
+        />
         <Analytics />
         <SpeedInsights />
       </body>
