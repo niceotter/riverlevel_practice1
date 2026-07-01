@@ -1,14 +1,5 @@
 'use client';
 // components/MapView.tsx
-//
-// VWorld 지도 초기화 + 핀(마커) 관리 + FloatWindow 연동
-//
-// ┌──────────────────────────────────────────────────┐
-// │  VWorld API 키 연결 방법                          │
-// │  app/layout.tsx 의 주석 처리된 <script> 태그의   │
-// │  YOUR_VWORLD_API_KEY 를 실제 키로 바꾸고          │
-// │  주석을 해제하세요.                               │
-// └──────────────────────────────────────────────────┘
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { FloodItem } from '@/types/flood';
@@ -79,7 +70,35 @@ export default function MapView() {
   }, []);
 
 
+useEffect(() => {
+  const tryInit = () => {
+    if (typeof window.vw !== 'undefined' && window.vw.ol3 && window.vw.ol3.Map) {
+      initMap();
+    }
+  };
 
+  // 이미 로드된 경우
+  tryInit();
+
+  // 아직 로드 안 된 경우 — load 이벤트 대기
+  window.addEventListener('load', tryInit);
+
+  // 그래도 안 되면 폴링으로 체크 (동적 스크립트 로딩 대비)
+  const interval = setInterval(() => {
+    if (typeof window.vw !== 'undefined' && window.vw.ol3 && window.vw.ol3.Map) {
+      initMap();
+      clearInterval(interval);
+    }
+  }, 200);
+
+  return () => {
+    window.removeEventListener('load', tryInit);
+    clearInterval(interval);
+  };
+}, [initMap]);
+
+
+/*
   useEffect(() => {
     // VWorld 스크립트가 이미 로드된 경우
     if (typeof window.vw !== 'undefined') {
@@ -89,7 +108,7 @@ export default function MapView() {
     // 스크립트 로드 완료 콜백
     window.onVWorldReady = initMap;
   }, [initMap]);
-
+*/
 
 
 
