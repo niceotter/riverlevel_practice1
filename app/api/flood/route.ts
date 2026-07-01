@@ -23,7 +23,10 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const params = new URLSearchParams(searchParams);
     params.set('serviceKey', apiKey);
-    params.set('type', 'json');
+//    params.set('type', 'json');
+    params.set('resultType', 'json');
+    params.set('pageNo', '1');
+    params.set('numOfRows', '30');
 
     const upstream = await fetch(`${apiUrl}?${params.toString()}`, {
       next: { revalidate: 60 }, // 60초 캐시 (너무 자주 호출 방지)
