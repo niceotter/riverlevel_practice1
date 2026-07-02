@@ -16,7 +16,6 @@
         initPosition: vw.ol3.CameraPosition,
     };
     window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
-//    let vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
 
     let markerLayer = new vw.ol3.layer.Marker(window.vmap);
     
@@ -37,7 +36,6 @@
         }
     };
     markerLayer.addMarker(vw.ol3.markerOption);
-//    vmap.addLayer(markerLayer);
     
     vw.ol3.markerOption = {
         x : 14128344.9523401,
