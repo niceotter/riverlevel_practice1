@@ -1,134 +1,44 @@
 'use client';
 // components/MapView.tsx
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FloodItem } from '@/types/flood';
 import FloatWindow from './FloatWindow';
 
-// VWorld 전역 타입 선언 (실제 API 확인 후 필요시 수정)
 declare global {
-  interface Window {
-    vw?: any;
-    onVWorldReady?: () => void;
-  }
+  interface Window { vw?: any; }
 }
 
-// 지도 초기 중심 좌표 (부산)
-const MAP_CENTER = { lat: 35.1796, lng: 129.0756 };
-const MAP_ZOOM   = 12;
-
 export default function MapView() {
-  const mapRef      = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<any>(null);
-  const markersRef  = useRef<Record<string, any>>({});
+  const mapRef     = useRef<HTMLDivElement>(null);
+  const scriptRef  = useRef<boolean>(false); // 중복 삽입 방지
 
-  const [floatItem,  setFloatItem]  = useState<FloodItem | null>(null);
-  const [floatPos,   setFloatPos]   = useState({ x: 0, y: 0 });
-  const [areaWidth,  setAreaWidth]  = useState(0);
-  const [mapReady,   setMapReady]   = useState(false);
+  const [floatItem, setFloatItem] = useState<FloodItem | null>(null);
+  const [floatPos,  setFloatPos]  = useState({ x: 0, y: 0 });
+  const [areaWidth, setAreaWidth] = useState(0);
+  const [mapReady,  setMapReady]  = useState(false);
 
-  // ── 지도 초기화 ─────────────────────────────────
-
-const initMap = useCallback(() => {
-  if (!mapRef.current || mapInstance.current) return;
-  if (typeof window.vw === 'undefined' || !window.vw.ol3.Map) return;
-
-  window.vw.ol3.MapOptions = {
-    basemapType: window.vw.ol3.BasemapType.GRAPHIC,
-    controlDensity: window.vw.ol3.DensityType.EMPTY,
-    interactionDensity: window.vw.ol3.DensityType.BASIC,
-    controlsAutoArrange: true,
-    homePosition: window.vw.ol3.CameraPosition,
-    initPosition: window.vw.ol3.CameraPosition,
-  };
-
-  mapInstance.current = new window.vw.ol3.Map('vworld-map');
-  setMapReady(true);
-}, []);
-
-/*
-  const initMap = useCallback(() => {
-    if (!mapRef.current || mapInstance.current) return;
-    if (typeof window.vw === 'undefined') return;
-
-    const vw = window.vw;
-
-    mapInstance.current = new vw.Map('vworld-map', {
-      basemap: 'midnight',
-      center:  new vw.Coords(MAP_CENTER.lng, MAP_CENTER.lat),
-      zoom:    MAP_ZOOM,
-    });
-
-    setMapReady(true);
-    console.log('[MapView] VWorld 지도 초기화 완료');
-  }, []);
-  */
-
-/*
-  const initMap = useCallback(() => {
-  if (!mapRef.current || mapInstance.current) return;
-  if (typeof window.vw === 'undefined') return;
-
-  const vw = window.vw;
-
-  // VWorld 2.0 초기화 방식
-  vw.ol3.MapOptions = {
-    basemapType: vw.ol3.BasemapType.GRAPHIC,
-    controlDensity: vw.ol3.DensityType.EMPTY,
-    interactionDensity: vw.ol3.DensityType.BASIC,
-    controlsAutoArrange: true,
-    homePosition: vw.ol3.CameraPosition,
-    initPosition: vw.ol3.CameraPosition,
-  };
-
-  mapInstance.current = new vw.ol3.Map('vworld-map');
-
-  setMapReady(true);
-  console.log('[MapView] VWorld 지도 초기화 완료');
-  }, []);
-*/
-
-useEffect(() => {
-  const tryInit = () => {
-    if (typeof window.vw !== 'undefined' && window.vw.ol3 && window.vw.ol3.Map) {
-      initMap();
-    }
-  };
-
-  // 이미 로드된 경우
-  tryInit();
-
-  // 아직 로드 안 된 경우 — load 이벤트 대기
-  window.addEventListener('load', tryInit);
-
-  // 그래도 안 되면 폴링으로 체크 (동적 스크립트 로딩 대비)
-  const interval = setInterval(() => {
-    if (typeof window.vw !== 'undefined' && window.vw.ol3 && window.vw.ol3.Map) {
-      initMap();
-      clearInterval(interval);
-    }
-  }, 200);
-
-  return () => {
-    window.removeEventListener('load', tryInit);
-    clearInterval(interval);
-  };
-}, [initMap]);
-
-
-/*
+  // ── VWorld 지도 초기화 ───────────────────────────
+  // 기존 index.html 방식과 동일하게:
+  // <div id="vworld-map"> 안에 <script src="/js/vworld-map.js"> 삽입
   useEffect(() => {
-    // VWorld 스크립트가 이미 로드된 경우
-    if (typeof window.vw !== 'undefined') {
-      initMap();
-      return;
-    }
-    // 스크립트 로드 완료 콜백
-    window.onVWorldReady = initMap;
-  }, [initMap]);
-*/
+    const container = document.getElementById('vworld-map');
+    if (!container || scriptRef.current) return;
+    scriptRef.current = true;
 
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src  = '/js/vworld-map.js';  // public/js/vworld-map.js
+    script.onload = () => {
+      setMapReady(true);
+      console.log('[MapView] VWorld 지도 초기화 완료');
+    };
+    script.onerror = () => {
+      console.error('[MapView] vworld-map.js 로드 실패');
+    };
 
+    container.appendChild(script);
+  }, []);
 
   // ── 영역 너비 추적 (FloatWindow 경계 계산용) ────
   useEffect(() => {
@@ -140,76 +50,70 @@ useEffect(() => {
     return () => ro.disconnect();
   }, []);
 
-
-
-
   // ── 사이드바 관측소 클릭 → 지도 이동 ───────────
+  // vworld-map.js 에서 vmap 변수를 window.vmap 으로 노출해야 동작합니다.
+  // vworld-map.js 에서: let vmap = ... → window.vmap = new vw.ol3.Map(...)
   useEffect(() => {
     const handler = (e: Event) => {
       const item = (e as CustomEvent<FloodItem>).detail;
-      if (!mapInstance.current || !item.lat || !item.lng) return;
-      const vw = window.vw;
-      mapInstance.current.setCenter(
-        new vw.Coords(parseFloat(item.lng), parseFloat(item.lat))
-      );
-      mapInstance.current.setZoom(15);
+      const vmap = (window as any).vmap;
+      if (!vmap || !item.lat || !item.lng) return;
+      // EPSG:3857 변환 (경위도 → 미터)
+      const x = parseFloat(item.lng) * 20037508.34 / 180;
+      const lat = parseFloat(item.lat);
+      const y = Math.log(Math.tan((90 + lat) * Math.PI / 360))
+                / (Math.PI / 180) * 20037508.34 / 180;
+      vmap.getView().setCenter([x, y]);
+      vmap.getView().setZoom(15);
     };
     window.addEventListener('siteSelect', handler);
     return () => window.removeEventListener('siteSelect', handler);
   }, []);
 
-
-
-  
-  // ── 마커 생성 (flood 데이터 로드 후 외부에서 호출 가능하도록 노출) ──
-  // Sidebar → CustomEvent → 여기서 수신
+  // ── 마커 생성 ────────────────────────────────────
+  // flood 데이터 로드 후 Sidebar에서 floodDataLoaded 이벤트 발생 시 수신
   useEffect(() => {
     const handler = (e: Event) => {
       const items = (e as CustomEvent<FloodItem[]>).detail;
-      renderMarkers(items);
+      const vmap  = (window as any).vmap;
+      const vw    = window.vw;
+      if (!vmap || !vw) return;
+
+      const markerLayer = new vw.ol3.layer.Marker(vmap);
+
+      items.forEach(item => {
+        if (!item.lat || !item.lng) return;
+
+        const lat = parseFloat(item.lat);
+        const lng = parseFloat(item.lng);
+        const x = lng * 20037508.34 / 180;
+        const y = Math.log(Math.tan((90 + lat) * Math.PI / 360))
+                  / (Math.PI / 180) * 20037508.34 / 180;
+
+        vw.ol3.markerOption = {
+          x,
+          y,
+          epsg: 'EPSG:3857',
+          title: item.siteName,
+          contents: `현재 수위: ${item.fludLevel}m`,
+          iconUrl: '/pin.svg',  // public/pin.svg 추가 필요
+          text: {
+            offsetX: -20,
+            offsetY: 12,
+            font: '13px sans-serif',
+            fill:   { color: '#000' },
+            stroke: { color: '#fff', width: 3 },
+            text: item.siteName,
+          },
+        };
+        markerLayer.addMarker(vw.ol3.markerOption);
+      });
+
+      vmap.addLayer(markerLayer);
     };
+
     window.addEventListener('floodDataLoaded', handler);
     return () => window.removeEventListener('floodDataLoaded', handler);
-  }, [mapReady]);
-
-  const renderMarkers = useCallback((items: FloodItem[]) => {
-    if (!mapInstance.current || typeof window.vw === 'undefined') return;
-    const vw = window.vw;
-    const mapArea = mapRef.current;
-    if (!mapArea) return;
-
-    // 기존 마커 제거
-    Object.values(markersRef.current).forEach((m: any) => m.setMap(null));
-    markersRef.current = {};
-
-    items.forEach(item => {
-      if (!item.lat || !item.lng) return;
-
-      /*
-       * ── VWorld 마커 생성 ──────────────────────────────────────
-       * VWorld API 문서를 확인 후 아래 주석을 실제 코드로 교체하세요.
-       *
-       * const marker = new vw.Marker({
-       *   map:      mapInstance.current,
-       *   position: new vw.Coords(parseFloat(item.lng), parseFloat(item.lat)),
-       *   icon: {
-       *     url:  '/pin.svg',          // public/ 폴더에 핀 이미지 추가
-       *     size: [32, 40],
-       *   },
-       * });
-       *
-       * marker.addListener('mouseover', (e: any) => {
-       *   const rect = mapArea.getBoundingClientRect();
-       *   setFloatItem(item);
-       *   setFloatPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-       * });
-       *
-       * marker.addListener('mouseout', () => setFloatItem(null));
-       *
-       * markersRef.current[item.siteCode] = marker;
-       * ─────────────────────────────────────────────────────────
-       */
-    });
   }, [mapReady]);
 
   return (
@@ -224,21 +128,16 @@ useEffect(() => {
         overflow:   'hidden',
       }}
     >
-      {/* VWorld 지도 컨테이너 */}
+      {/* VWorld 지도 컨테이너 — script가 이 div 안에 삽입됩니다 */}
       <div id="vworld-map" style={{ width: '100%', height: '100%' }} />
 
-      {/* VWorld API 미연결 플레이스홀더 */}
+      {/* 로딩 플레이스홀더 */}
       {!mapReady && (
         <div style={{
-          position:       'absolute',
-          inset:          0,
-          display:        'flex',
-          flexDirection:  'column',
-          alignItems:     'center',
-          justifyContent: 'center',
-          gap:            '1rem',
-          color:          'var(--text-muted)',
-          pointerEvents:  'none',
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          gap: '1rem', color: 'var(--text-muted)', pointerEvents: 'none',
         }}>
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" strokeWidth="1.2" style={{ opacity: 0.25 }}>
@@ -246,8 +145,9 @@ useEffect(() => {
             <line x1="8" y1="2" x2="8" y2="18"/>
             <line x1="16" y1="6" x2="16" y2="22"/>
           </svg>
-          <p style={{ fontSize: '0.8rem', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.45 }}>
-            layout.tsx 의 VWorld 스크립트 태그를 활성화하세요
+          <p style={{ fontSize: '0.8rem', letterSpacing: '0.08em',
+                      textTransform: 'uppercase', opacity: 0.45 }}>
+            지도 로딩 중…
           </p>
         </div>
       )}
