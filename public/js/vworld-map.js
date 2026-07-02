@@ -70,4 +70,5 @@ vw.ol3.MapOptions = {
 };
 
 // window.vmap 으로 노출 — MapView.tsx에서 지도 이동에 사용
-window.vmap = new vw.ol3.Map("vworld-map", vw.ol3.MapOptions);
+// window.vmap = new vw.ol3.Map("vworld-map", vw.ol3.MapOptions);
+window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
