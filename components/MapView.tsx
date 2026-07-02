@@ -44,9 +44,9 @@ export default function MapView() {
       style={{
         gridColumn: '2',
         gridRow:    '2',
-        paddingTop: '10px',
+        paddingTop: '0px',
         position:   'relative',
-        background: '#111827',
+        background: '#63adf8',
         overflow:   'hidden',
       }}
     >
