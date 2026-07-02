@@ -15,11 +15,9 @@
         homePosition: vw.ol3.CameraPosition,
         initPosition: vw.ol3.CameraPosition,
     };
-    window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
-
-/*
+//    window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
     let vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
-
+/*
     let markerLayer = new vw.ol3.layer.Marker(vmap);
     vw.ol3.markerOption = {
         x : 14126754.2858722,
@@ -27,7 +25,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '불광천 증산교',
         contents : '불광천 증산교 위치입니다.',
-        iconUrl : href="/pin2.png",
+        iconUrl : href="public/js/pin2.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치설정
@@ -46,7 +44,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '홍제천 사천교',
         contents : '홍제천 사천교 위치입니다.',
-        iconUrl : href="/pin2.png",
+        iconUrl : href="public/js/pin2.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치 설정
