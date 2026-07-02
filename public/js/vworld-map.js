@@ -15,10 +15,11 @@
         homePosition: vw.ol3.CameraPosition,
         initPosition: vw.ol3.CameraPosition,
     };
-//    window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
-    let vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
+    window.vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
+//    let vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
 
-    let markerLayer = new vw.ol3.layer.Marker(vmap);
+    let markerLayer = new vw.ol3.layer.Marker(window.vmap);
+    
     vw.ol3.markerOption = {
         x : 14126754.2858722,
         y : 4519757.4390882,
@@ -36,7 +37,7 @@
         }
     };
     markerLayer.addMarker(vw.ol3.markerOption);
-    vmap.addLayer(markerLayer);
+//    vmap.addLayer(markerLayer);
     
     vw.ol3.markerOption = {
         x : 14128344.9523401,
@@ -55,4 +56,7 @@
         }
     };
     markerLayer.addMarker(vw.ol3.markerOption);
-    vmap.addLayer(markerLayer);
+    
+    
+    
+    window.vmap.addLayer(markerLayer);
