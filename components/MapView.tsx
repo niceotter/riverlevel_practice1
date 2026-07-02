@@ -28,6 +28,24 @@ export default function MapView() {
   const [mapReady,   setMapReady]   = useState(false);
 
   // ── 지도 초기화 ─────────────────────────────────
+
+const initMap = useCallback(() => {
+  if (!mapRef.current || mapInstance.current) return;
+  if (typeof window.vw === 'undefined' || !window.vw.ol3.Map) return;
+
+  window.vw.ol3.MapOptions = {
+    basemapType: window.vw.ol3.BasemapType.GRAPHIC,
+    controlDensity: window.vw.ol3.DensityType.EMPTY,
+    interactionDensity: window.vw.ol3.DensityType.BASIC,
+    controlsAutoArrange: true,
+    homePosition: window.vw.ol3.CameraPosition,
+    initPosition: window.vw.ol3.CameraPosition,
+  };
+
+  mapInstance.current = new window.vw.ol3.Map('vworld-map');
+  setMapReady(true);
+}, []);
+
 /*
   const initMap = useCallback(() => {
     if (!mapRef.current || mapInstance.current) return;
@@ -46,7 +64,7 @@ export default function MapView() {
   }, []);
   */
 
-
+/*
   const initMap = useCallback(() => {
   if (!mapRef.current || mapInstance.current) return;
   if (typeof window.vw === 'undefined') return;
@@ -68,7 +86,7 @@ export default function MapView() {
   setMapReady(true);
   console.log('[MapView] VWorld 지도 초기화 완료');
   }, []);
-
+*/
 
 useEffect(() => {
   const tryInit = () => {
