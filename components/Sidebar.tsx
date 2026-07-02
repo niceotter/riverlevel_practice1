@@ -25,11 +25,11 @@ const STATUS_BG = {
 // ── 정적 메뉴 데이터 ──────────────────────────────────
 const STATIC_MENUS = [
   {
-    label: '지역 분류',
+    label: '서울',
     items: ['서울 · 경기', '인천 · 강원', '충청 · 대전', '전라 · 광주', '경상 · 부산', '제주'],
   },
   {
-    label: '카테고리',
+    label: '부산',
     items: ['카테고리 A', '카테고리 B', '카테고리 C'],
   },
 ];
@@ -195,7 +195,7 @@ export default function Sidebar() {
 
       {/* ── 정적 메뉴 ── */}
       <div style={{ marginBottom: '0.25rem' }}>
-        <SectionLabel>탐색</SectionLabel>
+        <SectionLabel>지역 분류</SectionLabel>
         {STATIC_MENUS.map(m => (
           <MenuItem key={m.label} label={m.label}>
             {m.items.map(i => <SubItem key={i}>{i}</SubItem>)}
@@ -236,6 +236,7 @@ export default function Sidebar() {
       <Divider />
 
       {/* ── 설정 ── */}
+      {/*
       <div>
         <SectionLabel>설정</SectionLabel>
         <MenuItem label="표시 옵션">
@@ -243,6 +244,7 @@ export default function Sidebar() {
           <SubItem>언어 설정</SubItem>
         </MenuItem>
       </div>
+      */}
 
     </nav>
   );
