@@ -57,7 +57,7 @@
         }
     };
     markerLayer.addMarker(vw.ol3.markerOption);
-    
+
     
     vw.ol3.markerOption = {
         x : 14127723.3523401,
@@ -76,6 +76,45 @@
         }
     };
     markerLayer.addMarker(vw.ol3.markerOption);
+
+
+
+    vw.ol3.markerOption = {
+        x : 14126438.696491,
+        y : 4500430.687489,
+        epsg : "EPSG:3857",//EPSG:3857 기반 좌표
+        title : '안양천 기아대교',
+        contents : '안양천 기아대교 위치입니다.',
+        iconUrl : href="js/pin2.png",
+        text : {
+            offsetX: -20,
+            offsetY: 12,//핀 위치 설정
+            font: '15px Calibri,sans-serif',//글자 크기 및 폰트 설정
+            fill: {color: '#000'},//글자색 설정
+            stroke: {color: '#fff', width: 4},//글자 테두리 설정
+            text: '안양천 기아대교'
+        }
+    };
+    markerLayer.addMarker(vw.ol3.markerOption);
+
+    vw.ol3.markerOption = {
+        x : 14123108.126711,
+        y : 4508943.279312,
+        epsg : "EPSG:3857",//EPSG:3857 기반 좌표
+        title : '안양천 고척교',
+        contents : '안양천 고척교 위치입니다.',
+        iconUrl : href="js/pin2.png",
+        text : {
+            offsetX: -20,
+            offsetY: 12,//핀 위치 설정
+            font: '15px Calibri,sans-serif',//글자 크기 및 폰트 설정
+            fill: {color: '#000'},//글자색 설정
+            stroke: {color: '#fff', width: 4},//글자 테두리 설정
+            text: '안양천 고척교'
+        }
+    };
+    markerLayer.addMarker(vw.ol3.markerOption);
+    
     
     
     
