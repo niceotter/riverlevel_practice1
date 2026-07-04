@@ -24,7 +24,7 @@
         y : 4519757.4390882,
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
 //        title: '(불광천)',
-        contents: <a href='https://www.riverlevel-info.kr/seoul/1401'>불광천 증산교의 현재 수위 정보 보기</a>,
+        contents: '<a href="https://www.riverlevel-info.kr/seoul/1401">불광천 증산교의 현재 수위 정보 보기</a>',
         watgCd: '1401',
 //        title : '불광천 증산교',
 //        contents : '불광천 증산교 위치입니다.',
@@ -64,7 +64,7 @@
         y : 4518246.2154397,
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
 //        title : '홍제천 성산2교',
-        contents: <a href='https://www.riverlevel-info.kr/seoul/1501'>홍제천 성산2교의 현재 수위 정보 보기</a>,
+        contents: '<a href="https://www.riverlevel-info.kr/seoul/1501">홍제천 성산2교의 현재 수위 정보 보기</a>',
 //        contents : '홍제천 성산2교 위치입니다.',
         iconUrl : href="js/pin1.png",
         text : {
