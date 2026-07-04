@@ -28,7 +28,7 @@
         watgCd: '1401',
 //        title : '불광천 증산교',
 //        contents : '불광천 증산교 위치입니다.',
-        iconUrl : href="js/pin2.png",
+        iconUrl : href="js/pin1.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치설정
@@ -46,7 +46,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '홍제천 사천교',
         contents : '홍제천 사천교 위치입니다.',
-        iconUrl : href="js/pin2.png",
+        iconUrl : href="js/pin1.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치 설정
@@ -65,7 +65,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '홍제천 성산2교',
         contents : '홍제천 성산2교 위치입니다.',
-        iconUrl : href="js/pin2.png",
+        iconUrl : href="js/pin1.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치 설정
@@ -85,7 +85,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '안양천 기아대교',
         contents : '안양천 기아대교 위치입니다.',
-        iconUrl : href="js/pin2.png",
+        iconUrl : href="js/pin1.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치 설정
@@ -103,7 +103,7 @@
         epsg : "EPSG:3857",//EPSG:3857 기반 좌표
         title : '안양천 고척교',
         contents : '안양천 고척교 위치입니다.',
-        iconUrl : href="js/pin2.png",
+        iconUrl : href="js/pin1.png",
         text : {
             offsetX: -20,
             offsetY: 12,//핀 위치 설정

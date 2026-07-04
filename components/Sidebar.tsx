@@ -183,7 +183,7 @@ export default function Sidebar() {
   const [error,      setError]      = useState(false);
 
   useEffect(() => {
-    fetch('/api/flood')
+    fetch('/api/busan')
       .then(r => {
         if (!r.ok) throw new Error();
         return r.json() as Promise<FloodApiResponse>;

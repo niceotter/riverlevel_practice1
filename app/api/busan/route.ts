@@ -1,4 +1,4 @@
-// app/api/flood/route.ts
+// app/api/busan/route.ts
 // 공공API 프록시 — 브라우저에 API 키를 노출하지 않습니다.
 //
 // Vercel 환경변수 설정 (대시보드 > Settings > Environment Variables):
@@ -43,7 +43,7 @@ export async function GET(request: Request) {
     return NextResponse.json(data);
 
   } catch (err) {
-    console.error('[/api/flood] 오류:', err);
+    console.error('[/api/busan] 오류:', err);
     return NextResponse.json({ error: '서버 오류' }, { status: 500 });
   }
 }
