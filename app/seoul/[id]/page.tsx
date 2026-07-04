@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import WaterAnimation from '@/components/WaterAnimation';
 
+{/*
 function getTimeTheme() {
   const hour = new Date().getHours();
   if (hour >= 0  && hour < 5)  return { bgHeader: '#0a0e1a', bgDeep: '#1a2540' };
@@ -15,16 +16,20 @@ function getTimeTheme() {
   if (hour >= 17 && hour < 20) return { bgHeader: '#FE9380', bgDeep: '#63adf8' };
   return { bgHeader: '#382A2F', bgDeep: '#1a2540' };
 }
+*/}
+
+const bgHeader = '#FFFFFF';
+const bgDeep = '#63adf8';
 
 export default function SeoulStationPage() {
   const params = useParams();
   const id = params?.id as string;
-  const [theme, setTheme] = useState(getTimeTheme());
+//  const [theme, setTheme] = useState(getTimeTheme());
 
-  useEffect(() => {
-    const interval = setInterval(() => setTheme(getTimeTheme()), 60000);
-    return () => clearInterval(interval);
-  }, []);
+//  useEffect(() => {
+//    const interval = setInterval(() => setTheme(getTimeTheme()), 60000);
+//    return () => clearInterval(interval);
+//  }, []);
 
   return (
     <div style={{
@@ -38,8 +43,8 @@ export default function SeoulStationPage() {
       <Sidebar />
       <WaterAnimation
         id={id}
-        bgDeep={theme.bgDeep}
-        bgHeader={theme.bgHeader}
+        bgDeep={bgDeep}//{theme.bgDeep}
+        bgHeader={bgHeader}//{theme.bgHeader}
       />
     </div>
   );

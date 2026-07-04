@@ -25,8 +25,27 @@ const STATUS_BG = {
 
 // ── 서울 관측소 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
-  { watgCd: '1401', rvrNm: '불광천', watgNm: '증산교' },
-  { watgCd: '1501', rvrNm: '홍제천', watgNm: '성산2교' },
+  { watgCd: '101', rvrNm: '탄천 ', watgNm: '여수대교' },
+  { watgCd: '102', rvrNm: '탄천 ', watgNm: '대곡교' },
+  { watgCd: '103', rvrNm: '탄천 ', watgNm: '탄천2교' },
+  { watgCd: '1401', rvrNm: '불광천 ', watgNm: '증산교' },
+  { watgCd: '1501', rvrNm: '홍제천 ', watgNm: '성산2교' },
+  { watgCd: '2001', rvrNm: '안양천 ', watgNm: '고척교' },
+  { watgCd: '2002', rvrNm: '도림천', watgNm: '도림교' },
+  { watgCd: '2003', rvrNm: '목감천 ', watgNm: '광화교' },
+  { watgCd: '2201', rvrNm: '안양천 ', watgNm: '기아대교' },
+  { watgCd: '2301', rvrNm: '도림천 ', watgNm: '신대방역' },
+  { watgCd: '2303', rvrNm: '도림천 ', watgNm: '양산교' },
+  { watgCd: '2502', rvrNm: '탄천 ', watgNm: '봉은교' },
+  { watgCd: '301', rvrNm: '방학천 ', watgNm: '모래말옆' },
+  { watgCd: '302', rvrNm: '중랑천 ', watgNm: '노원교' },
+  { watgCd: '303', rvrNm: '우이천 ', watgNm: '계성교' },
+  { watgCd: '401', rvrNm: '우이천 ', watgNm: '장월교' },
+  { watgCd: '402', rvrNm: '중랑천 ', watgNm: '신의교' },
+  { watgCd: '403', rvrNm: '중랑천 ', watgNm: '월계1교' },
+  { watgCd: '801', rvrNm: '정릉천 ', watgNm: '용두교' },
+  { watgCd: '901', rvrNm: '중랑천', watgNm: '성동교' },
+  { watgCd: '902', rvrNm: '청계천 ', watgNm: '마장2교' },
 ];
 
 // ── 서브메뉴 컴포넌트 ────────────────────────────────
