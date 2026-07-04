@@ -1,19 +1,20 @@
 /* app/globals.css */
 
 :root {
-  --bg-deep:      #63adf8;
-  --bg-header:    #ffffff;
-  --bg-panel:     #0080ff;
-  --bg-hover:     #a5beeb;
-  --border:       #00b7ff;
-  --accent:       #0080ff;
-  --accent-dim:   rgba(201, 168, 76, 0.12);
+  --bg-deep:      #63adf8; /* background color for the main app container */
+  --bg-header:    #ffffff; /* background color for the header section */
+  --bg-panel:     #2190ff; /* ??? */
+  --bg-hover:     #63adf8; /* highlight color to back-ground(서울) when hovering */
+  --bg-backtomap: #3d8ff2; /* background color for the back-to-map button */
+  --border:       #63adf8; /* border color for map-sidebar and sidebar sections */
+  --accent:       #0015ff; /* highlight color to font(서울) when hovering */
+  --accent-dim:   #57abff; /* highlight color to back-ground(불광천) when hovering */
   --status-ok:    #3ecf8e;
   --status-warn:  #f59e0b;
   --status-danger:#ef4444;
   --text-header: #0c54e6;
-  --text-body: #083899;
-  --text-muted:   #7a8499;
+  --text-body: #000000;
+  --text-muted:   #000000;
   --shadow-float: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.15);
   --radius:       8px;
   --transition:   200ms cubic-bezier(0.4, 0, 0.2, 1);
