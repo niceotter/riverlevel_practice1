@@ -19,7 +19,7 @@ function getTimeTheme() {
 */}
 
 const bgHeader = '#FFFFFF';
-const bgDeep = '#ffffff';//'#63adf8';
+const bgDeep = '#63adf8';
 
 export default function SeoulStationPage() {
   const params = useParams();
