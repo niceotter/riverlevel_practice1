@@ -1,9 +1,10 @@
 'use client';
 // components/Header.tsx
 
-export default function Header() {
+//export default function Header() {
+export default function Header({ bgDeep = '#63adf8' }: { bgDeep?: string }) {
   
-  const bgDeep = '#63adf8';  // 물결 라인 backgroundImage에 --bg-deep 값을 직접 넣기보다는 변수로 정의해서 관리
+//  const bgDeep = '#63adf8';  // 물결 라인 backgroundImage에 --bg-deep 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
     <header style={{
       gridColumn: '1 / -1',
@@ -35,7 +36,7 @@ export default function Header() {
           fontSize: '1.2rem',
           marginLeft: '0.5rem',
         }}>
-          아직 서비스가 완벽하지 않습니다. 양해 부탁드립니다.
+          서비스 초기 단계입니다. 양해 부탁드립니다.
         </span>
       </h1>
       
