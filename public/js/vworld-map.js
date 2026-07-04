@@ -119,3 +119,23 @@
     
     
     window.vmap.addLayer(markerLayer);
+
+
+// ── 지도 종류 변경 ────────────────────────────────────
+function setMode(type) {
+  var basemapType = vw.ol3.BasemapType[type];
+  window.vmap.setBasemapType(basemapType);
+
+  // 활성 버튼 스타일 업데이트
+  var buttons = document.querySelectorAll('#map-type-btns button');
+  var typeMap = {
+    'GRAPHIC':       0,
+    'GRAPHIC_WHITE': 1,
+    'GRAPHIC_NIGHT': 2,
+    'PHOTO':         3,
+    'PHOTO_HYBRID':  4,
+  };
+  buttons.forEach(function(btn, i) {
+    btn.classList.toggle('active', i === typeMap[type]);
+  });
+}
