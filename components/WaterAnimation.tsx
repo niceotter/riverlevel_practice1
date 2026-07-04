@@ -50,7 +50,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
             if (found.RLTM_RVR_WATL_CNT >= found.PLAN_FLDE && !alertShown.current.danger) {
               alertShown.current.danger = true;
               setAlertMsg(`⚠️ 위험수위 초과! 현재 ${found.RLTM_RVR_WATL_CNT}m`);
-            } else if (found.RLTM_RVR_WATL_CNT >= found.CNTRL_WATL && !alertShown.current.warn) {
+            } else if (found.CNTRL_WATL > found.RBH && found.RLTM_RVR_WATL_CNT >= found.CNTRL_WATL && !alertShown.current.warn) {
               alertShown.current.warn = true;
               setAlertMsg(`⚠️ 경고수위 초과! 현재 ${found.RLTM_RVR_WATL_CNT}m`);
             }
@@ -68,6 +68,9 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
   const currentPct = station ? levelToPercent(station.RLTM_RVR_WATL_CNT, station.RBH, station.EBM_HGT) : 0;
   const warnPct    = station ? levelToPercent(station.CNTRL_WATL,         station.RBH, station.EBM_HGT) : 0;
   const dangerPct  = station ? levelToPercent(station.PLAN_FLDE,           station.RBH, station.EBM_HGT) : 0;
+
+  // CNTRL_WATL이 RBH보다 클 때만 경고수위 표시
+  const showWarn = station ? station.CNTRL_WATL > station.RBH : false;
 
   const waterY = 400 - currentPct * 3.6;
   const warnY  = 400 - warnPct   * 3.6;
@@ -147,6 +150,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
             }}>
               위험수위 ({station.PLAN_FLDE})m
             </div>
+            {showWarn && (
             <div style={{
               position: 'absolute',
               bottom: `calc(${warnPct}% - 0.5rem)`,
@@ -154,6 +158,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
             }}>
               경고수위 ({station.CNTRL_WATL})m
             </div>
+            )}
             <div style={{
               position: 'absolute',
               bottom: `calc(${currentPct}% - 0.5rem)`,
@@ -232,6 +237,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
               />
 
               {/* 경고수위 선 */}
+              {showWarn && (<>
               <line
                 x1="60" y1={warnY} x2="540" y2={warnY}
                 stroke="#f59e0b" strokeWidth="2"
@@ -242,6 +248,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
                 stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="4 3"
                 opacity="0.4"
               />
+              </>)}
 
               {/* 제방 외곽선 */}
               <polyline

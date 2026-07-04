@@ -28,14 +28,14 @@ export default function Header() {
         letterSpacing: '0.07em',
         color: 'var(--text-header)',
       }}>
-        실시간 하천 수위 현황      
+        실시간 하천 수위 현황
         <span style={{
           color: '#000000',
           fontWeight: 300,
           fontSize: '1.2rem',
           marginLeft: '0.5rem',
         }}>
-          <>서비스 테스트 중입니다.<br/>불광천-증산교, 홍제천-성산2교만 서비스 중입니다</>
+          아직 서비스가 완벽하지 않습니다. 양해 부탁드립니다.
         </span>
       </h1>
       
