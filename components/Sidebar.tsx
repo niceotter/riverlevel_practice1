@@ -235,6 +235,54 @@ export default function Sidebar() {
         <>지도로<br />돌아가기</>
       </a>
 
+      <a
+        href="https://radar.kma.go.kr/radar/main.do?cgiId=HSR"
+        style={{
+          display:        'flex',
+          alignItems:     'center',
+          gap:            '0.5rem',
+          padding:        '0.75rem 1.5rem',
+          fontSize:       '0.85rem',
+          fontWeight:     600,
+          color:          'var(--text-body)',// 'var(--accent)',
+          textDecoration: 'none',
+          transition:     'background var(--transition)',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" strokeWidth="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        <>비구름<br />확인하기</>
+      </a>
+
+      <a
+        href="https://www.weather.go.kr/w/index.do"
+        style={{
+          display:        'flex',
+          alignItems:     'center',
+          gap:            '0.5rem',
+          padding:        '0.75rem 1.5rem',
+          fontSize:       '0.85rem',
+          fontWeight:     600,
+          color:          'var(--text-body)',// 'var(--accent)',
+          textDecoration: 'none',
+          transition:     'background var(--transition)',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" strokeWidth="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        <>기상예보<br />확인하기</>
+      </a>
+
+
+
       <Divider />
 
       {/* ── 지역 분류 ── */}
