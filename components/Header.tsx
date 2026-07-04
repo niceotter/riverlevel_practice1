@@ -3,7 +3,7 @@
 
 export default function Header() {
   
-  const bgDeep = '#63adf8';  // --bg-deep 값을 직접 사용하기보다는 변수로 정의하여 
+  const bgDeep = '#63adf8';  // 물결 라인 backgroundImage에 --bg-deep 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
     <header style={{
       gridColumn: '1 / -1',
@@ -35,7 +35,7 @@ export default function Header() {
           fontSize: '1.2rem',
           marginLeft: '0.5rem',
         }}>
-          서비스 준비중입니다 / Opening Soon
+          <>서비스 테스트 중입니다.<br/>불광천-증산교, 홍제천-성산2교만 서비스 중입니다</>
         </span>
       </h1>
       
