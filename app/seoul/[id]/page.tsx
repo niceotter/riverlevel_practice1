@@ -21,6 +21,12 @@ function getTimeTheme() {
 const bgHeader = '#FFFFFF';
 const bgDeep = '#63adf8';
 
+// 관측소별 외부 링크
+const EXTERNAL_LINKS: Record<string, string> = {
+  '1401': 'http://kko.to/VoFK32aX8C',  // 불광천 증산교
+  '103':  'http://kko.to/2sjB8l91K9',  // 탄천 탄천2교
+};
+
 export default function SeoulStationPage() {
   const params = useParams();
   const id = params?.id as string;
@@ -45,6 +51,7 @@ export default function SeoulStationPage() {
         id={id}
         bgDeep={bgDeep}//{theme.bgDeep}
         bgHeader={bgHeader}//{theme.bgHeader}
+        externalLink={EXTERNAL_LINKS[id] ?? '#'}
       />
     </div>
   );

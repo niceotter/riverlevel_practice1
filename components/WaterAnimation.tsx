@@ -26,9 +26,11 @@ interface Props {
   id: string;
   bgDeep: string;
   bgHeader: string;
+  externalLink?: string;  
 }
 
-export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
+//export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
+export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#' }: Props) {
   const [station,   setStation]   = useState<SeoulStation | null>(null);
   const [loading,   setLoading]   = useState(true);
   const [error,     setError]     = useState(false);
@@ -96,15 +98,15 @@ export default function WaterAnimation({ id, bgDeep, bgHeader }: Props) {
           background: bgDeep, color: '#fff',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
         }}>
-          📷 수위계
+          📷 수위계 모습
         </button>
-        <a href="#" target="_blank" style={{
+        <a href={externalLink} target="_blank" style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
           background: '#555', color: '#fff',
           borderRadius: '6px', textDecoration: 'none',
           display: 'flex', alignItems: 'center',
         }}>
-          🔗 관련 링크
+          🔗 CCTV 링크 - 비가 오지 않을때는 다른 곳을 바라보고 있을 수 있습니다
         </a>
       </div>
 
