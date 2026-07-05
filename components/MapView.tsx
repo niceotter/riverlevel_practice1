@@ -1,17 +1,13 @@
 'use client';
 // components/MapView.tsx
-// 카카오 지도 기반 (iframe 없음)
 
 import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 
 declare global {
-  interface Window {
-    kakao: any;
-  }
+  interface Window { kakao: any; }
 }
 
-// 서울 관측소 마커 데이터
 const MARKERS = [
   { id: '101',  lat: 37.4695, lng: 127.0997, title: '탄천 여수대교' },
   { id: '102',  lat: 37.4490, lng: 127.0742, title: '탄천 대곡교' },
@@ -37,52 +33,43 @@ const MARKERS = [
 ];
 
 export default function MapView() {
-  const mapRef     = useRef<HTMLDivElement>(null);
+  const mapRef      = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
   const [mapReady, setMapReady] = useState(false);
 
   const initMap = () => {
     if (!mapRef.current || mapInstance.current) return;
-    if (typeof window.kakao === 'undefined') return;
 
-    window.kakao.maps.load(() => {
-      const map = new window.kakao.maps.Map(mapRef.current, {
-        center: new window.kakao.maps.LatLng(37.5532, 126.9698), // 서울 중심
-        level: 8,
+    const map = new window.kakao.maps.Map(mapRef.current, {
+      center: new window.kakao.maps.LatLng(37.5532, 126.9698),
+      level: 8,
+    });
+    mapInstance.current = map;
+    setMapReady(true);
+
+    MARKERS.forEach(m => {
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position: new window.kakao.maps.LatLng(m.lat, m.lng),
+        title: m.title,
       });
-      mapInstance.current = map;
-      setMapReady(true);
 
-      // 마커 생성
-      MARKERS.forEach(m => {
-        const marker = new window.kakao.maps.Marker({
-          map,
-          position: new window.kakao.maps.LatLng(m.lat, m.lng),
-          title: m.title,
-        });
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: `
+          <div style="padding:8px 12px;font-size:13px;font-family:sans-serif;min-width:140px;">
+            <strong>${m.title}</strong><br/>
+            <a href="/seoul/${m.id}" target="_top"
+              style="color:#1a6fc4;font-size:12px;text-decoration:none;">
+              ▶ 상세 수위 보기
+            </a>
+          </div>
+        `,
+      });
 
-        // 인포윈도우 (팝업)
-        const infowindow = new window.kakao.maps.InfoWindow({
-          content: `
-            <div style="padding:8px 12px;font-size:13px;font-family:sans-serif;min-width:140px;">
-              <strong>${m.title}</strong><br/>
-              <a href="/seoul/${m.id}" target="_top"
-                style="color:#1a6fc4;font-size:12px;text-decoration:none;">
-                ▶ 상세 수위 보기
-              </a>
-            </div>
-          `,
-        });
-
-        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
-          infowindow.open(map, marker);
-        });
-        window.kakao.maps.event.addListener(marker, 'mouseout', () => {
-          infowindow.close();
-        });
-        window.kakao.maps.event.addListener(marker, 'click', () => {
-          window.location.href = `/seoul/${m.id}`;
-        });
+      window.kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+      window.kakao.maps.event.addListener(marker, 'mouseout',  () => infowindow.close());
+      window.kakao.maps.event.addListener(marker, 'click', () => {
+        window.location.href = `/seoul/${m.id}`;
       });
     });
   };
@@ -92,11 +79,9 @@ export default function MapView() {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail;
       if (!mapInstance.current || !detail.lat || !detail.lng) return;
-      const moveLatLng = new window.kakao.maps.LatLng(
-        parseFloat(detail.lat),
-        parseFloat(detail.lng)
+      mapInstance.current.setCenter(
+        new window.kakao.maps.LatLng(parseFloat(detail.lat), parseFloat(detail.lng))
       );
-      mapInstance.current.setCenter(moveLatLng);
       mapInstance.current.setLevel(5);
     };
     window.addEventListener('siteSelect', handler);
@@ -105,22 +90,17 @@ export default function MapView() {
 
   return (
     <main style={{
-      gridColumn: '2',
-      gridRow:    '2',
-      position:   'relative',
-      overflow:   'hidden',
+      gridColumn: '2', gridRow: '2',
+      position: 'relative', overflow: 'hidden',
     }}>
-      {/* 카카오 지도 스크립트 */}
       <Script
-        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713&autoload=false`}
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713"
         strategy="afterInteractive"
         onLoad={initMap}
       />
 
-      {/* 지도 컨테이너 */}
       <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
 
-      {/* 로딩 플레이스홀더 */}
       {!mapReady && (
         <div style={{
           position: 'absolute', inset: 0,
