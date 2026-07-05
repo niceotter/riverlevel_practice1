@@ -93,10 +93,13 @@ export default function MapView() {
       gridColumn: '2', gridRow: '2',
       position: 'relative', overflow: 'hidden',
     }}>
+
       <Script
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713&autoload=false"
         strategy="afterInteractive"
-        onLoad={initMap}
+        onLoad={() => {
+          window.kakao.maps.load(initMap);
+          }}
       />
 
       <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
