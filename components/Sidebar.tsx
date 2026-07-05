@@ -162,6 +162,7 @@ function SubItem({
     return (
       <a
         href={href}
+        target="_top"
         style={baseStyle as React.CSSProperties}
         onMouseEnter={e => {
           (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-primary)';
