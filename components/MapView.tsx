@@ -112,7 +112,7 @@ export default function MapView() {
     }}>
       {/* 카카오 지도 스크립트 */}
       <Script
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713&autoload=false`}
+        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713&autoload=false`}
         strategy="afterInteractive"
         onLoad={initMap}
       />
