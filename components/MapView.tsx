@@ -1,73 +1,143 @@
 'use client';
 // components/MapView.tsx
+// 카카오 지도 기반 (iframe 없음)
 
 import { useEffect, useRef, useState } from 'react';
-import { FloodItem } from '@/types/flood';
-import FloatWindow from './FloatWindow';
+import Script from 'next/script';
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
+// 서울 관측소 마커 데이터
+const MARKERS = [
+  { id: '101',  lat: 37.4695, lng: 127.0997, title: '탄천 여수대교' },
+  { id: '102',  lat: 37.4490, lng: 127.0742, title: '탄천 대곡교' },
+  { id: '103',  lat: 37.4940, lng: 127.0830, title: '탄천 탄천2교' },
+  { id: '1401', lat: 37.5792, lng: 126.9197, title: '불광천 증산교' },
+  { id: '1501', lat: 37.5660, lng: 126.9112, title: '홍제천 성산2교' },
+  { id: '2001', lat: 37.5070, lng: 126.8660, title: '안양천 고척교' },
+  { id: '2002', lat: 37.4990, lng: 126.8930, title: '도림천 도림교' },
+  { id: '2003', lat: 37.4780, lng: 126.8530, title: '목감천 광화교' },
+  { id: '2201', lat: 37.4570, lng: 126.8990, title: '안양천 기아대교' },
+  { id: '2301', lat: 37.4870, lng: 126.9230, title: '도림천 신대방역' },
+  { id: '2303', lat: 37.4710, lng: 126.9310, title: '도림천 양산교' },
+  { id: '2502', lat: 37.5120, lng: 127.0850, title: '탄천 봉은교' },
+  { id: '301',  lat: 37.6590, lng: 127.0380, title: '방학천 모래말옆' },
+  { id: '302',  lat: 37.6540, lng: 127.0640, title: '중랑천 노원교' },
+  { id: '303',  lat: 37.6420, lng: 127.0230, title: '우이천 계성교' },
+  { id: '401',  lat: 37.6480, lng: 127.0570, title: '우이천 장월교' },
+  { id: '402',  lat: 37.6310, lng: 127.0730, title: '중랑천 신의교' },
+  { id: '403',  lat: 37.6210, lng: 127.0700, title: '중랑천 월계1교' },
+  { id: '801',  lat: 37.5760, lng: 127.0420, title: '정릉천 용두교' },
+  { id: '901',  lat: 37.5510, lng: 127.0530, title: '중랑천 성동교' },
+  { id: '902',  lat: 37.5620, lng: 127.0370, title: '청계천 마장2교' },
+];
 
 export default function MapView() {
-  const mapRef    = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const mapRef     = useRef<HTMLDivElement>(null);
+  const mapInstance = useRef<any>(null);
+  const [mapReady, setMapReady] = useState(false);
 
-  const [floatItem, setFloatItem] = useState<FloodItem | null>(null);
-  const [floatPos,  setFloatPos]  = useState({ x: 0, y: 0 });
-  const [areaWidth, setAreaWidth] = useState(0);
+  const initMap = () => {
+    if (!mapRef.current || mapInstance.current) return;
+    if (typeof window.kakao === 'undefined') return;
 
-  // ── 영역 너비 추적 (FloatWindow 경계 계산용) ────
-  useEffect(() => {
-    const el = mapRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setAreaWidth(el.offsetWidth));
-    ro.observe(el);
-    setAreaWidth(el.offsetWidth);
-    return () => ro.disconnect();
-  }, []);
+    window.kakao.maps.load(() => {
+      const map = new window.kakao.maps.Map(mapRef.current, {
+        center: new window.kakao.maps.LatLng(37.5532, 126.9698), // 서울 중심
+        level: 8,
+      });
+      mapInstance.current = map;
+      setMapReady(true);
 
-  // ── 사이드바 관측소 클릭 → iframe에 지도 이동 명령 ──
+      // 마커 생성
+      MARKERS.forEach(m => {
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position: new window.kakao.maps.LatLng(m.lat, m.lng),
+          title: m.title,
+        });
+
+        // 인포윈도우 (팝업)
+        const infowindow = new window.kakao.maps.InfoWindow({
+          content: `
+            <div style="padding:8px 12px;font-size:13px;font-family:sans-serif;min-width:140px;">
+              <strong>${m.title}</strong><br/>
+              <a href="/seoul/${m.id}" target="_top"
+                style="color:#1a6fc4;font-size:12px;text-decoration:none;">
+                ▶ 상세 수위 보기
+              </a>
+            </div>
+          `,
+        });
+
+        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
+          infowindow.open(map, marker);
+        });
+        window.kakao.maps.event.addListener(marker, 'mouseout', () => {
+          infowindow.close();
+        });
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          window.location.href = `/seoul/${m.id}`;
+        });
+      });
+    });
+  };
+
+  // 사이드바 관측소 클릭 → 지도 이동
   useEffect(() => {
     const handler = (e: Event) => {
-      const item = (e as CustomEvent<FloodItem>).detail;
-      if (!item.lat || !item.lng) return;
-      iframeRef.current?.contentWindow?.postMessage({
-        type: 'moveToSite',
-        lat:  parseFloat(item.lat),
-        lng:  parseFloat(item.lng),
-      }, '*');
+      const detail = (e as CustomEvent).detail;
+      if (!mapInstance.current || !detail.lat || !detail.lng) return;
+      const moveLatLng = new window.kakao.maps.LatLng(
+        parseFloat(detail.lat),
+        parseFloat(detail.lng)
+      );
+      mapInstance.current.setCenter(moveLatLng);
+      mapInstance.current.setLevel(5);
     };
     window.addEventListener('siteSelect', handler);
     return () => window.removeEventListener('siteSelect', handler);
   }, []);
 
   return (
-    <main
-      ref={mapRef}
-      style={{
-        gridColumn: '2',
-        gridRow:    '2',
-        paddingTop: '0px',
-        position:   'relative',
-        background: '#63adf8',
-        overflow:   'hidden',
-      }}
-    >
-      <iframe
-        ref={iframeRef}
-        src="/map.html"
-        style={{
-          width:  '100%',
-          height: '100%',
-          border: 'none',
-        }}
-        title="VWorld 지도"
+    <main style={{
+      gridColumn: '2',
+      gridRow:    '2',
+      position:   'relative',
+      overflow:   'hidden',
+    }}>
+      {/* 카카오 지도 스크립트 */}
+      <Script
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=b1de14803829c260bc393fb3ffc81713&autoload=false`}
+        strategy="afterInteractive"
+        onLoad={initMap}
       />
 
-      {/* Float Window */}
-      <FloatWindow
-        item={floatItem}
-        x={floatPos.x}
-        y={floatPos.y}
-        areaWidth={areaWidth}
-      />
+      {/* 지도 컨테이너 */}
+      <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
+
+      {/* 로딩 플레이스홀더 */}
+      {!mapReady && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          background: '#e8f0fe', gap: '1rem',
+          color: '#555', pointerEvents: 'none',
+        }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+               stroke="#aaa" strokeWidth="1.2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+            <line x1="8" y1="2" x2="8" y2="18"/>
+            <line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>지도 로딩 중…</p>
+        </div>
+      )}
     </main>
   );
 }
