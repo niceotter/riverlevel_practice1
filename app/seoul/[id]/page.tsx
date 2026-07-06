@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
-import WaterAnimation from '@/components/WaterAnimation';
+import WaterAnimationSeoul from '@/components/WaterAnimationSeoul';
 
 {/*
 function getTimeTheme() {
@@ -66,7 +66,7 @@ export default function SeoulStationPage() {
     }}>
       <Header />
       <Sidebar />
-      <WaterAnimation
+      <WaterAnimationSeoul
         id={id}
         bgDeep={bgDeep}//{theme.bgDeep}
         bgHeader={bgHeader}//{theme.bgHeader}

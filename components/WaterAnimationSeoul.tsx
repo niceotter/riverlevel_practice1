@@ -35,6 +35,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
   const [loading,   setLoading]   = useState(true);
   const [error,     setError]     = useState(false);
   const [showPhoto, setShowPhoto] = useState(false);
+  const [showNoLink, setShowNoLink] = useState(false);
   const [alertMsg,  setAlertMsg]  = useState<string | null>(null);
   const alertShown = useRef({ warn: false, danger: false });
 
@@ -100,6 +101,18 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
         }}>
           📷 수위계 모습
         </button>
+        <button
+          onClick={() => externalLink === '#' ? setShowNoLink(true) : window.open(externalLink, '_blank')}
+          style={{
+            padding: '0.45rem 0.85rem', fontSize: '0.78rem',
+            background: '#555', color: '#fff',
+            border: 'none', borderRadius: '6px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center',
+          }}
+        >
+          🔗 CCTV 링크 - 비가 오지 않을때는 다른 곳을 바라보고 있을 수 있습니다
+        </button>
+        {/*
         <a href={externalLink} target="_blank" style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
           background: '#555', color: '#fff',
@@ -108,6 +121,9 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
         }}>
           🔗 CCTV 링크 - 비가 오지 않을때는 다른 곳을 바라보고 있을 수 있습니다
         </a>
+        */}
+
+
       </div>
 
       {/* 관측소 이름 + 관측 시각 */}
@@ -220,6 +236,21 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
             </button>
           </div>
         </div>
+      )}
+
+      {/* 링크 없음 팝업 */}
+      {showNoLink && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}
+          onClick={() => setShowNoLink(false)}>
+          <div style={{ background: '#fff', borderRadius: '12px', padding: '1.5rem', maxWidth: '90vw', textAlign: 'center' }}
+            onClick={e => e.stopPropagation()}>
+            <p style={{ fontSize: '1rem', color: '#555', marginBottom: '1rem' }}>현재 연결된 링크가 없습니다.</p>
+            <button onClick={() => setShowNoLink(false)} style={{ padding: '0.5rem 1.5rem', background: '#555', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+              닫기
+            </button>
+          </div>
+        </div>
+        
       )}
     </main>
   );
