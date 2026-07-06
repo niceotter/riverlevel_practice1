@@ -108,7 +108,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
     }}>
 
       {/* 우측 상단 버튼 2개 */}
-      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
+      <div style={{ position: 'absolute', top: '4rem', left: '1rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
         <button onClick={() => setShowPhoto(true)} style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
           background: '#555', color: '#fff',
@@ -124,7 +124,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
             padding: '0.45rem 0.85rem', fontSize: '0.78rem',
             background: '#555', color: '#fff',
             border: 'none', borderRadius: '6px', cursor: 'pointer',
-            display: 'flex', alignItems: 'center',
+            display: 'flex', alignItems: 'left',
           }}
         >
           🔗 관련 링크
