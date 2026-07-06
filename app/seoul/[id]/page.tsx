@@ -23,7 +23,7 @@ const bgDeep = '#63adf8';
 
 // 수위계 별 외부 링크
 const EXTERNAL_LINKS: Record<string, string> = {
-  '101': '#',
+  '101': 'http://kko.to/oSQknqGwvL',  // 탄천 여수대교
   '102': '#',
   '103': 'http://kko.to/2sjB8l91K9',  // 탄천 탄천2교
   '1401': 'http://kko.to/VoFK32aX8C',  // 불광천 증산교
@@ -40,9 +40,9 @@ const EXTERNAL_LINKS: Record<string, string> = {
   '303': '#',
   '401': '#',
   '402': '#',
-  '403': '#',
+  '403': 'http://kko.to/wBWqrHBKHM',  // 중랑천 월계1교
   '801': '#',
-  '901': '#',
+  '901': 'http://kko.to/_GP-2rog2j',  // 중랑천 성동교
   '902': '#',
 };
 
