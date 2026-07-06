@@ -89,7 +89,7 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
           transition: max-height 300ms cubic-bezier(0.4,0,0.2,1), opacity 240ms ease, border-color var(--transition);
         }
         .menu-item:hover > .submenu {
-          max-height: 400px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
+          max-height: 900px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
         }
       `}</style>
     </div>

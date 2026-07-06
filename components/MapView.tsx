@@ -9,30 +9,30 @@ declare global {
 }
 
 const MARKERS = [
-  { id: '101',  lat: 37.422093, lng: 127.117576, title: '탄천 여수대교' },
-  { id: '102',  lat: 37.468873, lng: 127.122695, title: '탄천 대곡교' },
-  { id: '103',  lat: 37.502442, lng: 127.071609, title: '탄천 탄천2교' },
-  { id: '1401', lat: 37.576384, lng: 126.902668, title: '불광천 증산교' },
-  { id: '1501', lat: 37.565590, lng: 126.911468, title: '홍제천 성산2교' },
-  { id: '2001', lat: 37.499342, lng: 126.870129, title: '안양천 고척교' },
-  { id: '2002', lat: 37.510590, lng: 126.891129, title: '도림천 도림교' },
-  { id: '2003', lat: 37.474382, lng: 126.845366, title: '목감천 광화교' },
-  { id: '2201', lat: 37.438683, lng: 126.900006, title: '안양천 기아대교' },
-  { id: '2301', lat: 37.487552, lng: 126.913354, title: '도림천 신대방역' },
-  { id: '2303', lat: 37.473849, lng: 126.933797, title: '도림천 양산교' },
-  { id: '2502', lat: 37.515530, lng: 127.067782, title: '탄천 봉은교' },
-  { id: '301',  lat: 37.661418, lng: 127.048815, title: '방학천 모래말옆' },
-  { id: '302',  lat: 37.678949, lng: 127.050930, title: '중랑천 노원교' },
-  { id: '303',  lat: 37.647929, lng: 127.022414, title: '우이천 계성교' },
-  { id: '401',  lat: 37.617957, lng: 127.057091, title: '우이천 장월교' },
-  { id: '402',  lat: 37.733274, lng: 127.053999, title: '중랑천 신의교' },
-  { id: '403',  lat: 37.632790, lng: 127.063223, title: '중랑천 월계1교' },
-  { id: '801',  lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' },
-  { id: '901',  lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' },
-  { id: '902',  lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' },
+  { id: '101',  region: 'seoul', lat: 37.422093, lng: 127.117576, title: '탄천 여수대교' },
+  { id: '102',  region: 'seoul', lat: 37.468873, lng: 127.122695, title: '탄천 대곡교' },
+  { id: '103',  region: 'seoul', lat: 37.502442, lng: 127.071609, title: '탄천 탄천2교' },
+  { id: '1401', region: 'seoul', lat: 37.576384, lng: 126.902668, title: '불광천 증산교' },
+  { id: '1501', region: 'seoul', lat: 37.565590, lng: 126.911468, title: '홍제천 성산2교' },
+  { id: '2001', region: 'seoul', lat: 37.499342, lng: 126.870129, title: '안양천 고척교' },
+  { id: '2002', region: 'seoul', lat: 37.510590, lng: 126.891129, title: '도림천 도림교' },
+  { id: '2003', region: 'seoul', lat: 37.474382, lng: 126.845366, title: '목감천 광화교' },
+  { id: '2201', region: 'seoul', lat: 37.438683, lng: 126.900006, title: '안양천 기아대교' },
+  { id: '2301', region: 'seoul', lat: 37.487552, lng: 126.913354, title: '도림천 신대방역' },
+  { id: '2303', region: 'seoul', lat: 37.473849, lng: 126.933797, title: '도림천 양산교' },
+  { id: '2502', region: 'seoul', lat: 37.515530, lng: 127.067782, title: '탄천 봉은교' },
+  { id: '301',  region: 'seoul', lat: 37.661418, lng: 127.048815, title: '방학천 모래말옆' },
+  { id: '302',  region: 'seoul', lat: 37.678949, lng: 127.050930, title: '중랑천 노원교' },
+  { id: '303',  region: 'seoul', lat: 37.647929, lng: 127.022414, title: '우이천 계성교' },
+  { id: '401',  region: 'seoul', lat: 37.617957, lng: 127.057091, title: '우이천 장월교' },
+  { id: '402',  region: 'seoul', lat: 37.733274, lng: 127.053999, title: '중랑천 신의교' },
+  { id: '403',  region: 'seoul', lat: 37.632790, lng: 127.063223, title: '중랑천 월계1교' },
+  { id: '801',  region: 'seoul', lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' },
+  { id: '901',  region: 'seoul', lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' },
+  { id: '902',  region: 'seoul', lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' },
 
-  { id: '200-0005',  lat: 35.289917, lng: 129.255917, title: '동백천' },
-  { id: '200-0006',  lat: 35.319848, lng: 129.115564, title: '임기천' },
+  { id: '200-0005',  region: 'busan', lat: 35.289917, lng: 129.255917, title: '동백천' },
+  { id: '200-0006',  region: 'busan', lat: 35.319848, lng: 129.115564, title: '임기천' },
 ];
 
 export default function MapView() {
@@ -61,7 +61,7 @@ export default function MapView() {
         content: `
           <div style="padding:8px 12px;font-size:13px;font-family:sans-serif;min-width:140px;">
             <strong>${m.title}</strong><br/>
-            <a href="/seoul/${m.id}" target="_top"
+            <a href="/${m.region}/${m.id}" target="_top"
               style="color:#1a6fc4;font-size:12px;text-decoration:none;">
               ▶ 상세 수위 보기
             </a>
@@ -71,8 +71,9 @@ export default function MapView() {
 
       window.kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
       window.kakao.maps.event.addListener(marker, 'mouseout',  () => infowindow.close());
+
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        window.location.href = `/seoul/${m.id}`;
+        window.location.href = `/${m.region}/${m.id}`;
       });
     });
   };
