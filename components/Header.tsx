@@ -28,15 +28,16 @@ export default function Header() {
         letterSpacing: '0.07em',
         color: 'var(--text-header)',
       }}>
-        실시간 하천 수위 현황
+        실시간 하천 수위 정보
+        {/*
         <span style={{
           color: '#000000',
           fontWeight: 300,
           fontSize: '1.2rem',
           marginLeft: '0.5rem',
         }}>
-          아직 서비스가 완벽하지 않습니다. 양해 부탁드립니다.
         </span>
+        */}
       </h1>
       
       <span style={{
