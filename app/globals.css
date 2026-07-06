@@ -7,6 +7,7 @@
   --bg-hover:     #63adf8; /* highlight color to back-ground(서울) when hovering */
   --bg-backtomap: #3d8ff2; /* background color for the back-to-map button */
   --border:       #63adf8; /* border color for map-sidebar and sidebar sections */
+  --scrollbar:    #000dff; /* scrollbar color for map-sidebar and sidebar sections */
   --accent:       #0015ff; /* highlight color to font(서울) when hovering */
   --accent-dim:   #57abff; /* highlight color to back-ground(불광천) when hovering */
   --status-ok:    #3ecf8e;
@@ -32,4 +33,4 @@ html, body {
 
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
