@@ -28,7 +28,7 @@ export default function Header() {
         letterSpacing: '0.07em',
         color: 'var(--text-header)',
       }}>
-        실시간 하천 수위 정보
+        <>실시간<br />하천 수위 정보</>
         {/*
         <span style={{
           color: '#000000',

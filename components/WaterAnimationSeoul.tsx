@@ -96,8 +96,9 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
         <button onClick={() => setShowPhoto(true)} style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
-          background: bgDeep, color: '#fff',
+          background: '#555', color: '#fff',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
+          display: 'flex', alignItems: 'left',
         }}>
           📷 수위계 모습
         </button>
@@ -107,10 +108,10 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
             padding: '0.45rem 0.85rem', fontSize: '0.78rem',
             background: '#555', color: '#fff',
             border: 'none', borderRadius: '6px', cursor: 'pointer',
-            display: 'flex', alignItems: 'center',
+            display: 'flex', alignItems: 'left',
           }}
         >
-          <>📹 CCTV 링크<br />다른 곳을 바라보고 있을 수 있습니다</>
+          <>📹 CCTV 링크<br />다른 곳을 바라보고<br />있을 수 있습니다</>
         </button>
         {/*
         <a href={externalLink} target="_blank" style={{
@@ -126,7 +127,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
 
       </div>
 
-      {/* 관측소 이름 + 관측 시각 +++ 출처 */}
+      {/* 수위계 이름 + 계측 시각 +++ 출처 */}
       {station && (
         <div style={{ position: 'absolute', top: '1rem', left: '1rem', fontSize: '0.8rem', color: '#555' }}>
           <strong>{station.RVR_NM.trim()} {station.WATG_NM}</strong>
@@ -244,7 +245,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
           onClick={() => setShowNoLink(false)}>
           <div style={{ background: '#fff', borderRadius: '12px', padding: '1.5rem', maxWidth: '90vw', textAlign: 'center' }}
             onClick={e => e.stopPropagation()}>
-            <p style={{ fontSize: '1rem', color: '#555', marginBottom: '1rem' }}>본 관측소는 연결된 CCTV가 없습니다.</p>
+            <p style={{ fontSize: '1rem', color: '#555', marginBottom: '1rem' }}>본 수위계는 연결된 CCTV가 없습니다.</p>
             <button onClick={() => setShowNoLink(false)} style={{ padding: '0.5rem 1.5rem', background: '#555', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
               닫기
             </button>
