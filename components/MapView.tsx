@@ -30,6 +30,9 @@ const MARKERS = [
   { id: '801',  lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' },
   { id: '901',  lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' },
   { id: '902',  lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' },
+
+  { id: '200-0005',  lat: 35.289917, lng: 129.255917, title: '동백천' },
+  { id: '200-0006',  lat: 35.319848, lng: 129.115564, title: '임기천' },
 ];
 
 export default function MapView() {
@@ -41,8 +44,8 @@ export default function MapView() {
     if (!mapRef.current || mapInstance.current) return;
 
     const map = new window.kakao.maps.Map(mapRef.current, {
-      center: new window.kakao.maps.LatLng(37.5532, 126.9698),
-      level: 8,
+      center: new window.kakao.maps.LatLng(36.500805, 127.942966),
+      level: 12,
     });
     mapInstance.current = map;
     setMapReady(true);

@@ -116,6 +116,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
         }}>
           📷 수위계
         </button>
+        {/*
         <button
           onClick={() => externalLink === '#' ? setShowNoLink(true) : window.open(externalLink, '_blank')}
           style={{
@@ -127,7 +128,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
         >
           🔗 관련 링크
         </button>
-        {/*
+        
         <a href={externalLink} target="_blank" style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
           background: '#555', color: '#fff',
@@ -241,6 +242,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
       )}
       
       {/* 링크 없음 팝업 */}
+      {/*
       {showNoLink && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}
           onClick={() => setShowNoLink(false)}>
@@ -253,8 +255,9 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
           </div>
         </div>
       )}
+      */}
 
-      
+
     </main>
   );
 }

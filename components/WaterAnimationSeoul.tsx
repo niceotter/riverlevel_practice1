@@ -126,7 +126,7 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
 
       </div>
 
-      {/* 관측소 이름 + 관측 시각 */}
+      {/* 관측소 이름 + 관측 시각 +++ 출처 */}
       {station && (
         <div style={{ position: 'absolute', top: '1rem', left: '1rem', fontSize: '0.8rem', color: '#555' }}>
           <strong>{station.RVR_NM.trim()} {station.WATG_NM}</strong>
@@ -244,13 +244,13 @@ export default function WaterAnimation({ id, bgDeep, bgHeader, externalLink = '#
           onClick={() => setShowNoLink(false)}>
           <div style={{ background: '#fff', borderRadius: '12px', padding: '1.5rem', maxWidth: '90vw', textAlign: 'center' }}
             onClick={e => e.stopPropagation()}>
-            <p style={{ fontSize: '1rem', color: '#555', marginBottom: '1rem' }}>현재 연결된 링크가 없습니다.</p>
+            <p style={{ fontSize: '1rem', color: '#555', marginBottom: '1rem' }}>본 관측소는 연결된 CCTV가 없습니다.</p>
             <button onClick={() => setShowNoLink(false)} style={{ padding: '0.5rem 1.5rem', background: '#555', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
               닫기
             </button>
           </div>
         </div>
-        
+
       )}
     </main>
   );
