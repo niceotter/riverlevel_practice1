@@ -49,7 +49,7 @@ export default function Header() {
       }}>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSculavkKLqlbaxQeB7iM5horoVSCi0amN-1h4vmRT38mxG_Yw/viewform?usp=publish-editor"
         target="_blank" title="새 창에서 구글폼 열기">
-          버그 및 개선사항 제보 / Bug & Feedback
+          <>버그 및 개선사항 제보<br />Bug & Feedback</>
         </a>
       </span>
 

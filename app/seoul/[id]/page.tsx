@@ -21,7 +21,7 @@ function getTimeTheme() {
 const bgHeader = '#FFFFFF';
 const bgDeep = '#63adf8';
 
-// 관측소별 외부 링크
+// 수위계 별 외부 링크
 const EXTERNAL_LINKS: Record<string, string> = {
   '101': '#',
   '102': '#',

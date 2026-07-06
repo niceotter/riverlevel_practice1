@@ -45,7 +45,7 @@ export default function MapView() {
 
     const map = new window.kakao.maps.Map(mapRef.current, {
       center: new window.kakao.maps.LatLng(36.500805, 127.942966),
-      level: 12,
+      level: 13,
     });
     mapInstance.current = map;
     setMapReady(true);
@@ -77,7 +77,7 @@ export default function MapView() {
     });
   };
 
-  // 사이드바 관측소 클릭 → 지도 이동
+  // 사이드바 수위계 클릭 → 지도 이동
   useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail;

@@ -1,7 +1,7 @@
 'use client';
 // components/Sidebar.tsx
 
-// ── 서울 관측소 정적 데이터 ───────────────────────────
+// ── 서울 수위계 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
   { watgCd: '101',  rvrNm: '탄천',  watgNm: '여수대교' },
   { watgCd: '102',  rvrNm: '탄천',  watgNm: '대곡교' },
@@ -26,7 +26,7 @@ const SEOUL_STATIONS = [
   { watgCd: '902',  rvrNm: '청계천', watgNm: '마장2교' },
 ];
 
-// ── 부산 관측소 정적 데이터 ───────────────────────────
+// ── 부산 수위계 정적 데이터 ───────────────────────────
 const BUSAN_STATIONS = [
 //  { siteId: '200-0001', siteName: '동천교' },
 //  { siteId: '200-0002', siteName: '범5호교' },

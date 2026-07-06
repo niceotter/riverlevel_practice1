@@ -9,7 +9,7 @@ import WaterAnimationBusan from '@/components/WaterAnimationBusan';
 const bgHeader = '#FFFFFF';
 const bgDeep   = '#63adf8';
 
-// 외부 링크 (나중에 추가)
+// 수위계 별 외부 링크
 const EXTERNAL_LINKS: Record<string, string> = {
   '200-0005': '#',  // 동백천
   '200-0006': '#',  // 임기천

@@ -108,13 +108,13 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
     }}>
 
       {/* 우측 상단 버튼 2개 */}
-      <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
         <button onClick={() => setShowPhoto(true)} style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
           background: bgDeep, color: '#fff',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
         }}>
-          📷 수위계
+          📷 수위계 모습
         </button>
         {/*
         <button
@@ -140,7 +140,7 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
         */}
       </div>
 
-      {/* 관측소 이름 + 관측 시각 */}
+      {/* 관측소 이름 + 관측 시각 +++ 출처 */}
       {station && (
         <div style={{ position: 'absolute', top: '1rem', left: '1rem', fontSize: '0.8rem', color: '#555' }}>
           <strong>{station.siteName}</strong>
