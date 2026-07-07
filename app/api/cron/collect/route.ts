@@ -86,6 +86,14 @@ async function collectBusan() {
 
 export async function GET(request: Request) {
   // Cron Job 인증 (Vercel이 자동으로 헤더 추가)
+  const authHeader = request.headers.get('authorization') ?? 
+                     request.headers.get('Authorization');
+  const secret = process.env.CRON_SECRET?.trim();
+  const incoming = authHeader?.replace('Bearer ', '').trim();
+  
+  if (!secret || incoming !== secret) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 //  const authHeader = request.headers.get('authorization');
 //  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
 //    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
