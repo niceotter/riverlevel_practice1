@@ -230,9 +230,11 @@ export default function HistoryPage() {
         padding: '1.5rem 2rem',
       }}>
         <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#333', marginBottom: '1.2rem' }}>
-          수위 이력 조회 (서비스가 시작된 2026년 7월 11일 0시 이후의 데이터만 제공됩니다. 양해 부탁드립니다.)
+          수위 이력 조회
         </h2>
-
+        <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
+          본 사이트가 만들어진 2026년 7월 11일 0시 이후의 데이터만 제공됩니다.
+        </p>
         {/* 검색 폼 */}
         <div style={{
           display: 'flex', flexWrap: 'wrap', gap: '0.75rem',

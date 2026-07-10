@@ -225,6 +225,32 @@ export default function Sidebar() {
         <>기상예보<br />확인하기</>
       </a>
 
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLSculavkKLqlbaxQeB7iM5horoVSCi0amN-1h4vmRT38mxG_Yw/viewform?usp=publish-editor"
+        target="_blank" title="새 창에서 구글폼 열기"
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+          버그 및 개선사항 제보
+      </a>
+      
+      <a
+        href="https://qr.kakaopay.com/Ej8ONNgYW"
+        target="_blank"
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+          <>유지보수 기여<br />- 카카오페이 송금</>
+      </a>
+
     </nav>
   );
 }

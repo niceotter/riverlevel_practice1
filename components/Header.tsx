@@ -42,6 +42,7 @@ export default function Header() {
         */}
       </h1>
       
+      {/*}
       <span style={{
         marginLeft: 'auto',
         fontSize: '0.72rem',
@@ -54,6 +55,7 @@ export default function Header() {
           <>버그 및 개선사항 제보<br />Bug & Feedback</>
         </a>
       </span>
+      */}
 
       {/* 물결 라인 정의 */}
       <div style={{
