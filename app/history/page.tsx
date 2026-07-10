@@ -219,7 +219,6 @@ export default function HistoryPage() {
       height: '100vh',
       width: '100vw',
     }}>
-      <Header headerWave="#ffffff" />
       <Sidebar />
 
       {/* 메인 콘텐츠 */}
