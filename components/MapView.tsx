@@ -63,17 +63,29 @@ export default function MapView() {
             <strong>${m.title}</strong><br/>
             <a href="/${m.region}/${m.id}" target="_top"
               style="color:#1a6fc4;font-size:12px;text-decoration:none;">
-              ▶ 상세 수위 보기
+              ▶ 현재 수위 보기
             </a>
           </div>
         `,
       });
 
-      window.kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
-      window.kakao.maps.event.addListener(marker, 'mouseout',  () => infowindow.close());
-
+      // PC: 클릭 → infowindow 열기/닫기 토글
+      // 모바일: 터치 → infowindow 열기/닫기 토글
+      // infowindow의 링크를 클릭/터치하면 해당 페이지로 이동
+      let isOpen = false;
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        window.location.href = `/${m.region}/${m.id}`;
+        if (isOpen) {
+          infowindow.close();
+          isOpen = false;
+        } else {
+          infowindow.open(map, marker);
+          isOpen = true;
+//      window.kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+//      window.kakao.maps.event.addListener(marker, 'mouseout',  () => infowindow.close());
+//
+//      window.kakao.maps.event.addListener(marker, 'click', () => {
+//        window.location.href = `/${m.region}/${m.id}`;
+        }
       });
     });
   };

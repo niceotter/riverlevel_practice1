@@ -148,7 +148,7 @@ export default function Sidebar() {
       padding: '1.5rem 0', zIndex: 50,
     }}>
 
-      {/* ── 지도로 돌아가기 ── */}
+      {/* ── 지도로 돌아가기 ──
       <a
         href="https://www.riverlevel-info.kr"
         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
@@ -160,8 +160,8 @@ export default function Sidebar() {
         </svg>
         <>지도로<br />돌아가기</>
       </a>
-
       <Divider />
+      */}
 
       {/* ── 지역 분류 ── */}
       <div style={{ marginBottom: '0.25rem' }}>
