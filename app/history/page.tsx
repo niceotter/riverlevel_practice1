@@ -1,0 +1,319 @@
+'use client';
+// app/history/page.tsx
+
+import { useState } from 'react';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
+
+// ── 관측소 목록 ───────────────────────────────────────
+const SEOUL_STATIONS = [
+  { id: '101',  name: '탄천 여수대교' },
+  { id: '102',  name: '탄천 대곡교' },
+  { id: '103',  name: '탄천 탄천2교' },
+  { id: '1401', name: '불광천 증산교' },
+  { id: '1501', name: '홍제천 성산2교' },
+  { id: '2001', name: '안양천 고척교' },
+  { id: '2002', name: '도림천 도림교' },
+  { id: '2003', name: '목감천 광화교' },
+  { id: '2201', name: '안양천 기아대교' },
+  { id: '2301', name: '도림천 신대방역' },
+  { id: '2303', name: '도림천 양산교' },
+  { id: '2502', name: '탄천 봉은교' },
+  { id: '301',  name: '방학천 모래말옆' },
+  { id: '302',  name: '중랑천 노원교' },
+  { id: '303',  name: '우이천 계성교' },
+  { id: '401',  name: '우이천 장월교' },
+  { id: '402',  name: '중랑천 신의교' },
+  { id: '403',  name: '중랑천 월계1교' },
+  { id: '801',  name: '정릉천 용두교' },
+  { id: '901',  name: '중랑천 성동교' },
+  { id: '902',  name: '청계천 마장2교' },
+];
+
+const BUSAN_STATIONS = [
+  { id: '00-200-0001', name: '동천교' },
+  { id: '00-200-0002', name: '범5호교' },
+  { id: '00-200-0003', name: '화명교' },
+  { id: '00-200-0004', name: '덕천교' },
+  { id: '00-200-0005', name: '동백천' },
+  { id: '00-200-0006', name: '임기천' },
+  { id: '00-200-0007', name: '온천천' },
+  { id: '00-200-0008', name: '수영강' },
+  { id: '00-200-0009', name: '학장천' },
+  { id: '00-200-0010', name: '괴정천' },
+  { id: '00-200-0011', name: '신평천' },
+  { id: '00-200-0012', name: '장림천' },
+  { id: '00-200-0013', name: '감전천' },
+  { id: '00-200-0014', name: '삼락천' },
+  { id: '00-200-0015', name: '엄궁천' },
+  { id: '00-200-0016', name: '대천천' },
+  { id: '00-200-0017', name: '춘천천' },
+  { id: '00-200-0018', name: '석대천' },
+  { id: '00-200-0019', name: '좌수영강' },
+  { id: '00-200-0020', name: '동래천' },
+];
+
+interface WaterRecord {
+  recorded_at:  string;
+  observed_at:  string | null;
+  water_level:  number;
+  warn_level:   number | null;
+  danger_level: number | null;
+  site_name:    string;
+}
+
+// ── 간단한 SVG 라인 차트 ─────────────────────────────
+function LineChart({ data }: { data: WaterRecord[] }) {
+  if (data.length === 0) return null;
+
+  const W = 800;
+  const H = 300;
+  const PAD = { top: 20, right: 20, bottom: 50, left: 50 };
+
+  const chartW = W - PAD.left - PAD.right;
+  const chartH = H - PAD.top  - PAD.bottom;
+
+  const levels   = data.map(d => d.water_level);
+  const minLevel = Math.min(...levels) * 0.95;
+  const maxLevel = Math.max(
+    ...levels,
+    ...data.map(d => d.warn_level   ?? 0),
+    ...data.map(d => d.danger_level ?? 0),
+  ) * 1.05;
+
+  const xScale = (i: number) => PAD.left + (i / (data.length - 1)) * chartW;
+  const yScale = (v: number) => PAD.top + chartH - ((v - minLevel) / (maxLevel - minLevel)) * chartH;
+
+  // 현재수위 선 경로
+  const path = data.map((d, i) =>
+    `${i === 0 ? 'M' : 'L'} ${xScale(i).toFixed(1)},${yScale(d.water_level).toFixed(1)}`
+  ).join(' ');
+
+  // 경고/위험수위 (첫 번째 데이터 기준)
+  const warnLevel   = data[0].warn_level;
+  const dangerLevel = data[0].danger_level;
+  const warnY   = warnLevel   ? yScale(warnLevel)   : null;
+  const dangerY = dangerLevel ? yScale(dangerLevel)  : null;
+
+  // X축 라벨 (5개만 표시)
+  const labelIndices = [0, Math.floor(data.length/4), Math.floor(data.length/2), Math.floor(data.length*3/4), data.length-1]
+    .filter((v, i, a) => a.indexOf(v) === i);
+
+  // Y축 라벨 (5개)
+  const yLabels = Array.from({ length: 5 }, (_, i) =>
+    minLevel + (maxLevel - minLevel) * i / 4
+  );
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto' }}>
+      {/* 배경 그리드 */}
+      {yLabels.map((v, i) => (
+        <g key={i}>
+          <line
+            x1={PAD.left} y1={yScale(v)}
+            x2={W - PAD.right} y2={yScale(v)}
+            stroke="#ddd" strokeWidth="1"
+          />
+          <text x={PAD.left - 6} y={yScale(v) + 4} fontSize="10" textAnchor="end" fill="#888">
+            {v.toFixed(2)}
+          </text>
+        </g>
+      ))}
+
+      {/* 위험수위 선 */}
+      {dangerY && (
+        <>
+          <line x1={PAD.left} y1={dangerY} x2={W - PAD.right} y2={dangerY}
+            stroke="#ef4444" strokeWidth="1.5" strokeDasharray="6 3" />
+          <text x={W - PAD.right + 4} y={dangerY + 4} fontSize="10" fill="#ef4444">위험</text>
+        </>
+      )}
+
+      {/* 경고수위 선 */}
+      {warnY && warnLevel && warnLevel > minLevel && (
+        <>
+          <line x1={PAD.left} y1={warnY} x2={W - PAD.right} y2={warnY}
+            stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="6 3" />
+          <text x={W - PAD.right + 4} y={warnY + 4} fontSize="10" fill="#f59e0b">경고</text>
+        </>
+      )}
+
+      {/* 현재수위 선 */}
+      <path d={path} fill="none" stroke="#63adf8" strokeWidth="2" />
+
+      {/* X축 */}
+      <line x1={PAD.left} y1={H - PAD.bottom} x2={W - PAD.right} y2={H - PAD.bottom}
+        stroke="#ccc" strokeWidth="1" />
+
+      {/* X축 라벨 */}
+      {labelIndices.map(i => (
+        <text key={i} x={xScale(i)} y={H - PAD.bottom + 16} fontSize="9"
+          textAnchor="middle" fill="#888">
+          {(data[i].observed_at ?? data[i].recorded_at).slice(5, 16)}
+        </text>
+      ))}
+
+      {/* Y축 */}
+      <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={H - PAD.bottom}
+        stroke="#ccc" strokeWidth="1" />
+    </svg>
+  );
+}
+
+// ── 메인 페이지 ───────────────────────────────────────
+export default function HistoryPage() {
+  const [region,    setRegion]    = useState<'seoul' | 'busan'>('seoul');
+  const [siteId,    setSiteId]    = useState('');
+  const [fromDate,  setFromDate]  = useState('');
+  const [toDate,    setToDate]    = useState('');
+  const [data,      setData]      = useState<WaterRecord[]>([]);
+  const [loading,   setLoading]   = useState(false);
+  const [error,     setError]     = useState('');
+  const [siteName,  setSiteName]  = useState('');
+
+  const stations = region === 'seoul' ? SEOUL_STATIONS : BUSAN_STATIONS;
+
+  const handleSearch = async () => {
+    if (!siteId)    return setError('관측소를 선택해주세요.');
+    if (!fromDate)  return setError('시작 시간을 입력해주세요.');
+    if (!toDate)    return setError('종료 시간을 입력해주세요.');
+    setError('');
+    setLoading(true);
+
+    // 부산은 00- 접두사 포함된 siteId 그대로 사용
+    const params = new URLSearchParams({
+      site:   siteId,
+      region,
+      from:   fromDate,
+      to:     toDate,
+    });
+
+    try {
+      const res = await fetch(`/api/history?${params}`);
+      if (!res.ok) throw new Error();
+      const json: WaterRecord[] = await res.json();
+      setData(json);
+      setSiteName(json[0]?.site_name ?? siteId);
+      if (json.length === 0) setError('해당 기간에 데이터가 없습니다.');
+    } catch {
+      setError('데이터를 불러올 수 없습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const inputStyle: React.CSSProperties = {
+    padding: '0.4rem 0.6rem',
+    fontSize: '0.85rem',
+    border: '1px solid #ccc',
+    borderRadius: '6px',
+    background: '#fff',
+    color: '#333',
+  };
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateRows: '20vh 80vh',
+      gridTemplateColumns: '20% 80%',
+      height: '100vh',
+      width: '100vw',
+    }}>
+      <Header headerWave="#ffffff" />
+      <Sidebar />
+
+      {/* 메인 콘텐츠 */}
+      <main style={{
+        gridColumn: '2', gridRow: '2',
+        background: '#f8f9fa',
+        overflow: 'auto',
+        padding: '1.5rem 2rem',
+      }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#333', marginBottom: '1.2rem' }}>
+          수위 이력 조회
+        </h2>
+
+        {/* 검색 폼 */}
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', gap: '0.75rem',
+          alignItems: 'center', marginBottom: '1.5rem',
+          background: '#fff', padding: '1rem',
+          borderRadius: '8px', border: '1px solid #e0e0e0',
+        }}>
+          {/* 지역 선택 */}
+          <select
+            value={region}
+            onChange={e => { setRegion(e.target.value as 'seoul' | 'busan'); setSiteId(''); }}
+            style={inputStyle}
+          >
+            <option value="seoul">서울</option>
+            <option value="busan">부산</option>
+          </select>
+
+          {/* 관측소 선택 */}
+          <select value={siteId} onChange={e => setSiteId(e.target.value)} style={inputStyle}>
+            <option value="">관측소 선택</option>
+            {stations.map(s => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+
+          {/* 시작 시간 */}
+          <input
+            type="datetime-local"
+            value={fromDate}
+            onChange={e => setFromDate(e.target.value)}
+            style={inputStyle}
+          />
+          <span style={{ color: '#888', fontSize: '0.85rem' }}>~</span>
+          {/* 종료 시간 */}
+          <input
+            type="datetime-local"
+            value={toDate}
+            onChange={e => setToDate(e.target.value)}
+            style={inputStyle}
+          />
+
+          {/* 조회 버튼 */}
+          <button
+            onClick={handleSearch}
+            disabled={loading}
+            style={{
+              padding: '0.4rem 1.2rem',
+              fontSize: '0.85rem',
+              background: '#63adf8',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.6 : 1,
+            }}
+          >
+            {loading ? '조회 중…' : '조회'}
+          </button>
+        </div>
+
+        {/* 에러 메시지 */}
+        {error && (
+          <p style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</p>
+        )}
+
+        {/* 차트 */}
+        {data.length > 0 && (
+          <div style={{
+            background: '#fff', borderRadius: '8px',
+            border: '1px solid #e0e0e0', padding: '1.5rem',
+          }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#333', marginBottom: '1rem' }}>
+              {siteName} 수위 이력
+              <span style={{ fontSize: '0.75rem', fontWeight: 400, color: '#888', marginLeft: '0.5rem' }}>
+                ({data.length}건)
+              </span>
+            </h3>
+            <LineChart data={data} />
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}

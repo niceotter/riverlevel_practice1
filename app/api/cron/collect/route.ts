@@ -22,17 +22,17 @@ async function supabase(path: string, options?: RequestInit) {
   });
 }
 
-// ── 마지막 저장 수위 조회 ─────────────────────────────
-// 특정 관측소의 가장 최근 저장된 수위를 가져옴
-// 이전 수위와 동일하면 저장 안 함 (중복 방지)
-async function getLastLevel(siteCode: string): Promise<number | null> {
+// ── 마지막 저장 관측시간 조회 ────────────────────────
+// 특정 관측소의 가장 최근 저장된 관측시간을 가져옴
+// 이전 관측시간과 동일하면 저장 안 함 (중복 방지)
+async function getLastObservedAt(siteCode: string): Promise<string | null> {
   const res = await supabase(
     `/water_levels?site_code=eq.${encodeURIComponent(siteCode)}&order=recorded_at.desc&limit=1`,
     { method: 'GET' }
   );
   if (!res.ok) return null;
   const data = await res.json();
-  return data[0]?.water_level ?? null;
+  return data[0]?.observed_at ?? null;
 }
 
 // ── 수위 데이터 저장 ──────────────────────────────────
@@ -40,7 +40,7 @@ async function getLastLevel(siteCode: string): Promise<number | null> {
 // 컬럼 설명:
 //   region       - 'seoul' 또는 'busan'
 //   site_code    - 관측소 고유 코드
-//   site_name    - 관측소 이름 (서울: 구명+수위계명, 부산: 수위계명)
+//   site_name    - 관측소 이름 (서울: 하천명+수위계명, 부산: 수위계명)
 //   water_level  - 현재 수위 (m)
 //   warn_level   - 경고 수위 (m) / 서울: CNTRL_WATL, 부산: alertLevel3
 //   danger_level - 위험 수위 (m) / 서울: PLAN_FLDE, 부산: alertLevel4
@@ -74,7 +74,7 @@ async function saveLevel(
 // API 응답 필드:
 //   WATG_CD            - 관측소 코드
 //   WATG_NM            - 수위계 이름
-//   GU_OFC_NM          - 구청명 (예: 서대문구)
+//   RVR_NM             - 하천명 (예: 불광천)
 //   RLTM_RVR_WATL_CNT  - 현재 수위 (m)
 //   CNTRL_WATL         - 통제수위 = 경고수위 (m)
 //   PLAN_FLDE          - 계획홍수위 = 위험수위 (m)
@@ -94,14 +94,14 @@ async function collectSeoul() {
     const danger = parseFloat(row.PLAN_FLDE);
     if (isNaN(level)) continue;
 
-    // 이전 수위와 동일하면 저장 안 함
-    const last = await getLastLevel(row.WATG_CD);
-    if (last === null || last !== level) {
+    // 이전 관측시간과 동일하면 저장 안 함
+    const lastObservedAt = await getLastObservedAt(row.WATG_CD);
+    if (lastObservedAt === null || lastObservedAt !== row.DTRSM_DATA_CLCT_TM) {
       await saveLevel(
         'seoul',
         row.WATG_CD,
-        // 서울: 구명 + 수위계명 (예: 서대문구 증산교)
-        `${row.GU_OFC_NM} ${row.WATG_NM}`,
+        // 서울: 하천명 + 수위계명 (예: 불광천 증산교)
+        `${row.RVR_NM} ${row.WATG_NM}`,
         level,
         isNaN(warn)   || warn === 0   ? null : warn,
         isNaN(danger) ? null : danger,
@@ -110,6 +110,7 @@ async function collectSeoul() {
     }
   }
 }
+
 
 // ── 부산 데이터 수집 ──────────────────────────────────
 // 공공데이터포털 부산 하천수위 API 호출
@@ -140,9 +141,9 @@ async function collectBusan() {
     const danger = parseFloat(item.alertLevel4);
     if (isNaN(level)) continue;
 
-    // 이전 수위와 동일하면 저장 안 함
-    const last = await getLastLevel(item.siteCode);
-    if (last === null || last !== level) {
+    // 이전 관측시간과 동일하면 저장 안 함
+    const lastObservedAt = await getLastObservedAt(item.siteCode);
+    if (lastObservedAt === null || lastObservedAt !== item.obsrTime) {
       await saveLevel(
         'busan',
         item.siteCode,
