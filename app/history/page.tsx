@@ -192,7 +192,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
       {labelIndices.map(i => (
         <text key={i} x={xScale(i)} y={H - PAD.bottom + 16} fontSize="9"
           textAnchor="middle" fill="#888">
-          {(data[i].observed_at ?? data[i].recorded_at)?.replace('T', ' ')}
+          {(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
         </text>
       ))}
 
