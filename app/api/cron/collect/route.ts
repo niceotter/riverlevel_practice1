@@ -96,7 +96,7 @@ async function collectSeoul() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(row.WATG_CD);
-    if (lastObservedAt === null || row.DTRSM_DATA_CLCT_TM === null || lastObservedAt !== row.DTRSM_DATA_CLCT_TM)  {
+    if (lastObservedAt === null || row.DTRSM_DATA_CLCT_TM === null || lastObservedAt === row.DTRSM_DATA_CLCT_TM)  {
       await saveLevel(
         'seoul',
         row.WATG_CD,
@@ -143,7 +143,7 @@ async function collectBusan() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(item.siteCode);
-    if (lastObservedAt === null || item.obsrTime === null || lastObservedAt !== item.obsrTime) {
+    if (lastObservedAt === null || item.obsrTime === null || lastObservedAt === item.obsrTime) {
       await saveLevel(
         'busan',
         item.siteCode,
