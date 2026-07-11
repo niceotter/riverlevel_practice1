@@ -1,7 +1,7 @@
 'use client';
 // app/history/page.tsx
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 
@@ -62,8 +62,18 @@ interface WaterRecord {
   site_name:    string;
 }
 
-// ── 간단한 SVG 라인 차트 ─────────────────────────────
+// 날짜 문자열 → "2026년 7월 7일 20시 30분" 형식으로 변환
+function formatKoreanDateTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}시 ${String(d.getMinutes()).padStart(2, '0')}분`;
+}
+
+// ── 간단한 SVG 라인 차트 (호버 시 수위 표시 기능 포함) ─────
 function LineChart({ data }: { data: WaterRecord[] }) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+
   if (data.length === 0) return null;
 
   const W = 800;
@@ -104,8 +114,41 @@ function LineChart({ data }: { data: WaterRecord[] }) {
     minLevel + (maxLevel - minLevel) * i / 4
   );
 
+
+  // 마우스 위치 → 가장 가까운 데이터 인덱스 계산
+  const handleMouseMove = (e: React.MouseEvent<SVGRectElement>) => {
+    if (!svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    // 화면 픽셀 좌표를 viewBox(800x300) 좌표로 변환
+    const svgX = ((e.clientX - rect.left) / rect.width) * W;
+    const ratio = (svgX - PAD.left) / chartW;
+    const idx = Math.round(ratio * (data.length - 1));
+    const clamped = Math.min(Math.max(idx, 0), data.length - 1);
+    setHoverIndex(clamped);
+  };
+
+  const handleMouseLeave = () => setHoverIndex(null);
+
+  // 호버 중인 데이터 포인트 정보
+  const hovered = hoverIndex !== null ? data[hoverIndex] : null;
+  const hoverX = hoverIndex !== null ? xScale(hoverIndex) : 0;
+  const hoverY = hovered ? yScale(hovered.water_level) : 0;
+
+  // 툴팁 박스 크기 및 위치 (차트 밖으로 넘치지 않도록 좌우 보정)
+  const boxW = 190;
+  const boxH = 62;
+  let boxX = hoverX + 14;
+  if (boxX + boxW > W - PAD.right) boxX = hoverX - boxW - 14;
+  let boxY = hoverY - boxH - 14;
+  if (boxY < PAD.top) boxY = hoverY + 14;
+
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto' }}>
+    <svg
+      ref={svgRef}  
+
+      viewBox={`0 0 ${W} ${H}`}
+      style={{ width: '100%', height: 'auto' }}
+    >
       {/* 배경 그리드 */}
       {yLabels.map((v, i) => (
         <g key={i}>
@@ -156,6 +199,46 @@ function LineChart({ data }: { data: WaterRecord[] }) {
       {/* Y축 */}
       <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={H - PAD.bottom}
         stroke="#ccc" strokeWidth="1" />
+
+
+      {/* 호버 시 십자선 + 마커 + 정보 박스 */}
+      {hovered && (
+        <>
+          {/* 세로 십자선 */}
+          <line
+            x1={hoverX} y1={PAD.top} x2={hoverX} y2={H - PAD.bottom}
+            stroke="#333" strokeWidth="1" strokeDasharray="4 3"
+          />
+          {/* 데이터 포인트 마커 */}
+          <circle cx={hoverX} cy={hoverY} r="5" fill="#63adf8" stroke="#fff" strokeWidth="2" />
+
+          {/* 정보 박스 */}
+          <rect
+            x={boxX} y={boxY} width={boxW} height={boxH}
+            fill="#fff" stroke="#333" strokeWidth="1.5" rx="4"
+          />
+          <text x={boxX + 10} y={boxY + 18} fontSize="10" fontWeight="600" fill="#333">
+            {formatKoreanDateTime(hovered.observed_at ?? hovered.recorded_at)}
+          </text>
+          <text x={boxX + 10} y={boxY + 36} fontSize="10" fontWeight="600" fill="#333">
+            {hovered.site_name}
+          </text>
+          <text x={boxX + 10} y={boxY + 54} fontSize="11" fontWeight="700" fill="#63adf8">
+            당시 수위 : {hovered.water_level.toFixed(2)} m
+          </text>
+        </>
+      )}
+
+      {/* 마우스 이벤트 감지용 투명 오버레이 (차트 전체 영역) */}
+      <rect
+        x={PAD.left} y={PAD.top} width={chartW} height={chartH}
+        fill="transparent"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: 'crosshair' }}
+      />
+
+
     </svg>
   );
 }
