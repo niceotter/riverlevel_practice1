@@ -135,8 +135,8 @@ function LineChart({ data }: { data: WaterRecord[] }) {
   const hoverY = hovered ? yScale(hovered.water_level) : 0;
 
   // 툴팁 박스 크기 및 위치 (차트 밖으로 넘치지 않도록 좌우 보정)
-  const boxW = 190;
-  const boxH = 62;
+  const boxW = 180;
+  const boxH = 80;
   let boxX = hoverX + 14;
   if (boxX + boxW > W - PAD.right) boxX = hoverX - boxW - 14;
   let boxY = hoverY - boxH - 14;
