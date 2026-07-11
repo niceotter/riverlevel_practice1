@@ -1,6 +1,5 @@
 'use client';
 // components/Sidebar.tsx
-import { useState } from 'react';
 
 // ── 서울 수위계 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
@@ -52,23 +51,10 @@ const BUSAN_STATIONS = [
 ];
 
 // ── 1차 메뉴 컴포넌트 ────────────────────────────────
-// function MenuItem({ label, children }: { label: string; children: React.ReactNode }) {
-//   return (
-//     <div className="menu-item">
-//       <button className="menu-trigger">
-//         {label}
-//         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-//              stroke="currentColor" strokeWidth="2.5" className="chevron">
-//           <polyline points="9 18 15 12 9 6" />
-//         </svg>
-//       </button>
-//       <div className="submenu">{children}</div>
-
 function MenuItem({ label, children }: { label: string; children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div className={`menu-item ${open ? 'menu-open' : ''}`}>
-      <button className="menu-trigger" onClick={() => setOpen(value => !value)} aria-expanded={open}>
+    <div className="menu-item">
+      <button className="menu-trigger">
         {label}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" strokeWidth="2.5" className="chevron">
@@ -105,13 +91,6 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
         .menu-item:hover > .submenu {
           max-height: 900px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
         }
-
-        @media (max-width: 760px) {
-          .menu-item:hover > .submenu { max-height: 0; opacity: 0; overflow: hidden; }
-          .menu-item.menu-open > .submenu { max-height: 900px; opacity: 1; border-left-color: var(--accent); overflow-y: auto; }
-          .menu-item.menu-open > .menu-trigger .chevron { transform: rotate(90deg); opacity: 1; }
-        }
-
       `}</style>
     </div>
   );
@@ -159,46 +138,15 @@ function SubItem({ children, href }: { children: React.ReactNode; href?: string 
 }
 
 // ── Sidebar 본체 ─────────────────────────────────────
-// export default function Sidebar() {
-
-export default function Sidebar({
-  mobileOpen = false,
-  onClose
-}: {
-  mobileOpen?: boolean;
-  onClose?: () => void
-}) {
+export default function Sidebar() {
   return (
-    <>
-    {mobileOpen && (
-      <button
-        className="sidebar-backdrop"
-        onClick={onClose}
-        aria-label="메뉴 닫기"
-      />
-    )}
-    <nav
-      className={`site-sidebar ${mobileOpen ? 'is-open' : ''}`}
-      onClick={event => {
-        if ((event.target as HTMLElement).closest('a')) {
-          onClose?.();
-        }
-      }}
-    style={{
+    <nav style={{
       gridColumn: '1', gridRow: '2',
       background: 'var(--bg-deep)',
       borderRight: '1px solid var(--border)',
       overflowY: 'auto', overflowX: 'hidden',
       padding: '1.5rem 0', zIndex: 50,
     }}>
-      <button
-        className="sidebar-close"
-        onClick={onClose}
-        aria-label="메뉴 닫기"
-      >
-        ×
-      </button>
-
 
       {/* ── 지도로 돌아가기 ──
       <a
@@ -304,7 +252,6 @@ export default function Sidebar({
       </a>
 
     </nav>
-    </>
   );
 }
 

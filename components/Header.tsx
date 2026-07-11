@@ -1,17 +1,8 @@
 'use client';
 // components/Header.tsx
 
-export default function Header({
-
-  onMenuClick,
-  showMenuButton = false,
-  menuOpen = false,
-}: {
-  onMenuClick?: () => void;
-  showMenuButton?: boolean;
-  menuOpen?: boolean
-}) {
-
+export default function Header() {
+  
   const bgDeep = '#63adf8';  // 물결 라인 backgroundImage에 --bg-deep 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
     <header style={{
@@ -29,18 +20,6 @@ export default function Header({
       position: 'relative',
       zIndex: 100,
     }}>
-      {showMenuButton && (
-        <button
-          className="mobile-menu-button"
-          onClick={onMenuClick}
-          aria-label="메뉴 열기"
-          aria-expanded={menuOpen}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      )}
 
       <h1 style={{
         fontFamily: "'Georgia', 'Nanum Myeongjo', serif",
@@ -49,7 +28,7 @@ export default function Header({
         letterSpacing: '0.07em',
         color: 'var(--text-header)',
       }}>
-        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <a href="https://www.riverlevel-info.kr/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <>실시간<br />하천 수위 정보</>
         </a>
         {/*

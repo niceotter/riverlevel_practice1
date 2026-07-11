@@ -99,25 +99,18 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
   const wavePattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='${encodeURIComponent(bgDeep)}' fill='${encodeURIComponent(bgDeep)}' stroke-width='2'/%3E%3C/svg%3E")`;
 
   return (
-    <main className="station-view" style={{
-      gridColumn: '1', gridRow: '2',
+    <main style={{
+      gridColumn: '2', gridRow: '2',
       position: 'relative', background: bgHeader,
       overflow: 'hidden', display: 'flex',
       alignItems: 'center', justifyContent: 'center',
-      padding: '0', transition: 'background 1s ease',
+      padding: '1rem 2rem', transition: 'background 1s ease',
     }}>
 
-      {/* 우측 상단 버튼 2개
+      {/* 우측 상단 버튼 2개 */}
       <div style={{ position: 'absolute', top: '1rem', left: '20rem', display: 'flex', gap: '0.5rem', zIndex: 10 }}>
         <button onClick={() => setShowPhoto(true)} style={{
           padding: '0.45rem 0.85rem', fontSize: '0.78rem',
-          background: '#555', color: '#fff',
-          border: 'none', borderRadius: '6px', cursor: 'pointer',
-          display: 'flex', alignItems: 'left',
-        }}> */}
-      <div className="station-actions">
-        <button onClick={() => setShowPhoto(true)} style={{
-          padding: '0.7rem 1rem', fontSize: '0.86rem',
           background: '#555', color: '#fff',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
           display: 'flex', alignItems: 'left',
@@ -148,17 +141,11 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
         */}
       </div>
 
-      {/* 수위계 이름 + 계측 시각 +++ 출처
+      {/* 수위계 이름 + 계측 시각 +++ 출처 */}
       {station && (
         <div style={{ position: 'absolute', top: '1rem', left: '1rem', fontSize: '0.8rem', color: '#555' }}>
           <strong>{station.siteName}</strong>
           <span style={{ marginLeft: '0.5rem', color: '#999' }}>{station.obsrTime}</span>
-        </div> */}
-      {station && (
-        <div className="station-meta">
-          <strong>{station.siteName}</strong>
-          <time>{station.obsrTime}</time>
-          <span>정보 출처 : 부산광역시 재난안전대책본부</span>
         </div>
       )}
 
@@ -166,9 +153,9 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
       {error   && <p style={{ color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>}
 
       {station && (
-        <div className="river-section">
+        <div style={{ width: '100%', maxWidth: '720px', position: 'relative' }}>
 
-          {/* 수위 라벨 (왼쪽)
+          {/* 수위 라벨 (왼쪽) */}
           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '130px', pointerEvents: 'none' }}>
             <div style={{ position: 'absolute', bottom: `calc(${dangerPct}% - 0.5rem)`, fontSize: '0.75rem', color: '#ef4444', whiteSpace: 'nowrap' }}>
               위험수위 ({station.alertLevel4})m
@@ -181,38 +168,16 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
             <div style={{ position: 'absolute', bottom: `calc(${currentPct}% - 0.5rem)`, fontSize: '0.75rem', color: bgDeep, whiteSpace: 'nowrap', fontWeight: 700 }}>
               현재수위 ({station.waterLevel})m
             </div>
-          </div> */}
-          <div className="level-labels">
-            <div style={{ position: 'absolute', bottom: `calc(${dangerPct}% - 0.5rem)`, color: '#ef4444', whiteSpace: 'nowrap' }}>
-              위험수위 ({station.alertLevel4})m
-            </div>
-            {showWarn && (
-              <div style={{ position: 'absolute', bottom: `calc(${warnPct}% - 0.5rem)`, color: '#f97316', whiteSpace: 'nowrap' }}>
-                경고수위 ({station.alertLevel3})m
-              </div>
-            )}
-            <div style={{ position: 'absolute', bottom: `calc(${currentPct}% - 0.5rem)`, color: bgDeep, whiteSpace: 'nowrap', fontWeight: 700 }}>
-              현재수위 ({station.waterLevel})m
-            </div>
           </div>
 
-
-          {/* SVG 하천 단면
+          {/* SVG 하천 단면 */}
           <div style={{ marginLeft: '140px', position: 'relative' }}>
             <svg viewBox="0 0 600 400" style={{ width: '100%', height: 'auto', overflow: 'visible' }} xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <clipPath id={`trap-busan-${id}`}>
                   <polygon points="60,20 540,20 460,380 140,380" />
                 </clipPath>
-              </defs> */}
-          <div className="river-svg">
-            <svg viewBox="0 0 600 400" style={{ width: '100%', height: 'auto', overflow: 'visible' }} xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <clipPath id={`trap-busan-${id}`}>
-                  <polygon points="60,20 540,20 460,380 140,380" />
-                </clipPath>
               </defs>
-
 
               {/* 물 배경 */}
               <rect x="0" y={waterY} width="600" height={SVG_BOTTOM - waterY}
@@ -277,7 +242,8 @@ export default function WaterAnimationBusan({ id, bgDeep, bgHeader, externalLink
         </div>
       )}
       
-      {/* 링크 없음 팝업 
+      {/* 링크 없음 팝업 */}
+      {/*
       {showNoLink && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}
           onClick={() => setShowNoLink(false)}>

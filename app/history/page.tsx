@@ -162,7 +162,6 @@ function LineChart({ data }: { data: WaterRecord[] }) {
 
 // ── 메인 페이지 ───────────────────────────────────────
 export default function HistoryPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [region,    setRegion]    = useState<'seoul' | 'busan'>('seoul');
   const [siteId,    setSiteId]    = useState('');
   const [fromDate,  setFromDate]  = useState('');
@@ -213,27 +212,18 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="home-shell" style={{      
+    <div style={{
       display: 'grid',
       gridTemplateRows: '20vh 80vh',
-      gridTemplateColumns: '100%',
+      gridTemplateColumns: '20% 80%',
       height: '100vh',
       width: '100vw',
     }}>
-      <Header
-        showMenuButton
-        menuOpen={menuOpen}
-        onMenuClick={() => setMenuOpen(true)}
-      />
-      <Sidebar
-        mobileOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
-      />
+      <Header />
+      <Sidebar />
 
-      {/* 메인 콘텐츠 
-      <main style={{ */}
-
-      <main className="history-content" style={{      
+      {/* 메인 콘텐츠 */}
+      <main style={{
         gridColumn: '2', gridRow: '2',
         background: '#f8f9fa',
         overflow: 'auto',

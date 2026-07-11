@@ -1,24 +1,20 @@
 // app/page.tsx
-import HomeShell from '@/components/HomeShell';
-// import Header    from '@/components/Header';
-// import Sidebar   from '@/components/Sidebar';
-// import MapView   from '@/components/MapView';
+import Header    from '@/components/Header';
+import Sidebar   from '@/components/Sidebar';
+import MapView   from '@/components/MapView';
 
 export default function Page() {
-  return <HomeShell />;
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateRows: '20vh 80vh',
+      gridTemplateColumns: '20% 80%',
+      height: '100vh',
+      width: '100vw',
+    }}>
+      <Header />
+      <Sidebar />
+      <MapView />
+    </div>
+  );
 }
-
-//  return (
-//     <div style={{
-//       display: 'grid',
-//       gridTemplateRows: '20vh 80vh',
-//       gridTemplateColumns: '20% 80%',
-//       height: '100vh',
-//       width: '100vw',
-//     }}>
-//       <Header />
-//       <Sidebar />
-//       <MapView />
-//     </div>
-//   );
-// }

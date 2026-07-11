@@ -22,15 +22,6 @@ async function supabase(path: string, options?: RequestInit) {
   });
 }
 
-// 높이 순서...??
-// 제방       EBM_HGT 
-// 계획       PLAN_FLDE
-// 통제/위험   alertLevel4 == CNTRL_WATL
-// 경계       alertLevel3 
-// 주의       alertLevel2
-// 둔치       alertLevel1
-// 바닥       RBH
-
 // ── 마지막 저장 관측시간 조회 ────────────────────────
 // 특정 관측소의 가장 최근 저장된 관측시간을 가져옴
 // 이전 관측시간과 동일하면 저장 안 함 (중복 방지)
@@ -88,8 +79,6 @@ async function saveLevel(
 //   CNTRL_WATL         - 통제수위 = 경고수위 (m)
 //   PLAN_FLDE          - 계획홍수위 = 위험수위 (m)
 //   DTRSM_DATA_CLCT_TM - 관측 시각 (예: 2026-07-05 14:30:00)
-
-//   RBH, CNTRL_WATL, PLAN_FLDE, EBM_HGT 순서로 바닥, 통제, 계획, 제방
 async function collectSeoul() {
   const apiKey = process.env.SEOUL_API_KEY!;
   const apiUrl = process.env.SEOUL_API_URL!;
@@ -132,8 +121,6 @@ async function collectSeoul() {
 //   alertLevel3 - 경계수위 = 경고수위 (m)
 //   alertLevel4 - 위험수위 (m)
 //   obsrTime    - 관측 시각 (예: 2026-07-05 14:59)
-
-//   alertLevel1, alertLevel2, alertLevel3, alertLevel4 순서로 둔치, 주의, 경계, 위험
 async function collectBusan() {
   const apiKey = process.env.BUSAN_API_KEY!;
   const apiUrl = process.env.BUSAN_API_URL!;
