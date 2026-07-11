@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
+// import Sidebar from '@/components/Sidebar';
 import WaterAnimationSeoul from '@/components/WaterAnimationSeoul';
 
 {/*
@@ -60,12 +60,11 @@ export default function SeoulStationPage() {
     <div style={{
       display: 'grid',
       gridTemplateRows: '20vh 80vh',
-      gridTemplateColumns: '20% 80%',
+      gridTemplateColumns: '100%',
       height: '100vh',
       width: '100vw',
     }}>
       <Header />
-      <Sidebar />
       <WaterAnimationSeoul
         id={id}
         bgDeep={bgDeep}//{theme.bgDeep}

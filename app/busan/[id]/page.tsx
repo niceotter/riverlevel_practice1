@@ -3,7 +3,7 @@
 
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
+// import Sidebar from '@/components/Sidebar';
 import WaterAnimationBusan from '@/components/WaterAnimationBusan';
 
 const bgHeader = '#FFFFFF';
@@ -23,12 +23,12 @@ export default function BusanStationPage() {
     <div style={{
       display: 'grid',
       gridTemplateRows: '20vh 80vh',
-      gridTemplateColumns: '20% 80%',
+      gridTemplateColumns: '100%',
       height: '100vh',
       width: '100vw',
     }}>
       <Header/>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <WaterAnimationBusan
         id={id}
         bgDeep={bgDeep}
