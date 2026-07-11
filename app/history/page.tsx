@@ -158,7 +158,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
             stroke="#ddd" strokeWidth="1"
           />
           <text x={PAD.left - 6} y={yScale(v) + 4} fontSize="10" textAnchor="end" fill="#888">
-            {v.toFixed(2)}
+            {v.toFixed(2) } m
           </text>
         </g>
       ))}
@@ -192,7 +192,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
       {labelIndices.map(i => (
         <text key={i} x={xScale(i)} y={H - PAD.bottom + 16} fontSize="9"
           textAnchor="middle" fill="#888">
-          {(data[i].observed_at ?? data[i].recorded_at).slice(5, 16)}
+          {(data[i].observed_at ?? data[i].recorded_at)?.replace('T', ' ')}
         </text>
       ))}
 
@@ -225,6 +225,9 @@ function LineChart({ data }: { data: WaterRecord[] }) {
           </text>
           <text x={boxX + 10} y={boxY + 54} fontSize="11" fontWeight="700" fill="#63adf8">
             당시 수위 : {hovered.water_level.toFixed(2)} m
+          </text>
+          <text x={boxX + 10} y={boxY + 72} fontSize="11" fontWeight="700" fill="#ef4444">
+            위험 수위 : {hovered.danger_level?.toFixed(2) ?? 'N/A'} m
           </text>
         </>
       )}
