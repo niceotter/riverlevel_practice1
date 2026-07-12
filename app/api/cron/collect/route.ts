@@ -22,6 +22,19 @@ async function supabase(path: string, options?: RequestInit) {
   });
 }
 
+// ── 관측시간 동일 여부 비교 ────────────────────────────
+// API에서 준 시간 문자열("2026-07-05 14:59")과
+// DB에서 다시 읽어온 시간 문자열("2026-07-05T14:59:00")은
+// 표기 형식(공백/T, 초 유무)이 달라서 문자열로는 직접 비교할 수 없음.
+// Date로 변환해서 실제 시각(epoch)이 같은지 비교한다.
+function isSameObservedTime(a: string | null, b: string | null): boolean {
+  if (a === null || b === null) return false;
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
+  if (isNaN(timeA) || isNaN(timeB)) return false; // 파싱 실패 시 다른 것으로 취급
+  return timeA === timeB;
+}
+
 // ── 마지막 저장 관측시간 조회 ────────────────────────
 // 특정 관측소의 가장 최근 저장된 관측시간을 가져옴
 // 이전 관측시간과 동일하면 저장 안 함 (중복 방지)
@@ -96,7 +109,7 @@ async function collectSeoul() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(row.WATG_CD);
-    if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && row.DTRSM_DATA_CLCT_TM !== lastObservedAt))  {
+    if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && !isSameObservedTime(row.DTRSM_DATA_CLCT_TM, lastObservedAt)))  {
       await saveLevel(
         'seoul',
         row.WATG_CD,
@@ -143,7 +156,7 @@ async function collectBusan() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(item.siteCode);
-    if (lastObservedAt === null || (item.obsrTime !== null && item.obsrTime !== lastObservedAt)) {
+    if (lastObservedAt === null || (item.obsrTime !== null && !isSameObservedTime(item.obsrTime, lastObservedAt))) {
       await saveLevel(
         'busan',
         item.siteCode,

@@ -168,7 +168,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
         <>
           <line x1={PAD.left} y1={dangerY} x2={W - PAD.right} y2={dangerY}
             stroke="#ef4444" strokeWidth="1.5" strokeDasharray="6 3" />
-          <text x={W - PAD.right + 4} y={dangerY + 4} fontSize="10" fill="#ef4444">위험</text>
+          <text x={W - PAD.right} y={dangerY + 4} fontSize="10" fill="#ef4444">위험</text>
         </>
       )}
 
@@ -177,7 +177,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
         <>
           <line x1={PAD.left} y1={warnY} x2={W - PAD.right} y2={warnY}
             stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="6 3" />
-          <text x={W - PAD.right + 4} y={warnY + 4} fontSize="10" fill="#f59e0b">경고</text>
+          <text x={W - PAD.right} y={warnY + 4} fontSize="10" fill="#f59e0b">경고</text>
         </>
       )}
 
@@ -191,7 +191,9 @@ function LineChart({ data }: { data: WaterRecord[] }) {
       {/* X축 라벨 */}
       {labelIndices.map(i => (
         <text key={i} x={xScale(i)} y={H - PAD.bottom + 16} fontSize="9"
-          textAnchor="middle" fill="#888">
+          textAnchor="end" fill="#888"
+          transform={`rotate(-60, ${xScale(i)}, ${H - PAD.bottom + 16})`}
+        >
           {(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
         </text>
       ))}
@@ -319,7 +321,7 @@ export default function HistoryPage() {
           수위 이력 조회
         </h2>
         <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-          본 사이트가 만들어진 2026년 7월 11일 0시 이후의 데이터만 제공됩니다.
+          본 사이트가 만들어진 2026년 7월 13일 0시 이후의 데이터만 제공됩니다.
         </p>
         {/* 검색 폼 */}
         <div style={{
