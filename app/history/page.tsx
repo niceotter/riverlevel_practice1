@@ -199,7 +199,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
           fill="#888"
           transform={`rotate(-60, ${xScale(i)}, ${H - PAD.bottom + 16})`}
         >
-          {formatKoreanDateTime(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
+          {formatKoreanDateTime(data[i].observed_at ?? data[i].recorded_at)}
         </text>
       ))}
 
