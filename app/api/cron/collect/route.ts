@@ -81,6 +81,7 @@ async function saveLevel(
   waterLevel:  number,
   warnLevel:   number | null,
   dangerLevel: number | null,
+  floorLevel:  number | null,
   observedAt:  string | null,
 ) {
   await supabase('/water_levels', {
@@ -92,6 +93,7 @@ async function saveLevel(
       water_level:  waterLevel,
       warn_level:   warnLevel,
       danger_level: dangerLevel,
+      floor_level:  floorLevel, 
       observed_at:  observedAt,
     }),
   });
@@ -120,6 +122,7 @@ async function collectSeoul() {
     // CNTRL_WATL이 0이면 경고수위 없는 것으로 처리
     const warn   = parseFloat(row.CNTRL_WATL);
     const danger = parseFloat(row.PLAN_FLDE);
+    const floor = parseFloat(row.RBH);
     if (isNaN(level)) continue;
 
     // 이전 관측시간과 동일하면 저장 안 함
@@ -133,6 +136,7 @@ async function collectSeoul() {
         level,
         isNaN(warn)   || warn === 0   ? null : warn,
         isNaN(danger) ? null : danger,
+        isNaN(floor) ? null : floor,
         toKstIso(row.DTRSM_DATA_CLCT_TM),
       );
     }
@@ -180,6 +184,7 @@ async function collectBusan() {
         level,
         isNaN(warn)   ? null : warn,
         isNaN(danger) ? null : danger,
+        0, // 부산은 바닥수위 정보가 없으므로 0으로 설정
         toKstIso(item.obsrTime),
 
       );

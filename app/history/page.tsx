@@ -199,7 +199,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
           fill="#888"
           transform={`rotate(-60, ${xScale(i)}, ${H - PAD.bottom + 16})`}
         >
-          {(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
+          {formatKoreanDateTime(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
         </text>
       ))}
 
@@ -356,7 +356,7 @@ export default function HistoryPage() {
           {/* 시작 시간 */}
           <input
             type="datetime-local"
-            value={fromDate}
+            value={fromDate} 
             onChange={e => setFromDate(e.target.value)}
             style={inputStyle}
           />
