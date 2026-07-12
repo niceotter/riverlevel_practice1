@@ -18,6 +18,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'site, region 파라미터 필요' }, { status: 400 });
   }
 
+
+  // observed_at(실제 관측 시각) 기준으로 필터링.
+  // 그래프에 표시되는 값도 observed_at이므로 검색 기준과 표시 기준을 통일했다.
+  // 프론트엔드의 <input type="datetime-local">은 한국 로컬시간 문자열
+  // ("2026-07-01T00:00:00")을 시간대 정보 없이 보내는데,
+  // observed_at은 timestamptz라서 "+09:00"을 붙여 한국시간임을 명시해야
+  // DB가 UTC로 오해하지 않는다.
+  const toKstIso = (v: string | null) => (v ? `${v}+09:00` : null);
+
+
   let query = `/water_levels?site_code=eq.${encodeURIComponent(site)}&region=eq.${region}&order=recorded_at.asc`;
   if (from) query += `&recorded_at=gte.${encodeURIComponent(from)}`;
   if (to)   query += `&recorded_at=lte.${encodeURIComponent(to)}`;

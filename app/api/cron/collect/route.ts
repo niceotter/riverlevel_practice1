@@ -22,6 +22,21 @@ async function supabase(path: string, options?: RequestInit) {
   });
 }
 
+// ── 한국 로컬시간 문자열 → timestamptz용 ISO 변환 ────
+// 서울/부산 API는 "2026-07-05 14:30:00" 또는 "2026-07-05 14:59"처럼
+// 시간대 정보 없는 한국 로컬시간 문자열을 준다.
+// observed_at 컬럼이 timestamptz라서, 시간대 없이 저장하면
+// DB가 이 값을 UTC로 오해해서 9시간이 밀려 저장되는 문제가 있었음.
+// "+09:00"을 명시해서 정확히 한국시간으로 저장되게 한다.
+function toKstIso(raw: string | null): string | null {
+  if (!raw) return null;
+  const isoLike = raw.trim().replace(' ', 'T');           // "2026-07-05 14:59" → "2026-07-05T14:59"
+  const hasSeconds = /T\d{2}:\d{2}:\d{2}$/.test(isoLike);
+  const withSeconds = hasSeconds ? isoLike : `${isoLike}:00`; // 초 없으면 ":00" 보충
+  return `${withSeconds}+09:00`;
+}
+
+
 // ── 관측시간 동일 여부 비교 ────────────────────────────
 // API에서 준 시간 문자열("2026-07-05 14:59")과
 // DB에서 다시 읽어온 시간 문자열("2026-07-05T14:59:00")은
@@ -109,7 +124,7 @@ async function collectSeoul() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(row.WATG_CD);
-    if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && !isSameObservedTime(row.DTRSM_DATA_CLCT_TM, lastObservedAt)))  {
+    if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && !isSameObservedTime(toKstIso(row.DTRSM_DATA_CLCT_TM), lastObservedAt)))  {
       await saveLevel(
         'seoul',
         row.WATG_CD,
@@ -118,7 +133,7 @@ async function collectSeoul() {
         level,
         isNaN(warn)   || warn === 0   ? null : warn,
         isNaN(danger) ? null : danger,
-        row.DTRSM_DATA_CLCT_TM ?? null,
+        toKstIso(row.DTRSM_DATA_CLCT_TM),
       );
     }
   }
@@ -156,7 +171,7 @@ async function collectBusan() {
 
     // 이전 관측시간과 동일하면 저장 안 함
     const lastObservedAt = await getLastObservedAt(item.siteCode);
-    if (lastObservedAt === null || (item.obsrTime !== null && !isSameObservedTime(item.obsrTime, lastObservedAt))) {
+    if (lastObservedAt === null || (item.obsrTime !== null && !isSameObservedTime(toKstIso(item.obsrTime), lastObservedAt))) {
       await saveLevel(
         'busan',
         item.siteCode,
@@ -165,7 +180,8 @@ async function collectBusan() {
         level,
         isNaN(warn)   ? null : warn,
         isNaN(danger) ? null : danger,
-        item.obsrTime ?? null,
+        toKstIso(item.obsrTime),
+
       );
     }
   }
