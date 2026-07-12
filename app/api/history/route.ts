@@ -29,8 +29,9 @@ export async function GET(request: Request) {
 
 
   let query = `/water_levels?site_code=eq.${encodeURIComponent(site)}&region=eq.${region}&order=recorded_at.asc`;
-  if (from) query += `&recorded_at=gte.${encodeURIComponent(from)}`;
-  if (to)   query += `&recorded_at=lte.${encodeURIComponent(to)}`;
+  if (from) query += `&observed_at=gte.${encodeURIComponent(toKstIso(from)!)}`;
+  if (to)   query += `&observed_at=lte.${encodeURIComponent(toKstIso(to)!)}`;
+
 
   const res = await fetch(`${SUPABASE_URL}/rest/v1${query}`, {
     headers: {
