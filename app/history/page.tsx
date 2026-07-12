@@ -77,8 +77,8 @@ function LineChart({ data }: { data: WaterRecord[] }) {
   if (data.length === 0) return null;
 
   const W = 800;
-  const H = 300;
-  const PAD = { top: 20, right: 20, bottom: 50, left: 50 };
+  const H = 340;
+  const PAD = { top: 20, right: 20, bottom: 90, left: 50 };
 
   const chartW = W - PAD.left - PAD.right;
   const chartH = H - PAD.top  - PAD.bottom;
@@ -190,8 +190,13 @@ function LineChart({ data }: { data: WaterRecord[] }) {
 
       {/* X축 라벨 */}
       {labelIndices.map(i => (
-        <text key={i} x={xScale(i)} y={H - PAD.bottom + 16} fontSize="9"
-          textAnchor="end" fill="#888"
+        <text
+          key={i}
+          x={xScale(i)}
+          y={H - PAD.bottom + 16}
+          fontSize="9"
+          textAnchor="end"
+          fill="#888"
           transform={`rotate(-60, ${xScale(i)}, ${H - PAD.bottom + 16})`}
         >
           {(data[i].observed_at ?? data[i].recorded_at).slice(0, 16).replace('T', ' ')}
