@@ -77,8 +77,8 @@ function LineChart({ data }: { data: WaterRecord[] }) {
   if (data.length === 0) return null;
 
   const W = 800;
-  const H = 340;
-  const PAD = { top: 20, right: 20, bottom: 90, left: 50 };
+  const H = 400;
+  const PAD = { top: 20, right: 20, bottom: 150, left: 50 };
 
   const chartW = W - PAD.left - PAD.right;
   const chartH = H - PAD.top  - PAD.bottom;
@@ -197,7 +197,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
           fontSize="9"
           textAnchor="end"
           fill="#888"
-          transform={`rotate(-60, ${xScale(i)}, ${H - PAD.bottom + 16})`}
+          transform={`rotate(-80, ${xScale(i)}, ${H - PAD.bottom + 16})`}
         >
           {formatKoreanDateTime(data[i].observed_at ?? data[i].recorded_at)}
         </text>
