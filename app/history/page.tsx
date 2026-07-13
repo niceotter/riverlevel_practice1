@@ -60,6 +60,8 @@ interface WaterRecord {
   warn_level:   number | null;
   danger_level: number | null;
   site_name:    string;
+  floor_level:  number | null;
+
 }
 
 // 날짜 문자열 → "2026년 7월 7일 20시 30분" 형식으로 변환
@@ -75,6 +77,18 @@ function LineChart({ data }: { data: WaterRecord[] }) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   if (data.length === 0) return null;
+
+  // 서울도 부산처럼 바닥높이(RBH) 기준 0으로 보정해서 표시
+  // (부산은 floor_level이 이미 0이라 보정해도 값이 그대로 유지됨)
+  data = data.map(d => {
+    const floor = d.floor_level ?? 0;
+    return {
+      ...d,
+      water_level:  d.water_level - floor,
+      warn_level:   d.warn_level   != null ? d.warn_level   - floor : d.warn_level,
+      danger_level: d.danger_level != null ? d.danger_level - floor : d.danger_level,
+    };
+  });  
 
   const W = 800;
   const H = 400;
