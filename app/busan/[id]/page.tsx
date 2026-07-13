@@ -1,5 +1,22 @@
 'use client';
 // app/busan/[id]/page.tsx
+
+import { useParams } from 'next/navigation';
+import WaterLevelHeroBusan from '@/components/WaterLevelHeroBusan';
+
+// 수위계 별 CCTV 외부 링크
+// TODO: 부산 지점 링크 채워넣기
+const EXTERNAL_LINKS: Record<string, string> = {};
+
+export default function BusanStationPage() {
+  const params = useParams();
+  const id = params?.id as string; // siteCode에서 "00-" 뺀 값 (예: 200-0005)
+
+  return <WaterLevelHeroBusan id={id} externalLink={EXTERNAL_LINKS[id]} />;
+}
+
+
+{/*
 // /api/busan을 60초마다 폴링. 부산 API는 floor(바닥) 데이터가 없으므로
 // floorLevel=0으로 고정 (WaterLevelHero의 보정식이 자동으로 no-op 처리).
 
@@ -79,10 +96,6 @@ export default function BusanStationPage() {
     />
   );
 }
-
-
-
-{/*
 
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';

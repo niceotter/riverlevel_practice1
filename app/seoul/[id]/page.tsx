@@ -1,5 +1,29 @@
 'use client';
 // app/seoul/[id]/page.tsx
+
+import { useParams } from 'next/navigation';
+import WaterLevelHeroSeoul from '@/components/WaterLevelHeroSeoul';
+
+// 수위계 별 CCTV 외부 링크 (사다리꼴 버전에서 그대로 이식)
+const EXTERNAL_LINKS: Record<string, string> = {
+  '101': 'http://kko.to/oSQknqGwvL',
+  '103': 'http://kko.to/2sjB8l91K9',
+  '1401': 'http://kko.to/VoFK32aX8C',
+  '403': 'http://kko.to/wBWqrHBKHM',
+  '901': 'http://kko.to/_GP-2rog2j',
+};
+
+export default function SeoulStationPage() {
+  const params = useParams();
+  const id = params?.id as string;
+
+  return <WaterLevelHeroSeoul id={id} externalLink={EXTERNAL_LINKS[id]} />;
+}
+
+
+
+{/*
+
 // 사다리꼴 버전(WaterAnimationSeoul.tsx)과 동일하게 /api/seoul을 60초마다 폴링해서 최신값을 받아온다.
 // Supabase는 이 페이지에서 쓰지 않음 (히스토리 그래프 페이지에서만 필요).
 
@@ -88,7 +112,6 @@ export default function SeoulStationPage() {
 }
 
 
-{/*
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
