@@ -116,8 +116,8 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: '#fff' }}>
       {/* 왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>
-        <h3 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
-          <a href="/" style={{ color: 'inherit', textDecoration: 'underline' }}>
+        <h3 style={{ fontSize: 'clamp(20px, 4vw, 30px)', fontWeight: 600, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
+          <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
             🔙 메인으로 돌아가기
           </a>
         </h3>
