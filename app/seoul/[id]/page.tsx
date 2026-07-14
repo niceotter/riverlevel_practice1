@@ -27,6 +27,7 @@ const EXTERNAL_LINKS: Record<string, string> = {
   // '801': '#',
   '901': 'http://kko.to/_GP-2rog2j',  // 중랑천 성동교
   // '902': '#',
+  // '903': '#',
 };
 
 export default function SeoulStationPage() {

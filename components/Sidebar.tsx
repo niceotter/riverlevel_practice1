@@ -23,6 +23,7 @@ const SEOUL_STATIONS = [
   { watgCd: '103',  rvrNm: '탄천',  watgNm: '탄천2교' },
   { watgCd: '2502', rvrNm: '탄천',  watgNm: '봉은교' },
   { watgCd: '902',  rvrNm: '청계천', watgNm: '마장2교' },
+  { watgCd: '903',  rvrNm: '청계천', watgNm: '사근용답' },
   { watgCd: '1501', rvrNm: '홍제천', watgNm: '성산2교' },
 ];
 

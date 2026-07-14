@@ -30,6 +30,7 @@ const MARKERS = [
   { id: '801',  region: 'seoul', lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' },
   { id: '901',  region: 'seoul', lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' },
   { id: '902',  region: 'seoul', lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' },
+  { id: '903',  region: 'seoul', lat: 37.562504, lng: 127.050055, title: '청계천 사근용답' },
 
   { id: '200-0001',  region: 'busan', lat: 35.217199, lng: 129.118391, title: '동천교' },
   { id: '200-0002',  region: 'busan', lat: 35.141427, lng: 129.064556, title: '범5호교' },
@@ -42,9 +43,8 @@ const MARKERS = [
 //  { id: '200-0009',  region: 'busan', lat: 35.319848, lng: 129.115564, title: '고래골천' },
 //  { id: '200-0010',  region: 'busan', lat: 35.319848, lng: 129.115564, title: '이곡천' },
   { id: '200-0011',  region: 'busan', lat: 35.171343, lng: 129.173396, title: '대천교' },
-  { id: '200-0011',  region: 'busan', lat: 35.241478, lng: 129.017879, title: '대천교' },
 //  { id: '200-0012',  region: 'busan', lat: 35.169510, lng: 128.978472, title: '삼락22호교' },
-  { id: '200-0013',  region: 'busan', lat: 35.149281, lng: 129.836094, title: '청천교' },
+  { id: '200-0013',  region: 'busan', lat: 35.149281, lng: 128.836094, title: '청천교' },
   { id: '200-0014',  region: 'busan', lat: 35.324355, lng: 129.176649, title: '용상교' },
   { id: '210-0001',  region: 'busan', lat: 35.237847, lng: 129.088236, title: '장전동역' },
   { id: '210-0002',  region: 'busan', lat: 35.193381, lng: 129.090984, title: '연안교' },
