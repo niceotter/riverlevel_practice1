@@ -15,14 +15,12 @@ export default function Page() {
       <Header />
       <Sidebar />
       <MapView />
-
+      {/* 사이드바(햄버거 버튼/오버레이/nav)를 제외한 나머지 요소는 모바일에서 화면 전체 폭을 사용하도록 강제 */}
       <style>{`
         @media (max-width: 768px) {
           .app-grid {
             grid-template-columns: 1fr !important;
           }
-          /* 사이드바(햄버거 버튼/오버레이/nav)를 제외한 나머지 요소는
-             모바일에서 화면 전체 폭을 사용하도록 강제 */
           .app-grid > *:not(.sidebar-hamburger):not(.sidebar-backdrop):not(.sidebar-nav) {
             grid-column: 1 !important;
           }

@@ -379,12 +379,23 @@ export default function Sidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ display: 'block', padding: '0.2rem 1.5rem 0.5rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+    <span style={{ 
+      display: 'block', 
+      padding: '0.2rem 1.5rem 0.5rem', 
+      fontSize: '0.63rem', 
+      letterSpacing: '0.18em', 
+      textTransform: 'uppercase', 
+      color: 'var(--text-muted)' 
+    }}>
       {children}
     </span>
   );
 }
 
 function Divider() {
-  return <div style={{ height: '1px', background: 'var(--border)', margin: '0.75rem 1.5rem' }} />;
+  return <div style={{ 
+    height: '1px', 
+    background: 'var(--border)',
+    margin: '0.75rem 1.5rem' 
+  }}/>;
 }
