@@ -108,7 +108,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 130, bottom: 10 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 140, bottom: 10 },
     { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -14 },
   ];
 
@@ -151,9 +151,6 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
 
       {/* 왼쪽 하단: 목록으로 / 새로고침 */}
       <div style={{ position: 'absolute', left: '5vw', bottom: '5vh', zIndex: 10, display: 'flex', gap: 10 }}>
-        {/* <button type="button" onClick={() => router.push('/')} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
-          ← 목록으로
-        </button> */}
         <button
           type="button"
           onClick={load}

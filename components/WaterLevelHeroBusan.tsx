@@ -57,7 +57,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
         if (found) {
           setStation(found);
 
-          const floor = parseFloat(found.alertLevel1);
+          const floor = 0;
           const current = parseFloat(found.waterLevel) - floor;
           const danger = parseFloat(found.alertLevel4) - floor;
           const showWarn = parseFloat(found.alertLevel3) > parseFloat(found.alertLevel1);
@@ -90,7 +90,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   if (error || !station) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
 
   // ── 바닥(alertLevel1) 기준 보정 ──────────────────────────────
-  const floorLevel = parseFloat(station.alertLevel1);
+  const floorLevel = 0;
   const rawCurrent = parseFloat(station.waterLevel);
   const rawDanger = parseFloat(station.alertLevel4);
   const rawWarn = parseFloat(station.alertLevel3);
@@ -113,23 +113,23 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   const waterTopPercent = levelToTopPercent(calibratedCurrent);
 
   const ticks = [
-    { key: 'danger', label: `위험 수위 (${calibratedDanger.toFixed(1)})m`, value: calibratedDanger, color: '#e02424' },
+    { key: 'danger', label: `위험 수위 ${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424', right: 26, bottom: -6 },
     ...(calibratedWarn !== null
-      ? [{ key: 'warn', label: `경고 수위 (${calibratedWarn.toFixed(1)})m`, value: calibratedWarn, color: '#f5820a' }]
+      ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 (${calibratedCurrent.toFixed(1)})m`, value: calibratedCurrent, color: '#2f8ce0' },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a' },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 140, bottom: 10 },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
   ];
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: '#fff' }}>
       {/* 왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>
-        <h1 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.25, color: '#2f8ce0', margin: '0 0 28px 0' }}>
-          실시간
-          <br />
-          하천 수위 정보
-        </h1>
+        <h3 style={{ fontSize: 'clamp(15px, 4vw, 20px)', fontWeight: 600, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
+          <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+            🔙 메인으로 돌아가기
+          </a>
+        </h3>
 
         <p style={{ fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 700, margin: '0 0 6px 0' }}>{station.siteName}</p>
         <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 22px 0' }}>{station.obsrTime}</p>
@@ -158,9 +158,6 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
 
       {/* 왼쪽 하단: 목록으로 / 새로고침 */}
       <div style={{ position: 'absolute', left: '5vw', bottom: '5vh', zIndex: 10, display: 'flex', gap: 10 }}>
-        <button type="button" onClick={() => router.push('/')} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
-          ← 목록으로
-        </button>
         <button type="button" onClick={load} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
           ↻ 새로고침
         </button>
@@ -174,7 +171,17 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           const isCurrent = t.key === 'current';
           return (
             <div key={t.key} style={{ position: 'absolute', right: -2, top: `${top}%`, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', transform: 'translateY(-50%)' }}>
-              <span style={{ position: 'absolute', right: 26, whiteSpace: 'nowrap', fontWeight: 800, fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18, color: t.color }}>{t.label}</span>
+              <span style={{
+                position: 'absolute',
+                right: t.right,
+                bottom: t.bottom,
+                whiteSpace: 'nowrap', 
+                fontWeight: 800,
+                fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18,
+                color: t.color
+              }}>
+                {t.label}
+              </span>
               <span style={{ width: isCurrent ? 26 : 18, height: isCurrent ? 3 : 2, background: t.color }} />
             </div>
           );
