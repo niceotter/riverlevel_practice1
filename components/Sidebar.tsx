@@ -1,6 +1,8 @@
 'use client';
 // components/Sidebar.tsx
 
+import { useState } from 'react';
+
 // ── 서울 수위계 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
   { watgCd: '2301', rvrNm: '도림천', watgNm: '신대방역' },
@@ -53,16 +55,22 @@ const BUSAN_STATIONS = [
 
 // ── 1차 메뉴 컴포넌트 ────────────────────────────────
 function MenuItem({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="menu-item">
-      <button className="menu-trigger">
+      <button
+        className={`menu-trigger${open ? ' active' : ''}`}
+        onClick={() => setOpen(prev => !prev)}
+        aria-expanded={open}
+      >
         {label}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" strokeWidth="2.5" className="chevron">
+             stroke="currentColor" strokeWidth="2.5" className={`chevron${open ? ' open' : ''}`}>
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </button>
-      <div className="submenu">{children}</div>
+      <div className={`submenu${open ? ' open' : ''}`}>{children}</div>
 
       <style>{`
         .menu-item { position: relative; }
@@ -74,14 +82,14 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
           cursor: pointer; text-align: left;
           transition: background var(--transition), color var(--transition);
         }
-        .menu-item:hover > .menu-trigger {
+        .menu-trigger:hover, .menu-trigger.active {
           background: var(--bg-hover); color: var(--accent);
         }
         .chevron {
           flex-shrink: 0; opacity: 0.45;
           transition: transform var(--transition), opacity var(--transition);
         }
-        .menu-item:hover > .menu-trigger .chevron {
+        .chevron.open {
           transform: rotate(90deg); opacity: 1;
         }
         .submenu {
@@ -89,8 +97,8 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
           background: rgba(0,0,0,0.18); border-left: 2px solid transparent; opacity: 0;
           transition: max-height 300ms cubic-bezier(0.4,0,0.2,1), opacity 240ms ease, border-color var(--transition);
         }
-        .menu-item:hover > .submenu {
-          max-height: 900px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
+        .submenu.open {
+          max-height: 2000px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
         }
       `}</style>
     </div>
@@ -189,7 +197,7 @@ export default function Sidebar() {
 
       {/* ── 링크 ── */}
       <a
-        href="https://www.riverlevel-info.kr/history"
+        href="/history"
         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
         onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
