@@ -104,12 +104,12 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   const waterTopPercent = levelToTopPercent(calibratedCurrent);
 
   const ticks = [
-    { key: 'danger', label: `위험 수위 ${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424' },
+    { key: 'danger', label: `위험 수위 ${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424', right: 0, bottom: 0 },
     ...(calibratedWarn !== null
-      ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a' }]
+      ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 0, bottom: 0 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff' },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000' },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 200, bottom: 20 },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 0, bottom: 0 },
   ];
 
   return (
@@ -192,7 +192,8 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
             }}>
               <span style={{ 
                 position: 'absolute', 
-                right: 60, 
+                right: t.right, 
+                bottom: t.bottom,
                 whiteSpace: 'nowrap', 
                 fontWeight: 800, 
                 fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18, 
