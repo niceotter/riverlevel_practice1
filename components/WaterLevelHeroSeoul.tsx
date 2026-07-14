@@ -220,7 +220,15 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
       </div>
 
       {/* 물 */}
-      <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, top: `${waterTopPercent}%`, background: 'linear-gradient(180deg, #6fb4f0 0%, #2f7fd6 100%)', zIndex: 1, transition: 'top 0.6s ease-out' }} />
+      <div style={{
+        position: 'absolute',
+        left: 0, 
+        right: 0, 
+        bottom: 0, 
+        top: `${waterTopPercent}%`, 
+        background: 'linear-gradient(180deg, var(--bg-deep) 0%, #2f7fd6 100%)', 
+        zIndex: 1, 
+        transition: 'top 0.6s ease-out' }} />
 
       {/* 물결 라인 - Header와 동일한 패턴 */}
       <div

@@ -151,10 +151,11 @@ export default function Sidebar() {
   return (
     <nav style={{
       gridColumn: '1', gridRow: '2',
-      background: 'var(--bg-deep)',
+      background: 'linear-gradient(180deg, var(--bg-deep) 0%, rgba(0,0,0,0.15) 100%), var(--bg-deep)',
       borderRight: '1px solid var(--border)',
       overflowY: 'auto', overflowX: 'hidden',
       padding: '1.5rem 0', zIndex: 50,
+
     }}>
 
       {/* ── 지도로 돌아가기 ──
