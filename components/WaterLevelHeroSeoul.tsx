@@ -108,15 +108,15 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 110, bottom: 10 },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -12 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 130, bottom: 10 },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -14 },
   ];
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: '#fff' }}>
       {/* 왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>
-        <h3 style={{ fontSize: 'clamp(20px, 4vw, 30px)', fontWeight: 600, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
+        <h3 style={{ fontSize: 'clamp(15px, 4vw, 20px)', fontWeight: 600, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
           <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
             🔙 메인으로 돌아가기
           </a>
