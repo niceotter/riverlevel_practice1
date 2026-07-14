@@ -104,12 +104,12 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   const waterTopPercent = levelToTopPercent(calibratedCurrent);
 
   const ticks = [
-    { key: 'danger', label: `위험 수위 (${calibratedDanger.toFixed(1)})m`, value: calibratedDanger, color: '#e02424' },
+    { key: 'danger', label: `위험 수위 ${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424' },
     ...(calibratedWarn !== null
-      ? [{ key: 'warn', label: `경고 수위 (${calibratedWarn.toFixed(1)})m`, value: calibratedWarn, color: '#f5820a' }]
+      ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a' }]
       : []),
-    { key: 'current', label: `현재 수위 (${calibratedCurrent.toFixed(1)})m`, value: calibratedCurrent, color: '#2f8ce0' },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a' },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m                      `, value: calibratedCurrent, color: '#1e00ff' },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#ffffff' },
   ];
 
   return (
