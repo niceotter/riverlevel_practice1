@@ -117,7 +117,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 140, bottom: 10 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 150, bottom: 10 },
     { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
   ];
 
