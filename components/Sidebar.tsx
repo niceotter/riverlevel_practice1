@@ -108,9 +108,12 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
 // ── 2차 메뉴 항목 ────────────────────────────────────
 function SubItem({ children, href }: { children: React.ReactNode; href?: string }) {
   const baseStyle: React.CSSProperties = {
-    display: 'flex', alignItems: 'center', gap: '0.55rem',
+    display: 'flex',
+    alignItems: 'center', 
+    gap: '0.55rem',
     padding: '0.58rem 1.5rem 0.58rem 2rem',
-    fontSize: '0.82rem', color: 'var(--text-muted)',
+    fontSize: '0.82rem', 
+    color: 'var(--text-muted)',
     cursor: 'pointer',
     transition: 'color var(--transition), background var(--transition)',
     textDecoration: 'none',
@@ -148,15 +151,58 @@ function SubItem({ children, href }: { children: React.ReactNode; href?: string 
 
 // ── Sidebar 본체 ─────────────────────────────────────
 export default function Sidebar() {
-  return (
-    <nav style={{
-      gridColumn: '1', gridRow: '2',
-      background: 'linear-gradient(180deg, var(--bg-deep) 0%, rgba(0,0,0,0.15) 100%), var(--bg-deep)',
-      borderRight: '1px solid var(--border)',
-      overflowY: 'auto', overflowX: 'hidden',
-      padding: '1.5rem 0', zIndex: 50,
+  const [isOpen, setIsOpen] = useState(false);
 
-    }}>
+  // 사이드바 내부에서 링크(<a>) 클릭 시 모바일 메뉴 자동 닫기
+  const handleNavClick = (e: React.MouseEvent<HTMLElement>) => {
+    if ((e.target as HTMLElement).closest('a')) {
+      setIsOpen(false);
+    }
+  };
+
+  return (
+    <>
+      {/* ── 모바일 전용 햄버거 버튼 ── */}
+      <button
+        className="sidebar-hamburger"
+        onClick={() => setIsOpen(true)}
+        aria-label="메뉴 열기"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      {/* ── 모바일 전용 배경 오버레이 ── */}
+      {isOpen && (
+        <div className="sidebar-backdrop" onClick={() => setIsOpen(false)} />
+      )}
+
+      <nav
+        className={`sidebar-nav${isOpen ? ' open' : ''}`}
+        onClick={handleNavClick}
+        style={{
+          gridColumn: '1', gridRow: '2',
+          background: 'linear-gradient(180deg, var(--bg-deep) 0%, rgba(0,0,0,0.15) 100%), var(--bg-deep)',
+          borderRight: '1px solid var(--border)',
+          overflowY: 'auto', overflowX: 'hidden',
+          padding: '1.5rem 0', zIndex: 50,
+
+        }}
+      >
+        {/* ── 모바일 전용 닫기 버튼 ── */}
+        <button
+          className="sidebar-close"
+          onClick={() => setIsOpen(false)}
+          aria-label="메뉴 닫기"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
 
       {/* ── 지도로 돌아가기 ──
       <a
@@ -261,7 +307,73 @@ export default function Sidebar() {
           <>유지보수 기여<br />- 카카오페이 송금</>
       </a>
 
-    </nav>
+      </nav>
+
+      <style>{`
+        /* 데스크톱 기본: 햄버거/닫기/오버레이 숨김 */
+        .sidebar-hamburger,
+        .sidebar-close,
+        .sidebar-backdrop {
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          /* 햄버거 버튼 */
+          .sidebar-hamburger {
+            display: flex;
+            align-items: center; justify-content: center;
+            position: fixed;
+            top: 0.75rem; left: 0.75rem;
+            width: 42px; height: 42px;
+            background: var(--bg-deep, #1a1a1a);
+            color: #fff;
+            border: none; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            cursor: pointer;
+            z-index: 300;
+          }
+
+          /* 배경 오버레이 */
+          .sidebar-backdrop {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 250;
+          }
+
+          /* 사이드바 자체를 grid에서 빼내어 고정 오버레이로 전환 */
+          .sidebar-nav {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            grid-column: unset !important;
+            grid-row: unset !important;
+            width: 78vw;
+            max-width: 300px;
+            height: 100vh !important;
+            transform: translateX(-100%);
+            transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 280;
+            box-shadow: 4px 0 16px rgba(0,0,0,0.3);
+          }
+          .sidebar-nav.open {
+            transform: translateX(0);
+          }
+
+          /* 닫기 버튼 (사이드바 내부 우측 상단) */
+          .sidebar-close {
+            display: flex;
+            align-items: center; justify-content: center;
+            position: absolute;
+            top: 0.75rem; right: 0.75rem;
+            width: 32px; height: 32px;
+            background: none; border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+          }
+        }
+      `}</style>
+    </>
   );
 }
 

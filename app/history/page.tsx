@@ -27,6 +27,7 @@ const SEOUL_STATIONS = [
   { id: '103',  name: '탄천 탄천2교' },
   { id: '2502', name: '탄천 봉은교' },
   { id: '902',  name: '청계천 마장2교' },
+  { id: '903',  name: '청계천 사근용답' },
   { id: '1501', name: '홍제천 성산2교' },
 ];
 
@@ -319,7 +320,7 @@ export default function HistoryPage() {
   };
 
   return (
-    <div style={{
+    <div className="app-grid" style={{
       display: 'grid',
       gridTemplateRows: '20vh 80vh',
       gridTemplateColumns: '20% 80%',
@@ -423,6 +424,17 @@ export default function HistoryPage() {
           </div>
         )}
       </main>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .app-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .app-grid > *:not(.sidebar-hamburger):not(.sidebar-backdrop):not(.sidebar-nav) {
+            grid-column: 1 !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
