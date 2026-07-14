@@ -182,7 +182,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           return (
             <div key={t.key} style={{ 
               position: 'absolute', 
-              right: -20, 
+              right: -2, 
               top: `${top}%`, 
               width: '100%', 
               display: 'flex', 
@@ -192,7 +192,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
             }}>
               <span style={{ 
                 position: 'absolute', 
-                right: 26, 
+                right: 60, 
                 whiteSpace: 'nowrap', 
                 fontWeight: 800, 
                 fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18, 
