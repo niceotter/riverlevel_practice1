@@ -108,8 +108,8 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a' }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m                      `, value: calibratedCurrent, color: '#1e00ff' },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#ffffff' },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff' },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000' },
   ];
 
   return (
@@ -160,15 +160,51 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
       </div>
 
       {/* 오른쪽 세로 눈금자 */}
-      <div style={{ position: 'absolute', right: '6vw', top: 0, height: '100%', width: 220, zIndex: 10 }}>
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 2, background: '#cfcfcf' }} />
+      <div style={{
+        position: 'absolute', 
+        right: '6vw', 
+        top: 0, 
+        height: '100%', 
+        width: 220, 
+        zIndex: 10 
+      }}>
+        <div style={{ 
+          position: 'absolute', 
+          right: 0, 
+          top: 0, 
+          bottom: 0, 
+          width: 2, 
+          background: '#cfcfcf'
+         }} />
         {ticks.map((t) => {
           const top = levelToTopPercent(t.value);
           const isCurrent = t.key === 'current';
           return (
-            <div key={t.key} style={{ position: 'absolute', right: -2, top: `${top}%`, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', transform: 'translateY(-50%)' }}>
-              <span style={{ position: 'absolute', right: 26, whiteSpace: 'nowrap', fontWeight: 800, fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18, color: t.color }}>{t.label}</span>
-              <span style={{ width: isCurrent ? 26 : 18, height: isCurrent ? 3 : 2, background: t.color }} />
+            <div key={t.key} style={{ 
+              position: 'absolute', 
+              right: -20, 
+              top: `${top}%`, 
+              width: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'flex-end', 
+              transform: 'translateY(-50%)' 
+            }}>
+              <span style={{ 
+                position: 'absolute', 
+                right: 26, 
+                whiteSpace: 'nowrap', 
+                fontWeight: 800, 
+                fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18, 
+                color: t.color 
+              }}>
+                {t.label}
+              </span>
+              <span style={{ 
+                width: isCurrent ? 26 : 18, 
+                height: isCurrent ? 3 : 2, 
+                background: t.color 
+              }} />
             </div>
           );
         })}
