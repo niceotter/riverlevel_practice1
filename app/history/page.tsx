@@ -424,17 +424,6 @@ export default function HistoryPage() {
           </div>
         )}
       </main>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .app-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .app-grid > *:not(.sidebar-hamburger):not(.sidebar-backdrop):not(.sidebar-nav) {
-            grid-column: 1 !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
