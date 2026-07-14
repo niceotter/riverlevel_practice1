@@ -116,11 +116,11 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: '#fff' }}>
       {/* 왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>
-        <h1 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.25, color: '#2f8ce0', margin: '0 0 28px 0' }}>
-          실시간
-          <br />
-          하천 수위 정보
-        </h1>
+        <h3 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
+          <a href="/" style={{ color: 'inherit', textDecoration: 'underline' }}>
+            🔙 메인으로 돌아가기
+          </a>
+        </h3>
 
         <p style={{ fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 700, margin: '0 0 6px 0' }}>
           {station.RVR_NM.trim()} {station.WATG_NM}
@@ -151,10 +151,21 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
 
       {/* 왼쪽 하단: 목록으로 / 새로고침 */}
       <div style={{ position: 'absolute', left: '5vw', bottom: '5vh', zIndex: 10, display: 'flex', gap: 10 }}>
-        <button type="button" onClick={() => router.push('/')} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+        {/* <button type="button" onClick={() => router.push('/')} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
           ← 목록으로
-        </button>
-        <button type="button" onClick={load} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+        </button> */}
+        <button
+          type="button"
+          onClick={load}
+          style={{
+            background: '#fff',
+            border: '1.5px solid #d8d8d8',
+            borderRadius: 999,
+            padding: '10px 18px',
+            fontSize: 14,
+            fontWeight: 700,
+            cursor: 'pointer'
+          }}>
           ↻ 새로고침
         </button>
       </div>
@@ -182,7 +193,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           return (
             <div key={t.key} style={{ 
               position: 'absolute', 
-              right: -20, 
+              right: -2, 
               top: `${top}%`, 
               width: '100%', 
               display: 'flex', 
