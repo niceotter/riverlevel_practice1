@@ -4,13 +4,29 @@
 import { useParams } from 'next/navigation';
 import WaterLevelHeroSeoul from '@/components/WaterLevelHeroSeoul';
 
-// 수위계 별 CCTV 외부 링크 (사다리꼴 버전에서 그대로 이식)
+// 수위계 별 외부 링크
 const EXTERNAL_LINKS: Record<string, string> = {
-  '101': 'http://kko.to/oSQknqGwvL',
-  '103': 'http://kko.to/2sjB8l91K9',
-  '1401': 'http://kko.to/VoFK32aX8C',
-  '403': 'http://kko.to/wBWqrHBKHM',
-  '901': 'http://kko.to/_GP-2rog2j',
+  '101': 'http://kko.to/oSQknqGwvL',  // 탄천 여수대교
+  // '102': '#',
+  '103': 'http://kko.to/2sjB8l91K9',  // 탄천 탄천2교
+  '1401': 'http://kko.to/VoFK32aX8C',  // 불광천 증산교
+  // '1501': '#',
+  // '2001': '#',
+  // '2002': '#',
+  // '2003': '#',
+  // '2201': '#',
+  // '2301': '#',
+  // '2303': '#',
+  // '2502': '#',
+  // '301': '#',
+  // '302': '#',
+  // '303': '#',
+  // '401': '#',
+  // '402': '#',
+  '403': 'http://kko.to/wBWqrHBKHM',  // 중랑천 월계1교
+  // '801': '#',
+  '901': 'http://kko.to/_GP-2rog2j',  // 중랑천 성동교
+  // '902': '#',
 };
 
 export default function SeoulStationPage() {

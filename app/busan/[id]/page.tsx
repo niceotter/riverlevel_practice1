@@ -5,8 +5,10 @@ import { useParams } from 'next/navigation';
 import WaterLevelHeroBusan from '@/components/WaterLevelHeroBusan';
 
 // 수위계 별 CCTV 외부 링크
-// TODO: 부산 지점 링크 채워넣기
-const EXTERNAL_LINKS: Record<string, string> = {};
+const EXTERNAL_LINKS: Record<string, string> = {
+  '200-0005': '#',  // 동백천
+  '200-0006': '#',  // 임기천
+};
 
 export default function BusanStationPage() {
   const params = useParams();
