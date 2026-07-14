@@ -108,8 +108,8 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 100, bottom: 10 },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -10 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 110, bottom: 10 },
+    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -12 },
   ];
 
   return (
@@ -182,7 +182,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           return (
             <div key={t.key} style={{ 
               position: 'absolute', 
-              right: -2, 
+              right: -20, 
               top: `${top}%`, 
               width: '100%', 
               display: 'flex', 
