@@ -201,7 +201,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
                 bottom: t.bottom,
                 whiteSpace: 'pre-line', 
                 fontWeight: 800,
-                fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18,
+                fontSize: isCurrent ? 18 : t.key === 'floor' ? 15 : 15,
                 color: t.color
               }}>
                 {t.label}
