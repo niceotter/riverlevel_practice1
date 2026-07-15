@@ -131,8 +131,21 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           </a>
         </h3>
 
-        <p style={{ fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 700, margin: '0 0 6px 0' }}>{station.siteName}</p>
-        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 8px 0' }}>{station.obsrTime}</p>
+        <p style={{ 
+          fontSize: 'clamp(20px, 2.4vw, 26px)', 
+          fontWeight: 700, 
+          margin: '0 0 6px 0' 
+        }}>
+          부산 {station.siteName}
+        </p>
+
+        <p style={{ 
+          fontSize: 16, 
+          fontWeight: 600, 
+          margin: '0 0 8px 0' 
+        }}>
+          {station.obsrTime}
+        </p>
 
         <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 부산광역시</p>
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
@@ -150,10 +163,30 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           <button
             type="button"
             onClick={() => (externalLink ? window.open(externalLink, '_blank') : setShowNoLink(true))}
-            style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, lineHeight: 1.4, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
+            style={{ 
+              minWidth: 120, 
+              borderRadius: 10, 
+              border: 'none', 
+              color: '#fff', 
+              fontSize: 14, 
+              lineHeight: 1.4, 
+              cursor: 'pointer', 
+              textAlign: 'left', 
+              padding: '14px 16px', 
+              backgroundColor: '#555' 
+            }}
           >
-            <span style={{ fontWeight: 700 }}>📹 CCTV 링크</span>
-            <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}><>CCTV가 없거나<br/>다른 곳을 바라보고 있을 수 있습니다</></span>
+            <span style={{ fontWeight: 700 }}>
+              📹 CCTV 링크
+            </span>
+            <span style={{ 
+              display: 'block', 
+              marginTop: 6, 
+              color: '#d8d8d8', 
+              fontSize: 12 
+            }}>
+              <>CCTV가 없거나<br/>다른 곳을 바라보고 있을 수 있습니다</>
+            </span>
           </button>
         </div>
 
@@ -161,7 +194,18 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
 
       {/* 왼쪽 하단: 목록으로 / 새로고침 */}
       <div style={{ position: 'absolute', left: '5vw', bottom: '5vh', zIndex: 10, display: 'flex', gap: 10 }}>
-        <button type="button" onClick={load} style={{ background: '#fff', border: '1.5px solid #d8d8d8', borderRadius: 999, padding: '10px 18px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+        <button 
+          type="button"
+          onClick={load}
+          style={{
+            background: '#fff',
+            border: '1.5px solid #d8d8d8',
+            borderRadius: 999,
+            padding: '10px 18px',
+            fontSize: 14,
+            fontWeight: 700,
+            cursor: 'pointer'
+          }}>
           ↻ 새로고침
         </button>
       </div>
