@@ -166,25 +166,51 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
       </div>
 
       {/* 오른쪽 세로 눈금자 */}
-      <div style={{ position: 'absolute', right: '6vw', top: 0, height: '100%', width: 220, zIndex: 10 }}>
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 2, background: '#cfcfcf' }} />
+      <div style={{ 
+        position: 'absolute', 
+        right: '6vw', 
+        top: 0, 
+        height: '100%', 
+        width: 220, 
+        zIndex: 10 
+      }}>
+        <div style={{ 
+          position: 'absolute', 
+          right: 0, 
+          top: 0, 
+          bottom: 0, 
+          width: 2, 
+          background: '#cfcfcf' 
+        }} />
         {ticks.map((t) => {
           const top = levelToTopPercent(t.value);
           const isCurrent = t.key === 'current';
           return (
-            <div key={t.key} style={{ position: 'absolute', right: -2, top: `${top}%`, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', transform: 'translateY(-50%)' }}>
+            <div key={t.key} style={{ 
+              position: 'absolute', 
+              right: -2, 
+              top: `${top}%`, 
+              width: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'flex-end', 
+              transform: 'translateY(-50%)' }}>
               <span style={{
                 position: 'absolute',
                 right: t.right,
                 bottom: t.bottom,
-                whiteSpace: 'nowrap', 
+                whiteSpace: 'pre-line', 
                 fontWeight: 800,
                 fontSize: isCurrent ? 20 : t.key === 'floor' ? 15 : 18,
                 color: t.color
               }}>
                 {t.label}
               </span>
-              <span style={{ width: isCurrent ? 26 : 18, height: isCurrent ? 3 : 2, background: t.color }} />
+              <span style={{ 
+                width: isCurrent ? 26 : 18, 
+                height: isCurrent ? 3 : 2, 
+                background: t.color 
+              }} />
             </div>
           );
         })}
