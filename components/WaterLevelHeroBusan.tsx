@@ -117,7 +117,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
     ...(calibratedWarn !== null
       ? [{ key: 'warn', label: `경고 수위\n${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 60, bottom: 10 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 70, bottom: 10 },
     { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
   ];
 
@@ -141,7 +141,8 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
             onClick={() => setShowPhoto(true)}
             style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
           >
-            <span style={{ fontWeight: 700 }}>📷 수위계 모습</span>
+            <span style={{ fontWeight: 700 }}>📷 수위계 사진</span>
+            <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}>수위계 사진 확보에 노력 중입니다.</span>
           </button>
         </div>
         
@@ -152,7 +153,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
             style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, lineHeight: 1.4, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
           >
             <span style={{ fontWeight: 700 }}>📹 CCTV 링크</span>
-            <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}>다른 곳을 바라보고 있을 수 있습니다</span>
+            <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}><>CCTV가 없거나<br/>다른 곳을 바라보고 있을 수 있습니다</></span>
           </button>
         </div>
 
@@ -201,7 +202,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
                 bottom: t.bottom,
                 whiteSpace: 'pre-line', 
                 fontWeight: 800,
-                fontSize: isCurrent ? 18 : t.key === 'floor' ? 15 : 15,
+                fontSize: isCurrent ? 18 : t.key === 'floor' ? 15 : 18,
                 color: t.color
               }}>
                 {t.label}
