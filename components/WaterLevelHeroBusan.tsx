@@ -132,9 +132,9 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
         </h3>
 
         <p style={{ fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 700, margin: '0 0 6px 0' }}>{station.siteName}</p>
-        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px 0' }}>{station.obsrTime}</p>
+        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 8px 0' }}>{station.obsrTime}</p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 10px 0' }}>데이터 제공 : 부산광역시</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 부산광역시</p>
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"
