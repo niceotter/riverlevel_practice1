@@ -2,7 +2,7 @@
 
 :root {
   --bg-water:      #63adf8; /* background color for the main app container */
-  --bg-header:    #ffffff; /* background color for the header section */
+  --bg-sky:    #87ceeb; /* background color for the header section */
   --bg-hover:     #a1d0ff; /* highlight color to back-ground(서울) when hovering */
   --border:       #63adf8; /* border color for map-sidebar and sidebar sections */
   --scrollbar:    #000dff; /* scrollbar color for map-sidebar and sidebar sections */

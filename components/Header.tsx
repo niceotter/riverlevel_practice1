@@ -6,7 +6,7 @@ import { useSidebar } from './SidebarContext';
 export default function Header() {
 
   const { toggle } = useSidebar();
-  
+
   const bgWater = '#63adf8';  // 물결 라인 backgroundImage에 --bg-water 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
     <header style={{
@@ -20,7 +20,7 @@ export default function Header() {
       paddingRight: '1rem',
       paddingBottom: '1rem',
       paddingLeft: '1rem',
-      background: 'var(--bg-header)',
+      background: 'var(--bg-sky)',
       borderBottom: '10px solid var(--bg-water)',
       position: 'relative',
       zIndex: 100,

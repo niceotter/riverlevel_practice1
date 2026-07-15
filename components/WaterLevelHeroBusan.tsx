@@ -113,16 +113,16 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   const waterTopPercent = levelToTopPercent(calibratedCurrent);
 
   const ticks = [
-    { key: 'danger', label: `위험 수위 ${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424', right: 26, bottom: -6 },
+    { key: 'danger', label: `위험 수위\n${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424', right: 26, bottom: -6 },
     ...(calibratedWarn !== null
-      ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
+      ? [{ key: 'warn', label: `경고 수위\n${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
-    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 150, bottom: 10 },
+    { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 110, bottom: 10 },
     { key: 'floor', label: '바닥 0.0m', value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
   ];
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: '#fff' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: 'var(--bg-sky)' }}>
       {/* 왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>
         <h3 style={{ fontSize: 'clamp(15px, 4vw, 20px)', fontWeight: 600, lineHeight: 1.25, color: '#000000', margin: '0 0 28px 0' }}>
@@ -139,15 +139,17 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           <button
             type="button"
             onClick={() => setShowPhoto(true)}
-            style={{ minWidth: 140, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
+            style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
           >
             <span style={{ fontWeight: 700 }}>📷 수위계 모습</span>
           </button>
-
+        </div>
+        
+        <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"
             onClick={() => (externalLink ? window.open(externalLink, '_blank') : setShowNoLink(true))}
-            style={{ minWidth: 140, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, lineHeight: 1.4, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
+            style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, lineHeight: 1.4, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
           >
             <span style={{ fontWeight: 700 }}>📹 CCTV 링크</span>
             <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}>다른 곳을 바라보고 있을 수 있습니다</span>
