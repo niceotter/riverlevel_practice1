@@ -129,7 +129,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
 
         <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600 }}>데이터 제공 : 서울특별시 물순환안전국</p>
 
-        <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
+        <div style={{ display: 'flex', gap: 10, marginTop: 10, marginBottom: 18 }}>
           <button
             type="button"
             onClick={() => setShowPhoto(true)}

@@ -82,8 +82,9 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
           cursor: pointer; text-align: left;
           transition: background var(--transition), color var(--transition);
         }
-        .menu-trigger:hover, .menu-trigger.active {
-          background: var(--bg-hover); color: var(--accent);
+        .menu-trigger:hover, .menu-trigger.active { /* 서울 메뉴 열었을 때 서울의 배경색과 폰트색 */
+          background: var(--bg-hover);
+          color: var(--accent);
         }
         .chevron {
           flex-shrink: 0; opacity: 0.45;
@@ -93,12 +94,18 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
           transform: rotate(90deg); opacity: 1;
         }
         .submenu {
-          max-height: 0; overflow: hidden;
-          background: rgba(0,0,0,0.18); border-left: 2px solid transparent; opacity: 0;
+          max-height: 0;
+          overflow: hidden;
+          background: var(--bg-water); /* 서울 메뉴 열었을 때 그냥 나오는 배경색 */
+          border-left: 2px solid transparent;
+          opacity: 0;
           transition: max-height 300ms cubic-bezier(0.4,0,0.2,1), opacity 240ms ease, border-color var(--transition);
         }
         .submenu.open {
-          max-height: 2000px; opacity: 1; border-left-color: var(--accent); overflow-y: auto;
+          max-height: 2000px; 
+          opacity: 1; 
+          border-left-color: var(--accent); /* 서울 메뉴 열었을 때 왼쪽에 나오는 파란색 선 */
+          overflow-y: auto;
         }
       `}</style>
     </div>
@@ -108,50 +115,59 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
 // ── 2차 메뉴 항목 ────────────────────────────────────
 function SubItem({ children, href }: { children: React.ReactNode; href?: string }) {
   const baseStyle: React.CSSProperties = {
-    display: 'flex', alignItems: 'center', gap: '0.55rem',
+    display: 'flex', 
+    alignItems: 'center', 
+    gap: '0.55rem',
     padding: '0.58rem 1.5rem 0.58rem 2rem',
-    fontSize: '0.82rem', color: 'var(--text-muted)',
+    fontSize: '0.82rem', 
+    color: 'var(--text-muted)',
     cursor: 'pointer',
     transition: 'color var(--transition), background var(--transition)',
     textDecoration: 'none',
   };
 
   const dot = (
-    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--accent)', opacity: 0.4, flexShrink: 0 }} />
+    <span style={{ 
+      width: '4px', 
+      height: '4px', 
+      borderRadius: '50%', 
+      background: 'var(--accent)', 
+      opacity: 0.4, 
+      flexShrink: 0 
+    }} />
   );
 
-  if (href) {
-    return (
-      <a
-        href={href}
-        target="_top"
-        style={baseStyle}
-        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-primary)'; (e.currentTarget as HTMLAnchorElement).style.background = 'var(--accent-dim)'; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-muted)'; (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; }}
-      >
-        {dot}
-        <span style={{ flex: 1 }}>{children}</span>
-      </a>
-    );
-  }
+  const handleEnter = (e: React.MouseEvent<HTMLElement>) => {
+    e.currentTarget.style.color = 'var(--text-primary)';
+    e.currentTarget.style.background = 'var(--bg-hover)'; // 불광천에 마우스 올렸을때 배경색
+  };
+  const handleLeave = (e: React.MouseEvent<HTMLElement>) => {
+    e.currentTarget.style.color = 'var(--text-muted)';
+    e.currentTarget.style.background = 'transparent';
+  };
+
+  const Tag = href ? 'a' : 'div';
 
   return (
-    <div style={baseStyle}
-      onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.color = 'var(--text-primary)'; (e.currentTarget as HTMLDivElement).style.background = 'var(--accent-dim)'; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.color = 'var(--text-muted)'; (e.currentTarget as HTMLDivElement).style.background = 'transparent'; }}
+    <Tag
+      {...(href ? { href, target: '_top' } : {})}
+      style={baseStyle}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
     >
       {dot}
       <span style={{ flex: 1 }}>{children}</span>
-    </div>
+    </Tag>
   );
 }
+
 
 // ── Sidebar 본체 ─────────────────────────────────────
 export default function Sidebar() {
   return (
     <nav style={{
       gridColumn: '1', gridRow: '2',
-      background: 'linear-gradient(180deg, var(--bg-water) 0%, rgba(0,0,0,0.15) 100%), var(--bg-water)',
+      background: 'linear-gradient(180deg, var(--bg-water) 0%, #2f7fd6 100%), var(--bg-water)', //사이드바 기본 배경
       borderRight: '1px solid var(--border)',
       overflowY: 'auto', overflowX: 'hidden',
       padding: '1.5rem 0', zIndex: 50,
