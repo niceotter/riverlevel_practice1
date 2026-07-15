@@ -125,11 +125,11 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
         <p style={{ fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 700, margin: '0 0 6px 0' }}>
           {station.RVR_NM.trim()} {station.WATG_NM}
         </p>
-        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 22px 0' }}>{station.DTRSM_DATA_CLCT_TM}</p>
+        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px 0' }}>{station.DTRSM_DATA_CLCT_TM}</p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600 }}>데이터 제공 : 서울특별시 물순환안전국</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 10px 0' }}>데이터 제공 : 서울특별시 물순환안전국</p>
 
-        <div style={{ display: 'flex', gap: 10, marginTop: 10, marginBottom: 18 }}>
+        <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"
             onClick={() => setShowPhoto(true)}

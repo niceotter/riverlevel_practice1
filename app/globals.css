@@ -3,13 +3,11 @@
 :root {
   --bg-water:      #63adf8; /* background color for the main app container */
   --bg-header:    #ffffff; /* background color for the header section */
-/*  --bg-panel:     #2190ff;  ??? */
   --bg-hover:     #a1d0ff; /* highlight color to back-ground(서울) when hovering */
-/*  --bg-backtomap: #3d8ff2;  background color for the back-to-map button */
   --border:       #63adf8; /* border color for map-sidebar and sidebar sections */
   --scrollbar:    #000dff; /* scrollbar color for map-sidebar and sidebar sections */
   --accent:       #0015ff; /* highlight color to font(서울) when hovering */
-  --accent-dim:   #57abff; /* highlight color to back-ground(불광천) when hovering */
+  --tree-expand:   #0015ff; /* highlight color to tree-expand(서울) when hovering */
   --status-ok:    #3ecf8e;
   --status-warn:  #f59e0b;
   --status-danger:#ef4444;

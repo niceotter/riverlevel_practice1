@@ -75,23 +75,31 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
       <style>{`
         .menu-item { position: relative; }
         .menu-trigger {
-          display: flex; align-items: center; justify-content: space-between;
-          width: 100%; padding: 0.75rem 1.5rem;
-          background: none; border: none;
-          color: var(--text-primary); font-size: 0.9rem; font-weight: 500;
-          cursor: pointer; text-align: left;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%; 
+          padding: 0.75rem 1.5rem;
+          background: none; 
+          border: none;
+          color: var(--text-primary); 
+          font-size: 0.9rem; 
+          font-weight: 500;
+          cursor: pointer; 
+          text-align: left;
           transition: background var(--transition), color var(--transition);
         }
-        .menu-trigger:hover, .menu-trigger.active { /* 서울 메뉴 열었을 때 서울의 배경색과 폰트색 */
-          background: var(--bg-hover);
-          color: var(--accent);
+        .menu-trigger:hover, .menu-trigger.active { 
+          background: var(--bg-hover); /* 서울 메뉴 열었을 때 서울의 배경색 */
+          color: var(--accent);        /* 서울 메뉴 열었을 때 서울의 폰트색 */
         }
         .chevron {
           flex-shrink: 0; opacity: 0.45;
           transition: transform var(--transition), opacity var(--transition);
         }
         .chevron.open {
-          transform: rotate(90deg); opacity: 1;
+          transform: rotate(90deg); 
+          opacity: 1;
         }
         .submenu {
           max-height: 0;
@@ -104,7 +112,7 @@ function MenuItem({ label, children }: { label: string; children: React.ReactNod
         .submenu.open {
           max-height: 2000px; 
           opacity: 1; 
-          border-left-color: var(--accent); /* 서울 메뉴 열었을 때 왼쪽에 나오는 파란색 선 */
+          border-left-color: var(--tree-expand); /* 서울 메뉴 열었을 때 왼쪽에 나오는 파란색 선 */
           overflow-y: auto;
         }
       `}</style>
