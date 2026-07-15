@@ -300,13 +300,13 @@ export default function Sidebar() {
           }
           .rl-sidebar {
             position: fixed !important;
-            top: 0 !important;
+            top: 20vh !important;
             left: 0 !important;
             grid-column: unset !important;
             grid-row: unset !important;
             width: 80vw !important;
             max-width: 300px !important;
-            height: 100vh !important;
+            height: 80vh !important;
             transform: translateX(-100%);
             transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
