@@ -127,6 +127,8 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
         </p>
         <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 22px 0' }}>{station.DTRSM_DATA_CLCT_TM}</p>
 
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600 }}>데이터 제공 : 서울특별시 물순환안전국</p>
+
         <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
           <button
             type="button"
@@ -146,7 +148,6 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           </button>
         </div>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600 }}>정보 출처 : 서울특별시 물순환안전국</p>
       </div>
 
       {/* 왼쪽 하단: 목록으로 / 새로고침 */}
@@ -226,7 +227,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
         right: 0, 
         bottom: 0, 
         top: `${waterTopPercent}%`, 
-        background: 'linear-gradient(180deg, var(--bg-deep) 0%, #2f7fd6 100%)', 
+        background: 'linear-gradient(180deg, var(--bg-water) 0%, #2f7fd6 100%)', 
         zIndex: 1, 
         transition: 'top 0.6s ease-out' }} />
 

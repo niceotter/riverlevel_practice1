@@ -3,7 +3,7 @@
 
 export default function Header() {
   
-  const bgDeep = '#63adf8';  // 물결 라인 backgroundImage에 --bg-deep 값을 직접 넣기보다는 변수로 정의해서 관리
+  const bgWater = '#63adf8';  // 물결 라인 backgroundImage에 --bg-water 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
     <header style={{
       gridColumn: '1 / -1',
@@ -16,7 +16,7 @@ export default function Header() {
       paddingBottom: '1rem',
       paddingLeft: '1rem',
       background: 'var(--bg-header)',
-      borderBottom: '10px solid var(--bg-deep)',
+      borderBottom: '10px solid var(--bg-water)',
       position: 'relative',
       zIndex: 100,
     }}>
@@ -62,7 +62,7 @@ export default function Header() {
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
         height: '10px',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='${encodeURIComponent(bgDeep)}' fill='${encodeURIComponent(bgDeep)}' stroke-width='2'/%3E%3C/svg%3E")`,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='${encodeURIComponent(bgWater)}' fill='${encodeURIComponent(bgWater)}' stroke-width='2'/%3E%3C/svg%3E")`,
 //        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10'%3E%3Cpath d='M0 10 Q9 9 10 0 Q11 9 20 10' stroke='%230080ff' fill='%230080ff' stroke-width='2'/%3E%3C/svg%3E")`,
 //      data URI 스킴을 사용하여 SVG 패턴을 인라인으로 정의했습니다.
 //      SVG는 40x6 크기의 작은 이미지로, 물결 모양의 선을 그리고 있습니다.

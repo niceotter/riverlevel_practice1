@@ -151,26 +151,11 @@ export default function Sidebar() {
   return (
     <nav style={{
       gridColumn: '1', gridRow: '2',
-      background: 'linear-gradient(180deg, var(--bg-deep) 0%, rgba(0,0,0,0.15) 100%), var(--bg-deep)',
+      background: 'linear-gradient(180deg, var(--bg-water) 0%, rgba(0,0,0,0.15) 100%), var(--bg-water)',
       borderRight: '1px solid var(--border)',
       overflowY: 'auto', overflowX: 'hidden',
       padding: '1.5rem 0', zIndex: 50,
     }}>
-
-      {/* ── 지도로 돌아가기 ──
-      <a
-        href="https://www.riverlevel-info.kr"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-        <>지도로<br />돌아가기</>
-      </a>
-      <Divider />
-      */}
 
       {/* ── 지역 분류 ── */}
       <div style={{ marginBottom: '0.25rem' }}>
@@ -198,8 +183,8 @@ export default function Sidebar() {
       {/* ── 링크 ── */}
       <a
         href="/history"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -211,8 +196,8 @@ export default function Sidebar() {
       <a
         href="https://radar.kma.go.kr/radar/main.do?cgiId=HSR"
         target="_blank"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -224,8 +209,8 @@ export default function Sidebar() {
       <a
         href="https://www.weather.go.kr/w/index.do"
         target="_blank"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -237,8 +222,8 @@ export default function Sidebar() {
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSculavkKLqlbaxQeB7iM5horoVSCi0amN-1h4vmRT38mxG_Yw/viewform?usp=publish-editor"
         target="_blank" title="새 창에서 구글폼 열기"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -250,8 +235,8 @@ export default function Sidebar() {
       <a
         href="https://qr.kakaopay.com/Ej8ONNgYW"
         target="_blank"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-backtomap)')}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
