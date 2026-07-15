@@ -6,6 +6,9 @@ import Script from "next/script";
 import type { Metadata } from 'next';
 import './globals.css';
 
+import { SidebarProvider } from '@/components/SidebarContext';
+
+
 export const metadata: Metadata = {
   title: '실시간 하천 수위 현황',
 //  themeColor: "#ffffff"
@@ -18,7 +21,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
       </head>
       <body>
-        {children}
+        
+        <SidebarProvider>
+          {children}
+        </SidebarProvider>
+
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,7 +1,11 @@
 'use client';
 // components/Header.tsx
 
+import { useSidebar } from './SidebarContext';
+
 export default function Header() {
+
+  const { toggle } = useSidebar();
   
   const bgWater = '#63adf8';  // 물결 라인 backgroundImage에 --bg-water 값을 직접 넣기보다는 변수로 정의해서 관리
   return (
@@ -11,6 +15,7 @@ export default function Header() {
       display: 'flex',
       flexShrink: 0,
       alignItems: 'center',
+      gap: '0.6rem',
       paddingTop: 0,
       paddingRight: '1rem',
       paddingBottom: '1rem',
@@ -21,7 +26,30 @@ export default function Header() {
       zIndex: 100,
     }}>
 
-      <h1 style={{
+      {/* 모바일 전용 사이드바 열림 버튼 (데스크톱에서는 숨김, CSS로 제어) */}
+      <button
+        type="button"
+        className="rl-hamburger-btn"
+        aria-label="메뉴 열기"
+        onClick={toggle}
+        style={{
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: '0.4rem',
+          color: 'var(--text-header)',
+          flexShrink: 0,
+        }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <h1 className="rl-header-title" style={{
         fontFamily: "'Georgia', 'Nanum Myeongjo', serif",
         fontSize: 'clamp(1.5rem, 3vw, 2.6rem)',
         fontWeight: 400,
@@ -75,6 +103,17 @@ export default function Header() {
 //        background: 'linear-gradient(90deg, transparent, var(--accent), transparent)',
       }}>
       </div>
+
+      <style>{`
+        .rl-hamburger-btn { display: none; }
+        @media (max-width: 768px) {
+          .rl-hamburger-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      `}</style>
 
     </header>
   );

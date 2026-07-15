@@ -32,3 +32,10 @@ html, body {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+
+/* 모바일: 사이드바가 오버레이로 빠지므로, 본문(지도/차트) 영역이 전체 너비를 사용하도록 함 */
+@media (max-width: 768px) {
+  .app-grid {
+    grid-template-columns: 0 100% !important;
+  }
+}

@@ -2,6 +2,7 @@
 // components/Sidebar.tsx
 
 import { useState } from 'react';
+import { useSidebar } from './SidebarContext';
 
 // ── 서울 수위계 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
@@ -172,8 +173,17 @@ function SubItem({ children, href }: { children: React.ReactNode; href?: string 
 
 // ── Sidebar 본체 ─────────────────────────────────────
 export default function Sidebar() {
+  const { isOpen, close } = useSidebar();
+
   return (
-    <nav style={{
+    <>
+      {/* 모바일 전용 배경 오버레이: 터치 시 사이드바 닫힘 */}
+      <div
+        className={`rl-sidebar-backdrop${isOpen ? ' open' : ''}`}
+        onClick={close}
+      />
+
+      <nav className={`rl-sidebar${isOpen ? ' open' : ''}`} style={{
       gridColumn: '1', gridRow: '2',
       background: 'linear-gradient(180deg, var(--bg-water) 0%, #2f7fd6 100%), var(--bg-water)', //사이드바 기본 배경
       borderRight: '1px solid var(--border)',
@@ -269,7 +279,44 @@ export default function Sidebar() {
           <>유지보수 기여<br />- 카카오페이 송금</>
       </a>
 
-    </nav>
+      </nav>
+
+      <style>{`
+        .rl-sidebar-backdrop { display: none; }
+        @media (max-width: 768px) {
+          .rl-sidebar-backdrop {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 45;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 260ms ease;
+          }
+          .rl-sidebar-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+          }
+          .rl-sidebar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            grid-column: unset !important;
+            grid-row: unset !important;
+            width: 80vw !important;
+            max-width: 300px !important;
+            height: 100vh !important;
+            transform: translateX(-100%);
+            transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+          }
+          .rl-sidebar.open {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+    </>
   );
 }
 
