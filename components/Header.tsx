@@ -2,6 +2,8 @@
 // components/Header.tsx
 
 import { useSidebar } from './SidebarContext';
+import WaterAlertBadge from './WaterAlertBadge';
+
 
 export default function Header() {
 
@@ -69,8 +71,9 @@ export default function Header() {
         </span>
         */}
       </h1>
+      <WaterAlertBadge />
       
-      {/*}
+      {/*
       <span style={{
         marginLeft: 'auto',
         fontSize: '0.72rem',
