@@ -5,9 +5,14 @@
 // 화면 디자인만 새 버전(사이드바/사다리꼴 없이, 바닥=0m 보정된 세로 눈금자 +
 // 수위에 따라 위치가 바뀌는 물)으로 교체한 자체완결형 컴포넌트.
 // /api/seoul을 60초마다 폴링. Supabase 사용 안 함.
+//
+// ── HRFCO 지점(예: 잠수교) 지원 추가 ──────────────────────────────
+// id가 HRFCO_STATION_IDS에 포함되면 서울시 API 대신 /api/hrfco를 폴링한다.
+// 서울시 API(WATG_CD 체계)와 HRFCO API(wlobscd 체계)는 필드가 완전히 달라서,
+// load() 안에서 각각 원본 데이터를 받아 공통 DisplayModel로 정규화한 뒤
+// 렌더링 로직은 하나만 쓰도록 만들었다.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 interface SeoulStation {
   WATG_CD: string;
@@ -20,8 +25,60 @@ interface SeoulStation {
   CNTRL_WATL: number;
 }
 
+interface HrfcoInfo {
+  wlobscd: string;
+  obsnm: string;
+  addr: string;
+  etcaddr: string;
+  gdt: string;
+  attwl: string;
+  wrnwl: string;
+  almwl: string;
+  srswl: string;
+  pfh: string;
+}
+
+interface HrfcoRealtime {
+  wlobscd: string;
+  ymdhm: string; // yyyyMMddHHmm
+  wl: string;
+  fw: string;
+}
+
+interface ModelTick {
+  key: string;
+  label: string;
+  valueRaw: number; // 보정 전(raw) 값
+  color: string;
+  right: number;
+  bottom: number;
+}
+
+interface RenderTick {
+  key: string;
+  label: string;
+  value: number; // 바닥(floorLevel) 보정된 값
+  color: string;
+  right: number;
+  bottom: number;
+}
+
+// 표시 로직 전체가 이 구조 하나만 보고 동작하도록 정규화한 모델.
+// 서울시 API든 HRFCO API든 load() 단계에서 이 모양으로 변환한다.
+interface DisplayModel {
+  title: string; // "서울 탄천 여수대교" 같은 타이틀
+  measuredAt: string;
+  source: string;
+  floorLevel: number; // raw 값 기준 바닥(0m) 보정 기준값
+  currentLevelRaw: number; // 보정 전 현재 수위
+  scaleMaxRaw: number; // 보정 전 눈금자 최상단 값
+  ticks: ModelTick[];
+  alertDangerRaw: number | null; // 위험 알림 팝업 트리거 기준(raw)
+  alertWarnRaw: number | null; // 경고 알림 팝업 트리거 기준(raw)
+}
+
 interface Props {
-  id: string; // WATG_CD
+  id: string; // WATG_CD 또는 HRFCO wlobscd
   externalLink?: string; // 없으면 "CCTV 링크없음" 팝업
 }
 
@@ -29,10 +86,35 @@ const TOP_PADDING = 14;
 const BOTTOM_PADDING = 6;
 const WATER_TOP_COLOR = '#6fb4f0'; // Header 물결 패턴과 맞춘 색
 
-export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
-  const router = useRouter();
+// HRFCO API로 관리하는 지점 목록 (wlobscd 기준)
+const HRFCO_STATION_IDS = new Set<string>([
+  '1018680', // 서울시(잠수교)
+]);
 
-  const [station, setStation] = useState<SeoulStation | null>(null);
+// HRFCO 응답의 숫자 필드는 값이 없을 때 " "(공백 문자열)로 온다.
+// trim 없이 Number()를 쓰면 " " → 0으로 잘못 변환되므로 반드시 이 헬퍼를 거친다.
+function parseHrfcoNum(v: string | undefined | null): number | null {
+  if (v === undefined || v === null) return null;
+  const trimmed = v.trim();
+  if (trimmed === '') return null;
+  const n = Number(trimmed);
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseHrfcoYmdhm(ymdhm: string): string {
+  if (!ymdhm || ymdhm.length < 12) return ymdhm;
+  const y = ymdhm.slice(0, 4);
+  const mo = ymdhm.slice(4, 6);
+  const d = ymdhm.slice(6, 8);
+  const h = ymdhm.slice(8, 10);
+  const mi = ymdhm.slice(10, 12);
+  return `${y}-${mo}-${d} ${h}:${mi}`;
+}
+
+export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
+  const isHrfco = HRFCO_STATION_IDS.has(id);
+
+  const [model, setModel] = useState<DisplayModel | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [showPhoto, setShowPhoto] = useState(false);
@@ -40,34 +122,109 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const alertShown = useRef({ warn: false, danger: false });
 
+  const loadSeoul = async () => {
+    const r = await fetch('/api/seoul');
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    const rows: SeoulStation[] = data?.ListRiverStageService?.row ?? [];
+    const found = rows.find((r2) => r2.WATG_CD === id);
+    if (!found) throw new Error();
+
+    const showWarn = found.CNTRL_WATL > found.RBH;
+
+    const next: DisplayModel = {
+      title: `서울 ${found.RVR_NM.trim()} ${found.WATG_NM}`,
+      measuredAt: found.DTRSM_DATA_CLCT_TM,
+      source: '데이터 제공 : 서울특별시 물순환안전국',
+      floorLevel: found.RBH,
+      currentLevelRaw: found.RLTM_RVR_WATL_CNT,
+      scaleMaxRaw: found.RBH + (found.PLAN_FLDE - found.RBH) * 1.18,
+      alertDangerRaw: found.PLAN_FLDE,
+      alertWarnRaw: showWarn ? found.CNTRL_WATL : null,
+      ticks: [
+        { key: 'danger', label: `위험 수위\n${(found.PLAN_FLDE - found.RBH).toFixed(1)}m`, valueRaw: found.PLAN_FLDE, color: '#e02424', right: 26, bottom: -6 },
+        ...(showWarn
+          ? [{ key: 'warn', label: `경고 수위\n${(found.CNTRL_WATL - found.RBH).toFixed(1)}m`, valueRaw: found.CNTRL_WATL, color: '#f5820a', right: 26, bottom: -6 }]
+          : []),
+        { key: 'floor', label: '바닥 0.0m', valueRaw: found.RBH, color: '#000000', right: 26, bottom: -14 },
+      ],
+    };
+    setModel(next);
+  };
+
+  const loadHrfco = async () => {
+    const [infoRes, rtRes] = await Promise.all([
+      fetch(`/api/hrfco?type=info&code=${id}`),
+      fetch(`/api/hrfco?type=realtime&code=${id}`),
+    ]);
+    if (!infoRes.ok || !rtRes.ok) throw new Error();
+
+    const infoData = await infoRes.json();
+    const rtData = await rtRes.json();
+    const info: HrfcoInfo | undefined = infoData?.content?.[0];
+    const rt: HrfcoRealtime | undefined = rtData?.content?.[0];
+    if (!info || !rt) throw new Error();
+
+    // HRFCO 응답은 값이 없는 필드를 ""가 아니라 " "(공백)로 준다.
+    // Number(" ")는 NaN이 아니라 0을 반환하므로 반드시 trim 후 빈 문자열 체크가 필요하다.
+    const gdt = parseHrfcoNum(info.gdt);
+    const attwl = parseHrfcoNum(info.attwl);
+    const wrnwl = parseHrfcoNum(info.wrnwl);
+    const almwl = parseHrfcoNum(info.almwl);
+    const srswl = parseHrfcoNum(info.srswl);
+    const pfh = parseHrfcoNum(info.pfh);
+    const wl = parseHrfcoNum(rt.wl);
+
+    // 바닥(gdt)과 현재수위(wl)는 필수값 — 없으면 표시 자체가 불가능
+    if (gdt === null || wl === null) throw new Error();
+
+    // 눈금자 최상단: pfh(계획홍수위) 우선, 없으면 있는 값 중 가장 높은 단계로 대체.
+    // 전부 없으면(예: 경보수위 미설정 지점) 현재수위 기준으로 여유 있게 잡는다.
+    const scaleMaxRaw = pfh ?? srswl ?? almwl ?? wrnwl ?? attwl ?? gdt + Math.max(wl - gdt, 1) * 1.5;
+
+    const tickDefs: { key: string; label: string; valueRaw: number | null; color: string }[] = [
+      { key: 'pfh', label: '계획홍수위', valueRaw: pfh, color: '#7a0e0e' },
+      { key: 'srswl', label: '심각 수위', valueRaw: srswl, color: '#e02424' },
+      { key: 'almwl', label: '경보 수위', valueRaw: almwl, color: '#e05d24' },
+      { key: 'wrnwl', label: '주의보 수위', valueRaw: wrnwl, color: '#f5820a' },
+      { key: 'attwl', label: '관심 수위', valueRaw: attwl, color: '#2f7fd6' },
+    ];
+
+    // 바닥 기준: gdt (영점표고) / 눈금자 최상단: pfh (계획홍수위) — 사용자 확정
+    const next: DisplayModel = {
+      title: `서울 ${info.obsnm}`,
+      measuredAt: parseHrfcoYmdhm(rt.ymdhm),
+      source: '데이터 제공 : 기후에너지환경부(HRFCO)',
+      floorLevel: gdt,
+      currentLevelRaw: wl,
+      scaleMaxRaw,
+      // 알림 팝업 기준: 심각(srswl)=위험, 경보(almwl)=경고로 매핑, 값 없으면 다음 단계로 대체.
+      // ※ 4단계(관심/주의보/경보/심각) 중 임의로 매핑한 값이라 필요시 조정해주세요.
+      alertDangerRaw: srswl ?? pfh ?? null,
+      alertWarnRaw: almwl ?? wrnwl ?? null,
+      ticks: [
+        // 값이 공백이었던 단계(예: 태백시(무사교))는 눈금에서 자동으로 제외
+        ...tickDefs
+          .filter((t): t is { key: string; label: string; valueRaw: number; color: string } => t.valueRaw !== null)
+          .map((t) => ({
+            key: t.key,
+            label: `${t.label}\n${(t.valueRaw - gdt).toFixed(1)}m`,
+            valueRaw: t.valueRaw,
+            color: t.color,
+            right: 26,
+            bottom: -6,
+          })),
+        { key: 'floor', label: '바닥 0.0m', valueRaw: gdt, color: '#000000', right: 26, bottom: -14 },
+      ],
+    };
+    setModel(next);
+  };
+
   const load = () => {
-    fetch('/api/seoul')
-      .then((r) => {
-        if (!r.ok) throw new Error();
-        return r.json();
-      })
-      .then((data) => {
-        const rows: SeoulStation[] = data?.ListRiverStageService?.row ?? [];
-        const found = rows.find((r) => r.WATG_CD === id);
-        if (found) {
-          setStation(found);
-
-          // 경고/위험 알림 팝업 (바닥 보정된 값 기준, 사다리꼴 버전 로직 이식)
-          const current = found.RLTM_RVR_WATL_CNT - found.RBH;
-          const danger = found.PLAN_FLDE - found.RBH;
-          const showWarn = found.CNTRL_WATL > found.RBH;
-          const warn = showWarn ? found.CNTRL_WATL - found.RBH : null;
-
-          if (current >= danger && !alertShown.current.danger) {
-            alertShown.current.danger = true;
-            setAlertMsg(`⚠️ 위험수위 초과! 현재 ${current.toFixed(2)}m`);
-          } else if (warn !== null && current >= warn && !alertShown.current.warn) {
-            alertShown.current.warn = true;
-            setAlertMsg(`⚠️ 경고수위 초과! 현재 ${current.toFixed(2)}m`);
-          }
-        }
-        setLoading(false);
-      })
+    setError(false);
+    const task = isHrfco ? loadHrfco() : loadSeoul();
+    task
+      .then(() => setLoading(false))
       .catch(() => {
         setError(true);
         setLoading(false);
@@ -81,18 +238,32 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
+  // 경고/위험 알림 팝업 (model이 갱신될 때마다 체크)
+  useEffect(() => {
+    if (!model) return;
+    const current = model.currentLevelRaw;
+    if (model.alertDangerRaw !== null && current >= model.alertDangerRaw && !alertShown.current.danger) {
+      alertShown.current.danger = true;
+      setAlertMsg(`⚠️ 위험수위 초과! 현재 ${(current - model.floorLevel).toFixed(2)}m`);
+    } else if (
+      model.alertWarnRaw !== null &&
+      current >= model.alertWarnRaw &&
+      !alertShown.current.warn
+    ) {
+      alertShown.current.warn = true;
+      setAlertMsg(`⚠️ 경고수위 초과! 현재 ${(current - model.floorLevel).toFixed(2)}m`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model]);
+
   if (loading) return <p style={{ padding: '2rem', color: '#888' }}>데이터 불러오는 중…</p>;
-  if (error || !station) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
+  if (error || !model) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
 
-  // ── 바닥(RBH) 기준 보정: 모든 값에서 RBH를 빼서 바닥=0m로 통일 ──────
-  const floorLevel = station.RBH;
-  const calibratedCurrent = station.RLTM_RVR_WATL_CNT - floorLevel;
-  const calibratedDanger = station.PLAN_FLDE - floorLevel;
-  const showWarn = station.CNTRL_WATL > station.RBH;
-  const calibratedWarn = showWarn ? station.CNTRL_WATL - floorLevel : null;
-
+  // ── 바닥(floorLevel) 기준 보정: 모든 값에서 floorLevel을 빼서 바닥=0m로 통일 ──
+  const floorLevel = model.floorLevel;
+  const calibratedCurrent = model.currentLevelRaw - floorLevel;
   const scaleMin = 0;
-  const scaleMax = calibratedDanger * 1.18;
+  const scaleMax = model.scaleMaxRaw - floorLevel;
 
   const levelToTopPercent = (value: number) => {
     const clamped = Math.min(Math.max(value, scaleMin), scaleMax);
@@ -103,13 +274,9 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
 
   const waterTopPercent = levelToTopPercent(calibratedCurrent);
 
-  const ticks = [
-    { key: 'danger', label: `위험 수위\n${calibratedDanger.toFixed(1)}m`, value: calibratedDanger, color: '#e02424', right: 26, bottom: -6 },
-    ...(calibratedWarn !== null
-      ? [{ key: 'warn', label: `경고 수위\n${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
-      : []),
+  const ticks: RenderTick[] = [
     { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 70, bottom: 10 },
-    { key: 'floor', label: '바닥 0.0m', value: 0, color: '#000000', right: 26, bottom: -14 },
+    ...model.ticks.map((t) => ({ key: t.key, label: t.label, value: t.valueRaw - floorLevel, color: t.color, right: t.right, bottom: t.bottom })),
   ];
 
   return (
@@ -127,7 +294,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           fontWeight: 700, 
           margin: '0 0 6px 0' 
         }}>
-          서울 {station.RVR_NM.trim()} {station.WATG_NM}
+          {model.title}
         </p>
 
         <p style={{ 
@@ -135,10 +302,10 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          {station.DTRSM_DATA_CLCT_TM}
+          {model.measuredAt}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 서울특별시 물순환안전국</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>{model.source}</p>
 
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button

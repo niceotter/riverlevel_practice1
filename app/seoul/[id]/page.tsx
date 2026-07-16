@@ -6,10 +6,10 @@ import WaterLevelHeroSeoul from '@/components/WaterLevelHeroSeoul';
 
 // 수위계 별 외부 링크
 const EXTERNAL_LINKS: Record<string, string> = {
-  '101': 'http://kko.to/oSQknqGwvL',  // 탄천 여수대교
+  '101': 'https://kko.to/oSQknqGwvL',  // 탄천 여수대교
   // '102': '#',  // 탄천 대곡교
-  '103': 'http://kko.to/2sjB8l91K9',  // 탄천 탄천2교
-  '1401': 'http://kko.to/VoFK32aX8C',  // 불광천 증산교
+  '103': 'https://kko.to/2sjB8l91K9',  // 탄천 탄천2교
+  '1401': 'https://kko.to/VoFK32aX8C',  // 불광천 증산교
   // '1501': '#',  // 홍제천 성산2교
   // '2001': '#',  // 안양천 고척교
   // '2002': '#',  // 도림천 도림교
@@ -23,11 +23,13 @@ const EXTERNAL_LINKS: Record<string, string> = {
   // '303': '#',   // 우이천 계성교
   // '401': '#',   // 우이천 장월교
   // '402': '#',   // 중랑천 신의교
-  '403': 'http://kko.to/wBWqrHBKHM',  // 중랑천 월계1교
+  '403': 'https://kko.to/wBWqrHBKHM',  // 중랑천 월계1교
   // '801': '#',  // 정릉천 용두교
-  '901': 'http://kko.to/_GP-2rog2j',  // 중랑천 성동교 
+  '901': 'https://kko.to/_GP-2rog2j',  // 중랑천 성동교 
   // '902': '#',  // 청계천 마장2교
   // '903': '#',  // 청계천 사근용답
+  '1018680': 'https://kko.to/7mTZBiQRbG',  // 한강 잠수교(HRFCO)
+
 };
 
 export default function SeoulStationPage() {
@@ -59,15 +61,6 @@ interface SeoulStation {
   CNTRL_WATL: number;
 }
 
-// 수위계 별 CCTV 외부 링크 (사다리꼴 버전에서 그대로 이식)
-// TODO: 항목이 늘어나면 별도 파일(config/externalLinks.ts)로 분리 고려
-const EXTERNAL_LINKS: Record<string, string> = {
-  '101': 'http://kko.to/oSQknqGwvL',
-  '103': 'http://kko.to/2sjB8l91K9',
-  '1401': 'http://kko.to/VoFK32aX8C',
-  '403': 'http://kko.to/wBWqrHBKHM',
-  '901': 'http://kko.to/_GP-2rog2j',
-};
 
 export default function SeoulStationPage() {
   const params = useParams();
@@ -143,35 +136,6 @@ function getTimeTheme() {
   if (hour >= 17 && hour < 20) return { bgHeader: '#FE9380', bgDeep: '#63adf8' };
   return { bgHeader: '#382A2F', bgDeep: '#1a2540' };
 }
-
-
-const bgHeader = '#FFFFFF';
-const bgDeep = '#63adf8';
-
-// 수위계 별 외부 링크
-const EXTERNAL_LINKS: Record<string, string> = {
-  '101': 'http://kko.to/oSQknqGwvL',  // 탄천 여수대교
-  '102': '#',
-  '103': 'http://kko.to/2sjB8l91K9',  // 탄천 탄천2교
-  '1401': 'http://kko.to/VoFK32aX8C',  // 불광천 증산교
-  '1501': '#',
-  '2001': '#',
-  '2002': '#',
-  '2003': '#',
-  '2201': '#',
-  '2301': '#',
-  '2303': '#',
-  '2502': '#',
-  '301': '#',
-  '302': '#',
-  '303': '#',
-  '401': '#',
-  '402': '#',
-  '403': 'http://kko.to/wBWqrHBKHM',  // 중랑천 월계1교
-  '801': '#',
-  '901': 'http://kko.to/_GP-2rog2j',  // 중랑천 성동교
-  '902': '#',
-};
 
 export default function SeoulStationPage() {
   const params = useParams();
