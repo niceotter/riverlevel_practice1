@@ -140,7 +140,7 @@ export default function WaterAlertBadge() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (!visible || items.length === 0) return null;
+  if (!visible) return null;
 
   return (
     <div ref={containerRef} style={{ position: 'relative', marginLeft: 'auto', flexShrink: 0 }}>
@@ -152,8 +152,8 @@ export default function WaterAlertBadge() {
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem',
-          background: '#f5893a',
-          color: '#2a1400',
+          background: items.length > 0 ? '#f5893a' : '#e5e9ec',
+          color: items.length > 0 ? '#2a1400' : '#4a5560',
           border: 'none',
           borderRadius: '999px',
           padding: '0.65rem 1.1rem',
@@ -187,6 +187,11 @@ export default function WaterAlertBadge() {
           boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
           zIndex: 200,
         }}>
+          {items.length === 0 && (
+            <div style={{ padding: '0.9rem 1rem', fontSize: '0.85rem', color: '#888' }}>
+              현재 위험 수위에 근접한 곳이 없습니다.
+            </div>
+          )}
           {items.map((it) => (
             <a
               key={`${it.region}-${it.id}`}
