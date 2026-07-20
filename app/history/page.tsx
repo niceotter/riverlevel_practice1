@@ -347,7 +347,7 @@ export default function HistoryPage() {
         <div style={{
           display: 'flex', flexWrap: 'wrap', gap: '0.75rem',
           alignItems: 'center', marginBottom: '1.5rem',
-          background: '#fff', padding: '1rem',
+          background: 'var(--bg-water)', padding: '1rem',
           borderRadius: '8px', border: '1px solid #e0e0e0',
         }}>
           {/* 지역 선택 */}
