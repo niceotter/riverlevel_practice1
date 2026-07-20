@@ -27,7 +27,7 @@ interface Props {
 
 const TOP_PADDING = 14;
 const BOTTOM_PADDING = 6;
-const WATER_TOP_COLOR = '#6fb4f0'; // Header 물결 패턴과 맞춘 색
+const WATER_TOP_COLOR = '#63adf8';//'#6fb4f0'; // Header 물결 패턴과 맞춘 색
 
 export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   const router = useRouter();
@@ -113,7 +113,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   ];
 
   return (
-    <div className="water-hero-viewport" style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: 'var(--bg-sky)' }}>
+    <div className="water-hero-viewport" style={{ position: 'relative', width: '100%', overflow: 'hidden', background: 'var(--bg-sky)' }}>
 {/*    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', background: 'var(--bg-sky)' }}>
       왼쪽 상단: 타이틀 + 정보 + 버튼 */}
       <div style={{ position: 'absolute', top: '6vh', left: '5vw', zIndex: 10, maxWidth: 480 }}>

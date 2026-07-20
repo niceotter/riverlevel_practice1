@@ -31,7 +31,7 @@ interface Props {
 
 const TOP_PADDING = 14;
 const BOTTOM_PADDING = 6;
-const WATER_TOP_COLOR = '#6fb4f0';
+const WATER_TOP_COLOR = '#63adf8';//'#6fb4f0'; // Header 물결 패턴과 맞춘 색
 
 export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   const router = useRouter();
