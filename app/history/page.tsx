@@ -333,21 +333,21 @@ export default function HistoryPage() {
       {/* 메인 콘텐츠 */}
       <main style={{
         gridColumn: '2', gridRow: '2',
-        background: '#f8f9fa',
+        background: 'var(--bg-water)',
         overflow: 'auto',
         padding: '1.5rem 2rem',
       }}>
         <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#333', marginBottom: '1.2rem' }}>
           수위 이력 조회
         </h2>
-        <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
+        <p style={{ color: '#ffffff', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
           본 사이트가 만들어진 2026년 7월 13일 0시 이후의 데이터만 제공됩니다.
         </p>
         {/* 검색 폼 */}
         <div style={{
           display: 'flex', flexWrap: 'wrap', gap: '0.75rem',
           alignItems: 'center', marginBottom: '1.5rem',
-          background: 'var(--bg-water)', padding: '1rem',
+          background: 'var(--bg-hover)', padding: '1rem',
           borderRadius: '8px', border: '1px solid #e0e0e0',
         }}>
           {/* 지역 선택 */}
