@@ -33,6 +33,12 @@ html, body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
 
+/* 모바일 브라우저 주소창 이슈 대응 — 100vh 대신 100dvh 사용 (폴백 포함) */
+.water-hero-viewport {
+  height: 100vh;
+  height: 100dvh;
+}
+
 /* 모바일: 사이드바가 오버레이로 빠지므로, 본문(지도/차트) 영역이 전체 너비를 사용하도록 함 */
 @media (max-width: 768px) {
   .app-grid {

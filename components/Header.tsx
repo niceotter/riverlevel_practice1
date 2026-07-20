@@ -53,7 +53,7 @@ export default function Header() {
 
       <h1 className="rl-header-title" style={{
         fontFamily: "'Georgia', 'Nanum Myeongjo', serif",
-        fontSize: 'clamp(1.5rem, 3vw, 2.6rem)',
+        fontSize: 'clamp(1.2rem, 3vw, 2.6rem)',
         fontWeight: 400,
         letterSpacing: '0.07em',
         color: 'var(--text-header)',
