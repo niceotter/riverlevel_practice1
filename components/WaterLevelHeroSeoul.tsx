@@ -18,7 +18,6 @@ interface SeoulStation {
   PLAN_FLDE: number;
   RBH: number;
   CNTRL_WATL: number;
-  source: string;      // 데이터 제공처 (예: 서울특별시 물순환안전국)
 }
 
 interface Props {
@@ -140,7 +139,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           {station.DTRSM_DATA_CLCT_TM}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : {station.source}</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 서울특별시 물순환안전국</p>
 
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
