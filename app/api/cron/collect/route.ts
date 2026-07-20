@@ -66,7 +66,7 @@ async function getLastObservedAt(siteCode: string): Promise<string | null> {
 // ── 수위 데이터 저장 ──────────────────────────────────
 // water_levels 테이블에 한 행 삽입
 // 컬럼 설명:
-//   region       - 'seoul' 또는 'busan'
+//   region       - '서울시 ~~구' 또는 '부산광역시'
 //   site_code    - 관측소 고유 코드
 //   site_name    - 관측소 이름 (서울: 하천명+수위계명, 부산: 수위계명)
 //   water_level  - 현재 수위 (m)
@@ -131,7 +131,7 @@ async function collectSeoul() {
     const lastObservedAt = await getLastObservedAt(row.WATG_CD);
     if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && !isSameObservedTime(toKstIso(row.DTRSM_DATA_CLCT_TM), lastObservedAt)))  {
       await saveLevel(
-        'seoul',
+        `서울시 ${row.GU_OFC_NM}`,
         row.WATG_CD,
         // 서울: 하천명 + 수위계명 (예: 불광천 증산교)
         `${row.RVR_NM} ${row.WATG_NM}`,
@@ -180,7 +180,7 @@ async function collectBusan() {
     const lastObservedAt = await getLastObservedAt(item.siteCode);
     if (lastObservedAt === null || (item.obsrTime !== null && !isSameObservedTime(toKstIso(item.obsrTime), lastObservedAt))) {
       await saveLevel(
-        'busan',
+        '부산광역시',
         item.siteCode,
         // 부산: 수위계 이름만 (예: 동백천)
         item.siteName,
