@@ -22,6 +22,7 @@ interface BusanStation {
   alertLevel1: string; // 바닥 (둔치)
   alertLevel3: string; // 경계 = 경고수위
   alertLevel4: string; // 위험수위
+  source: string;      // 데이터 제공처 (예: 부산광역시)
 }
 
 interface Props {
@@ -137,7 +138,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 700, 
           margin: '0 0 6px 0' 
         }}>
-          부산 {station.siteName}
+          {station.source} {station.siteName}
         </p>
 
         <p style={{ 
@@ -148,7 +149,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           {station.obsrTime}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 부산광역시</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : {station.source}</p>
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"

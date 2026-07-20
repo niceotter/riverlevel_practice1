@@ -83,6 +83,7 @@ async function saveLevel(
   dangerLevel: number | null,
   floorLevel:  number | null,
   observedAt:  string | null,
+  source:      string,
 ) {
   await supabase('/water_levels', {
     method: 'POST',
@@ -95,6 +96,7 @@ async function saveLevel(
       danger_level: dangerLevel,
       floor_level:  floorLevel, 
       observed_at:  observedAt,
+      source:       source,
     }),
   });
 }
@@ -138,6 +140,7 @@ async function collectSeoul() {
         isNaN(danger) ? null : danger,
         isNaN(floor) ? null : floor,
         toKstIso(row.DTRSM_DATA_CLCT_TM),
+        '서울특별시 물순환안전국'
       );
     }
   }
@@ -186,7 +189,7 @@ async function collectBusan() {
         isNaN(danger) ? null : danger,
         0, // 부산은 바닥수위 정보가 없으므로 0으로 설정
         toKstIso(item.obsrTime),
-
+        '부산광역시'
       );
     }
   }
