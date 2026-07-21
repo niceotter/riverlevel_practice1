@@ -164,7 +164,7 @@ const load = () => {
           fontWeight: 600, 
           margin: '0 0 12px 0' 
         }}>
-          데이터 제공: ${station.source}
+          데이터 제공: {station.source}
         </p>
 
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>

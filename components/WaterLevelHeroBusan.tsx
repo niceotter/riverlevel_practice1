@@ -70,7 +70,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
         // "00-" + id 로 원래 siteCode 복원해서 찾기 (사다리꼴 버전과 동일)
         // const found = items.find((i) => i.siteCode === `00-${id}`);
         const rows: BusanStation[] = data?.rows ?? [];
-        const found = rows.find((r) => r.site_code === `00-${id}`);
+        const found = rows.find((r) => r.site_code === id);
         if (found) {
           setStation(found);
 
@@ -180,7 +180,15 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           {formatObservedTime(station.observed_at)}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : {station.source}</p>
+        <p style={{
+          fontSize: 13,
+          color: '#6b6b6b',
+          fontWeight: 600,
+          margin: '0 0 12px 0'
+        }}>
+          데이터 제공 : {station.source}
+        </p>
+
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"
