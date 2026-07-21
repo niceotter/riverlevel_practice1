@@ -27,7 +27,8 @@ export async function GET() {
     // PostgREST는 DISTINCT ON을 지원하지 않아 앱단에서 dedupe.
     const cutoff = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
     const query =
-      `region=eq.${encodeURIComponent('부산광역시')}` +
+      `region=eq.busan` +
+//      `region=eq.${encodeURIComponent('부산광역시')}` +
       `&recorded_at=gte.${encodeURIComponent(cutoff)}` +
       `&order=recorded_at.desc&limit=1000`;
 
