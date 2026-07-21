@@ -28,19 +28,30 @@ interface BusanStation {
   // alertLevel4: string; // 위험수위
 }
 
-function formatObservedTime(iso: string | null): string {
-  if (!iso) return '';
-  return iso.replace('T', ' ').replace(/\+09:00$/, '').replace(/\.\d+$/, '');
-}
-
-
 // 날짜 문자열 → "2026년 7월 7일 20시 30분" 형식으로 변환
-function formatKoreanDateTime(dateStr: string): string {
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return dateStr;
-  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}시 ${String(d.getMinutes()).padStart(2, '0')}분`;
-}
+// dateStr 예: "2026-07-21 15:29:00+00:00" (UTC) → Asia/Seoul 기준으로 변환
+function formatKoreanDateTime(dateStr: string | null): string {
+  if (!dateStr) return '';
 
+  // "YYYY-MM-DD HH:mm:ss+00:00" 형식은 공백을 T로 바꿔야 Date가 파싱 가능
+  const iso = dateStr.includes(' ') ? dateStr.replace(' ', 'T') : dateStr;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return dateStr; // 파싱 실패 시 원본이라도 표시
+
+  // 브라우저 로컬시간대와 무관하게 항상 KST 기준으로 표시
+  const parts = new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(d);
+
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  return `${get('year')}년 ${get('month')}월 ${get('day')}일 ${get('hour')}시 ${get('minute')}분`;
+}
 
 interface Props {
   id: string; // siteCode에서 "00-" 뺀 값 (예: 200-0005)
@@ -173,7 +184,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 700, 
           margin: '0 0 6px 0' 
         }}>
-          부산 {station.site_name}
+          {station.site_name}
         </p>
 
         <p style={{ 
@@ -181,7 +192,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          formatKoreanDateTime({formatObservedTime(station.observed_at)})
+          {formatKoreanDateTime(station.observed_at)}
         </p>
 
         <p style={{

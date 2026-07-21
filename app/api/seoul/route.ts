@@ -28,7 +28,7 @@ export async function GET() {
     const cutoff = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
     const query =
       `region=eq.seoul` +      
-      `region=like.${encodeURIComponent('서울*')}` +
+//      `region=like.${encodeURIComponent('서울*')}` +
       `&recorded_at=gte.${encodeURIComponent(cutoff)}` +
       `&order=recorded_at.desc&limit=1000`;
 
