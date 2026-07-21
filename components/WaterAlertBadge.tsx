@@ -23,44 +23,99 @@ const THRESHOLD_MARGIN = 0.5; // 위험 수위 - 0.5m
 
 // 응답 구조가 정확히 어떻게 감싸져 있는지 몰라도 되도록,
 // 특정 key를 가진 객체들의 배열을 재귀적으로 찾아준다.
-function findArrayWithKey(obj: unknown, key: string): Record<string, unknown>[] {
-  if (!obj || typeof obj !== 'object') return [];
+// function findArrayWithKey(obj: unknown, key: string): Record<string, unknown>[] {
+//   if (!obj || typeof obj !== 'object') return [];
 
-  if (Array.isArray(obj)) {
-    if (obj.length > 0 && typeof obj[0] === 'object' && obj[0] !== null && key in (obj[0] as object)) {
-      return obj as Record<string, unknown>[];
-    }
-    for (const item of obj) {
-      const found = findArrayWithKey(item, key);
-      if (found.length) return found;
-    }
-    return [];
-  }
+//   if (Array.isArray(obj)) {
+//     if (obj.length > 0 && typeof obj[0] === 'object' && obj[0] !== null && key in (obj[0] as object)) {
+//       return obj as Record<string, unknown>[];
+//     }
+//     for (const item of obj) {
+//       const found = findArrayWithKey(item, key);
+//       if (found.length) return found;
+//     }
+//     return [];
+//   }
 
-  for (const k in obj as Record<string, unknown>) {
-    const found = findArrayWithKey((obj as Record<string, unknown>)[k], key);
-    if (found.length) return found;
-  }
-  return [];
-}
+//   for (const k in obj as Record<string, unknown>) {
+//     const found = findArrayWithKey((obj as Record<string, unknown>)[k], key);
+//     if (found.length) return found;
+//   }
+//   return [];
+// }
 
 function toNumber(v: unknown): number {
   const n = typeof v === 'string' ? parseFloat(v) : (v as number);
   return typeof n === 'number' && !Number.isNaN(n) ? n : NaN;
 }
 
+// async function fetchSeoulAlerts(): Promise<AlertItem[]> {
+//   const res = await fetch('/api/seoul', { cache: 'no-store' });
+//   if (!res.ok) return [];
+//   const data = await res.json();
+//   const rows = findArrayWithKey(data, 'WATG_CD');
+
+//   return rows
+//     .map((row): AlertItem | null => {
+//       const id = String(row.WATG_CD ?? '');
+//       const name = String(row.WATG_NM ?? '').trim();
+//       const current = toNumber(row.RLTM_RVR_WATL_CNT);
+//       const danger = toNumber(row.CNTRL_WATL);
+//       if (!id || Number.isNaN(current) || Number.isNaN(danger) || danger <= 0) return null;
+//       return {
+//         id,
+//         name,
+//         region: 'seoul',
+//         current,
+//         danger,
+//         diff: current - danger,
+//         href: `/seoul/${id}`,
+//       };
+//     })
+//     .filter((v): v is AlertItem => v !== null);
+// }
+
+// async function fetchBusanAlerts(): Promise<AlertItem[]> {
+//   const res = await fetch('/api/busan', { cache: 'no-store' });
+//   if (!res.ok) return [];
+//   const data = await res.json();
+//   const rows = findArrayWithKey(data, 'siteCode');
+
+//   return rows
+//     .map((row): AlertItem | null => {
+//       const siteCode = String(row.siteCode ?? '');
+//       const id = siteCode.replace(/^00-/, '');
+//       const name = String(row.siteName ?? '').trim();
+//       const current = toNumber(row.waterLevel);
+//       const danger = toNumber(row.alertLevel4); // 위험 수위
+//       if (!id || Number.isNaN(current) || Number.isNaN(danger) || danger <= 0) return null;
+//       return {
+//         id,
+//         name,
+//         region: 'busan',
+//         current,
+//         danger,
+//         diff: current - danger,
+//         href: `/busan/${id}`,
+//       };
+//     })
+//     .filter((v): v is AlertItem => v !== null);
+// }
+//
+// findArrayWithKey 함수 전체 삭제
+
 async function fetchSeoulAlerts(): Promise<AlertItem[]> {
   const res = await fetch('/api/seoul', { cache: 'no-store' });
   if (!res.ok) return [];
   const data = await res.json();
-  const rows = findArrayWithKey(data, 'WATG_CD');
+  const rows: Record<string, unknown>[] = data?.rows ?? [];
 
   return rows
     .map((row): AlertItem | null => {
-      const id = String(row.WATG_CD ?? '');
-      const name = String(row.WATG_NM ?? '').trim();
-      const current = toNumber(row.RLTM_RVR_WATL_CNT);
-      const danger = toNumber(row.CNTRL_WATL);
+      const id = String(row.site_code ?? '');
+      const name = String(row.site_name ?? '').trim();
+      const current = toNumber(row.water_level);
+      const danger = toNumber(row.warn_level); // 기존 로직 유지: CNTRL_WATL(경고수위) 기준
       if (!id || Number.isNaN(current) || Number.isNaN(danger) || danger <= 0) return null;
       return {
         id,
@@ -79,15 +134,15 @@ async function fetchBusanAlerts(): Promise<AlertItem[]> {
   const res = await fetch('/api/busan', { cache: 'no-store' });
   if (!res.ok) return [];
   const data = await res.json();
-  const rows = findArrayWithKey(data, 'siteCode');
+  const rows: Record<string, unknown>[] = data?.rows ?? [];
 
   return rows
     .map((row): AlertItem | null => {
-      const siteCode = String(row.siteCode ?? '');
+      const siteCode = String(row.site_code ?? '');
       const id = siteCode.replace(/^00-/, '');
-      const name = String(row.siteName ?? '').trim();
-      const current = toNumber(row.waterLevel);
-      const danger = toNumber(row.alertLevel4); // 위험 수위
+      const name = String(row.site_name ?? '').trim();
+      const current = toNumber(row.water_level);
+      const danger = toNumber(row.danger_level); // alertLevel4(위험수위) 기준
       if (!id || Number.isNaN(current) || Number.isNaN(danger) || danger <= 0) return null;
       return {
         id,
@@ -101,6 +156,8 @@ async function fetchBusanAlerts(): Promise<AlertItem[]> {
     })
     .filter((v): v is AlertItem => v !== null);
 }
+
+
 
 export default function WaterAlertBadge() {
   const pathname = usePathname();

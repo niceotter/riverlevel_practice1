@@ -1,24 +1,36 @@
 'use client';
 // components/WaterLevelHeroSeoul.tsx
 //
-// 사다리꼴 버전 WaterAnimationSeoul.tsx의 데이터 fetch/팝업 로직은 그대로 두고,
-// 화면 디자인만 새 버전(사이드바/사다리꼴 없이, 바닥=0m 보정된 세로 눈금자 +
-// 수위에 따라 위치가 바뀌는 물)으로 교체한 자체완결형 컴포넌트.
-// /api/seoul을 60초마다 폴링. Supabase 사용 안 함.
+// 사이드바 제거, 역사다리꼴 디자인 삭제, 바닥=0m로 보정된 세로 눈금자
+// 수위 정보에 따라 물 높이가 바뀌도록 한 자체완결형 컴포넌트.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface SeoulStation {
-  WATG_CD: string;
-  WATG_NM: string;
-  RVR_NM: string;
-  DTRSM_DATA_CLCT_TM: string;
-  RLTM_RVR_WATL_CNT: number;
-  PLAN_FLDE: number;
-  RBH: number;
-  CNTRL_WATL: number;
+  site_code: string;
+  site_name: string;
+  water_level: number;
+  warn_level: number | null;
+  danger_level: number | null;
+  floor_level: number | null;
+  observed_at: string | null;
+  source: string;
+//   WATG_CD: string;
+//   WATG_NM: string;
+//   RVR_NM: string;
+//   DTRSM_DATA_CLCT_TM: string;
+//   RLTM_RVR_WATL_CNT: number;
+//   PLAN_FLDE: number;
+//   RBH: number;
+//   CNTRL_WATL: number;
 }
+
+function formatObservedTime(iso: string | null): string {
+  if (!iso) return '';
+  return iso.replace('T', ' ').replace(/\+09:00$/, '').replace(/\.\d+$/, '');
+}  
+
 
 interface Props {
   id: string; // WATG_CD
@@ -40,23 +52,25 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const alertShown = useRef({ warn: false, danger: false });
 
-  const load = () => {
+const load = () => {
     fetch('/api/seoul')
       .then((r) => {
         if (!r.ok) throw new Error();
         return r.json();
       })
       .then((data) => {
-        const rows: SeoulStation[] = data?.ListRiverStageService?.row ?? [];
-        const found = rows.find((r) => r.WATG_CD === id);
+        const rows: SeoulStation[] = data?.rows ?? [];
+        const found = rows.find((r) => r.site_code === id);
+        // const rows: SeoulStation[] = data?.ListRiverStageService?.row ?? [];
+        // const found = rows.find((r) => r.WATG_CD === id);
         if (found) {
           setStation(found);
 
-          // 경고/위험 알림 팝업 (바닥 보정된 값 기준, 사다리꼴 버전 로직 이식)
-          const current = found.RLTM_RVR_WATL_CNT - found.RBH;
-          const danger = found.PLAN_FLDE - found.RBH;
-          const showWarn = found.CNTRL_WATL > found.RBH;
-          const warn = showWarn ? found.CNTRL_WATL - found.RBH : null;
+          const floor = found.floor_level ?? 0;
+          const current = found.water_level - floor;
+          const danger = (found.danger_level ?? 0) - floor;
+          const showWarn = (found.warn_level ?? 0) > floor;
+          const warn = showWarn ? (found.warn_level as number) - floor : null;
 
           if (current >= danger && !alertShown.current.danger) {
             alertShown.current.danger = true;
@@ -84,12 +98,17 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
   if (loading) return <p style={{ padding: '2rem', color: '#888' }}>데이터 불러오는 중…</p>;
   if (error || !station) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
 
-  // ── 바닥(RBH) 기준 보정: 모든 값에서 RBH를 빼서 바닥=0m로 통일 ──────
-  const floorLevel = station.RBH;
-  const calibratedCurrent = station.RLTM_RVR_WATL_CNT - floorLevel;
-  const calibratedDanger = station.PLAN_FLDE - floorLevel;
-  const showWarn = station.CNTRL_WATL > station.RBH;
-  const calibratedWarn = showWarn ? station.CNTRL_WATL - floorLevel : null;
+// ── 바닥(floor_level) 기준 보정 ──────────────────────────────
+  const floorLevel = station.floor_level ?? 0;
+  const calibratedCurrent = station.water_level - floorLevel;
+  const calibratedDanger = (station.danger_level ?? 0) - floorLevel;
+  const showWarn = (station.warn_level ?? 0) > floorLevel;
+  const calibratedWarn = showWarn ? (station.warn_level as number) - floorLevel : null;
+//  const floorLevel = station.RBH;
+//  const calibratedCurrent = station.RLTM_RVR_WATL_CNT - floorLevel;
+//  const calibratedDanger = station.PLAN_FLDE - floorLevel;
+//  const showWarn = station.CNTRL_WATL > station.RBH;
+//  const calibratedWarn = showWarn ? station.CNTRL_WATL - floorLevel : null;
 
   const scaleMin = 0;
   const scaleMax = calibratedDanger * 1.18;
@@ -128,7 +147,7 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           fontWeight: 700, 
           margin: '0 0 6px 0' 
         }}>
-          서울 {station.RVR_NM.trim()} {station.WATG_NM}
+          {station.site_name}
         </p>
 
         <p style={{ 
@@ -136,19 +155,47 @@ export default function WaterLevelHeroSeoul({ id, externalLink }: Props) {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          {station.DTRSM_DATA_CLCT_TM}
+          {formatObservedTime(station.observed_at)}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 서울특별시 물순환안전국</p>
+        <p style={{
+          fontSize: 13, 
+          color: '#6b6b6b', 
+          fontWeight: 600, 
+          margin: '0 0 12px 0' 
+        }}>
+          데이터 제공: ${station.source}
+        </p>
 
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"
             onClick={() => setShowPhoto(true)}
-            style={{ minWidth: 120, borderRadius: 10, border: 'none', color: '#fff', fontSize: 14, cursor: 'pointer', textAlign: 'left', padding: '14px 16px', backgroundColor: '#555' }}
+            style={{ 
+              minWidth: 120, 
+              borderRadius: 10, 
+              border: 'none', 
+              color: '#fff', 
+              fontSize: 14, 
+              cursor: 'pointer', 
+              textAlign: 'left', 
+              padding: '14px 16px', 
+              backgroundColor: '#555' 
+            }}
           >
-            <span style={{ fontWeight: 700 }}>📷 수위계 사진</span>
-            <span style={{ display: 'block', marginTop: 6, color: '#d8d8d8', fontSize: 12 }}>수위계 사진 확보에 노력 중입니다.</span>
+            <span style={{ fontWeight: 700 }}>
+              📷 수위계 사진
+            </span>
+
+            <span style={{
+              display: 'block', 
+              marginTop: 6, 
+              color: '#d8d8d8', 
+              fontSize: 12 
+            }}>
+              수위계 사진 확보에 노력 중입니다.
+            </span>
+            
           </button>
         </div>
 

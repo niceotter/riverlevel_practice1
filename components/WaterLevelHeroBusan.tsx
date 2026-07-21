@@ -1,8 +1,9 @@
 'use client';
 // components/WaterLevelHeroBusan.tsx
 //
-// 사다리꼴 버전 WaterAnimationBusan.tsx의 데이터 fetch/팝업 로직은 그대로 두고
-// 화면 디자인만 새 버전으로 교체.
+// 사이드바 제거, 역사다리꼴 디자인 삭제, 바닥=0m로 보정된 세로 눈금자
+// 수위 정보에 따라 물 높이가 바뀌도록 한 자체완결형 컴포넌트.
+//
 // ⚠️ 부산은 서울과 다르게:
 //   - id prop은 siteCode에서 "00-" 접두사를 뺀 값 (예: "200-0005") →
 //     API에서 찾을 땐 `00-${id}`로 복원해서 매칭
@@ -15,13 +16,26 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface BusanStation {
-  siteCode: string;
-  siteName: string;
-  waterLevel: string;
-  obsrTime: string;
-  alertLevel1: string; // 바닥 (둔치)
-  alertLevel3: string; // 경계 = 경고수위
-  alertLevel4: string; // 위험수위
+  site_code: string;
+  site_name: string;
+  water_level: number;
+  warn_level: number | null;
+  danger_level: number | null;
+  floor_level: number | null;
+  observed_at: string | null;
+  source: string;
+  // siteCode: string;
+  // siteName: string;
+  // waterLevel: string;
+  // obsrTime: string;
+  // alertLevel1: string; // 바닥 (둔치)
+  // alertLevel3: string; // 경계 = 경고수위
+  // alertLevel4: string; // 위험수위
+}
+
+function formatObservedTime(iso: string | null): string {
+  if (!iso) return '';
+  return iso.replace('T', ' ').replace(/\+09:00$/, '').replace(/\.\d+$/, '');
 }
 
 interface Props {
@@ -44,6 +58,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const alertShown = useRef({ warn: false, danger: false });
 
+
   const load = () => {
     fetch('/api/busan')
       .then((r) => {
@@ -51,17 +66,24 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
         return r.json();
       })
       .then((data) => {
-        const items: BusanStation[] = data?.response?.body?.items?.item ?? [];
+        // const items: BusanStation[] = data?.response?.body?.items?.item ?? [];
         // "00-" + id 로 원래 siteCode 복원해서 찾기 (사다리꼴 버전과 동일)
-        const found = items.find((i) => i.siteCode === `00-${id}`);
+        // const found = items.find((i) => i.siteCode === `00-${id}`);
+        const rows: BusanStation[] = data?.rows ?? [];
+        const found = rows.find((r) => r.site_code === `00-${id}`);
         if (found) {
           setStation(found);
 
-          const floor = 0;
-          const current = parseFloat(found.waterLevel) - floor;
-          const danger = parseFloat(found.alertLevel4) - floor;
-          const showWarn = parseFloat(found.alertLevel3) > parseFloat(found.alertLevel1);
-          const warn = showWarn ? parseFloat(found.alertLevel3) - floor : null;
+          // const floor = 0;
+          // const current = parseFloat(found.waterLevel) - floor;
+          // const danger = parseFloat(found.alertLevel4) - floor;
+          // const showWarn = parseFloat(found.alertLevel3) > parseFloat(found.alertLevel1);
+          // const warn = showWarn ? parseFloat(found.alertLevel3) - floor : null;
+          const floor = found.floor_level ?? 0;
+          const current = found.water_level - floor;
+          const danger = (found.danger_level ?? 0) - floor;
+          const showWarn = (found.warn_level ?? 0) > floor;
+          const warn = showWarn ? (found.warn_level as number) - floor : null;
 
           if (current >= danger && !alertShown.current.danger) {
             alertShown.current.danger = true;
@@ -78,6 +100,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
         setLoading(false);
       });
   };
+  
 
   useEffect(() => {
     load();
@@ -90,10 +113,19 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   if (error || !station) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
 
   // ── 바닥(alertLevel1) 기준 보정 ──────────────────────────────
-  const floorLevel = 0;
-  const rawCurrent = parseFloat(station.waterLevel);
-  const rawDanger = parseFloat(station.alertLevel4);
-  const rawWarn = parseFloat(station.alertLevel3);
+  // const floorLevel = 0;
+  // const rawCurrent = parseFloat(station.waterLevel);
+  // const rawDanger = parseFloat(station.alertLevel4);
+  // const rawWarn = parseFloat(station.alertLevel3);
+
+  // const calibratedCurrent = rawCurrent - floorLevel;
+  // const calibratedDanger = rawDanger - floorLevel;
+  // const showWarn = rawWarn > floorLevel;
+  // const calibratedWarn = showWarn ? rawWarn - floorLevel : null;
+  const floorLevel = station.floor_level ?? 0;
+  const rawCurrent = station.water_level;
+  const rawDanger = station.danger_level ?? 0;
+  const rawWarn = station.warn_level ?? 0;
 
   const calibratedCurrent = rawCurrent - floorLevel;
   const calibratedDanger = rawDanger - floorLevel;
@@ -118,8 +150,8 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
     { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 70, bottom: 10 },
-    { key: 'floor', label: `바닥 0.0m`, value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
-  ];
+    { key: 'floor', label: `바닥 ${floorLevel.toFixed(1)}m`, value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
+  ];  
 
   return (
     <div className="water-hero-viewport" style={{ position: 'relative', width: '100%', overflow: 'hidden', background: 'var(--bg-sky)' }}>
@@ -137,7 +169,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 700, 
           margin: '0 0 6px 0' 
         }}>
-          부산 {station.siteName}
+          부산 {station.site_name}
         </p>
 
         <p style={{ 
@@ -145,10 +177,10 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          {station.obsrTime}
+          {formatObservedTime(station.observed_at)}
         </p>
 
-        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : 부산광역시</p>
+        <p style={{ fontSize: 13, color: '#6b6b6b', fontWeight: 600, margin: '0 0 12px 0' }}>데이터 제공 : {station.source}</p>
         <div style={{ display: 'flex', gap: 10, margin: '10px 0 18px 0' }}>
           <button
             type="button"

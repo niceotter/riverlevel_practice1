@@ -131,16 +131,16 @@ async function collectSeoul() {
     const lastObservedAt = await getLastObservedAt(row.WATG_CD);
     if (lastObservedAt === null || (row.DTRSM_DATA_CLCT_TM !== null && !isSameObservedTime(toKstIso(row.DTRSM_DATA_CLCT_TM), lastObservedAt)))  {
       await saveLevel(
-        `서울시 ${row.GU_OFC_NM}`,
+        `seoul`,
         row.WATG_CD,
         // 서울: 하천명 + 수위계명 (예: 불광천 증산교)
-        `${row.RVR_NM} ${row.WATG_NM}`,
+        `서울특별시 ${row.GU_OFC_NM} ${row.RVR_NM} ${row.WATG_NM}`,
         level,
         isNaN(warn)   || warn === 0   ? null : warn,
         isNaN(danger) ? null : danger,
         isNaN(floor) ? null : floor,
         toKstIso(row.DTRSM_DATA_CLCT_TM),
-        '서울특별시 물순환안전국'
+        `서울특별시 물순환안전국`
       );
     }
   }
@@ -180,10 +180,10 @@ async function collectBusan() {
     const lastObservedAt = await getLastObservedAt(item.siteCode);
     if (lastObservedAt === null || (item.obsrTime !== null && !isSameObservedTime(toKstIso(item.obsrTime), lastObservedAt))) {
       await saveLevel(
-        '부산광역시',
+        'busan',
         item.siteCode,
         // 부산: 수위계 이름만 (예: 동백천)
-        item.siteName,
+        `부산광역시 ${item.siteName}`,
         level,
         isNaN(warn)   ? null : warn,
         isNaN(danger) ? null : danger,
