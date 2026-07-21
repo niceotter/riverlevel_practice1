@@ -31,6 +31,12 @@ function formatObservedTime(iso: string | null): string {
   return iso.replace('T', ' ').replace(/\+09:00$/, '').replace(/\.\d+$/, '');
 }  
 
+// 날짜 문자열 → "2026년 7월 7일 20시 30분" 형식으로 변환
+function formatKoreanDateTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}시 ${String(d.getMinutes()).padStart(2, '0')}분`;
+}
 
 interface Props {
   id: string; // WATG_CD
@@ -155,7 +161,7 @@ const load = () => {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          {formatObservedTime(station.observed_at)}
+          {formatKoreanDateTime(formatObservedTime(station.observed_at))}
         </p>
 
         <p style={{

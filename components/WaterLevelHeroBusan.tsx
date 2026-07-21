@@ -4,11 +4,6 @@
 // 사이드바 제거, 역사다리꼴 디자인 삭제, 바닥=0m로 보정된 세로 눈금자
 // 수위 정보에 따라 물 높이가 바뀌도록 한 자체완결형 컴포넌트.
 //
-// ⚠️ 부산은 서울과 다르게:
-//   - id prop은 siteCode에서 "00-" 접두사를 뺀 값 (예: "200-0005") →
-//     API에서 찾을 땐 `00-${id}`로 복원해서 매칭
-//   - 바닥 높이는 고정 0이 아니라 alertLevel1(둔치) 값 (이번 예시 데이터가
-//     우연히 0.0이었을 뿐, 다른 지점은 0이 아닐 수 있음)
 //   - 경고수위 유효 여부는 alertLevel3 > alertLevel1로 판단
 //   - 수위계 사진 경로는 /images/busan-{id}.jpg (서울과 접두사 다름)
 
@@ -37,6 +32,15 @@ function formatObservedTime(iso: string | null): string {
   if (!iso) return '';
   return iso.replace('T', ' ').replace(/\+09:00$/, '').replace(/\.\d+$/, '');
 }
+
+
+// 날짜 문자열 → "2026년 7월 7일 20시 30분" 형식으로 변환
+function formatKoreanDateTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}시 ${String(d.getMinutes()).padStart(2, '0')}분`;
+}
+
 
 interface Props {
   id: string; // siteCode에서 "00-" 뺀 값 (예: 200-0005)
@@ -177,7 +181,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
           fontWeight: 600, 
           margin: '0 0 8px 0' 
         }}>
-          {formatObservedTime(station.observed_at)}
+          formatKoreanDateTime({formatObservedTime(station.observed_at)})
         </p>
 
         <p style={{
