@@ -6,52 +6,70 @@ import { useSidebar } from './SidebarContext';
 
 // ── 서울 수위계 정적 데이터 ───────────────────────────
 const SEOUL_STATIONS = [
-  { watgCd: '2301', rvrNm: '도림천', watgNm: '신대방역' },
-  { watgCd: '2303', rvrNm: '도림천', watgNm: '양산교' },
-  { watgCd: '2002', rvrNm: '도림천', watgNm: '도림교' },
-  { watgCd: '2003', rvrNm: '목감천', watgNm: '광화교' },
-  { watgCd: '301',  rvrNm: '방학천', watgNm: '모래말옆' },
-  { watgCd: '1401', rvrNm: '불광천', watgNm: '증산교' },
-  { watgCd: '2001', rvrNm: '안양천', watgNm: '고척교' },
-  { watgCd: '2201', rvrNm: '안양천', watgNm: '기아대교' },
-  { watgCd: '303',  rvrNm: '우이천', watgNm: '계성교' },
-  { watgCd: '401',  rvrNm: '우이천', watgNm: '장월교' },
-  { watgCd: '801',  rvrNm: '정릉천', watgNm: '용두교' },
-  { watgCd: '302',  rvrNm: '중랑천', watgNm: '노원교' },
-  { watgCd: '402',  rvrNm: '중랑천', watgNm: '신의교' },
-  { watgCd: '403',  rvrNm: '중랑천', watgNm: '월계1교' },
-  { watgCd: '901',  rvrNm: '중랑천', watgNm: '성동교' },
-  { watgCd: '101',  rvrNm: '탄천',  watgNm: '여수대교' },
-  { watgCd: '102',  rvrNm: '탄천',  watgNm: '대곡교' },
-  { watgCd: '103',  rvrNm: '탄천',  watgNm: '탄천2교' },
-  { watgCd: '2502', rvrNm: '탄천',  watgNm: '봉은교' },
-  { watgCd: '902',  rvrNm: '청계천', watgNm: '마장2교' },
-  { watgCd: '903',  rvrNm: '청계천', watgNm: '사근용답' },
-  { watgCd: '1501', rvrNm: '홍제천', watgNm: '성산2교' },
+  { site_code: '2301', site_name: '도림천 신대방역' },
+  { site_code: '2303', site_name: '도림천 양산교' },
+  { site_code: '2002', site_name: '도림천 도림교' },
+  { site_code: '2003', site_name: '목감천 광화교' },
+  { site_code: '301',  site_name: '방학천 모래말옆' },
+  { site_code: '1401', site_name: '불광천 증산교' },
+  { site_code: '2001', site_name: '안양천 고척교' },
+  { site_code: '2201', site_name: '안양천 기아대교' },
+  { site_code: '303',  site_name: '우이천 계성교' },
+  { site_code: '401',  site_name: '우이천 장월교' },
+  { site_code: '801',  site_name: '정릉천 용두교' },
+  { site_code: '302',  site_name: '중랑천 노원교' },
+  { site_code: '402',  site_name: '중랑천 신의교' },
+  { site_code: '403',  site_name: '중랑천 월계1교' },
+  { site_code: '901',  site_name: '중랑천 성동교' },
+  { site_code: '101',  site_name: '탄천 여수대교' },
+  { site_code: '102',  site_name: '탄천 대곡교' },
+  { site_code: '103',  site_name: '탄천 탄천2교' },
+  { site_code: '2502', site_name: '탄천 봉은교' },
+  { site_code: '902',  site_name: '청계천 마장2교' },
+  { site_code: '903',  site_name: '청계천 사근용답' },
+  { site_code: '1501', site_name: '홍제천 성산2교' },
+
+  { site_code: '1018640', site_name: '서울시(광진교) '},
+  { site_code: '1018655', site_name: '서울시(대곡교) '},
+  { site_code: '1018658', site_name: '서울시(대치교) '},
+  { site_code: '1018662', site_name: '서울시(청담대교) '},
+  { site_code: '1018669', site_name: '서울시(창동교) '},
+  { site_code: '1018670', site_name: '서울시(월계2교) '},
+  { site_code: '1018675', site_name: '서울시(중랑교) '},
+  { site_code: '1018680', site_name: '서울시(잠수교) '},
+  { site_code: '1018681', site_name: '서울시(반포2교) '},
+  { site_code: '1018683', site_name: '서울시(한강대교) '},
+  { site_code: '1018686', site_name: '서울시(홍남교) '},
+  { site_code: '1018692', site_name: '서울시(신림5교) '},
+  { site_code: '1018695', site_name: '서울시(너부대교) '},
+  { site_code: '1018697', site_name: '서울시(오금교) '},
+  { site_code: '1018698', site_name: '서울시(신대방1교 '},
+  { site_code: '1019630', site_name: '한강 행주대교) '},
+
 ];
 
 // ── 부산 수위계 정적 데이터 ───────────────────────────
 const BUSAN_STATIONS = [
-  { siteId: '00-200-0001', siteName: '동천교' },
-  { siteId: '00-200-0002', siteName: '범5호교' },
-  { siteId: '00-200-0003', siteName: '화명교' },
-  { siteId: '00-200-0004', siteName: '학장교' },
-//  { siteId: '00-200-0005', siteName: '동백천' },
-//  { siteId: '00-200-0006', siteName: '임기천' },
-//  { siteId: '00-200-0007', siteName: '용소천' },
-//  { siteId: '00-200-0008', siteName: '효암천' },
-//  { siteId: '00-200-0009', siteName: '고래골천' },
-//  { siteId: '00-200-0010', siteName: '이곡천' },
- { siteId: '00-200-0011', siteName: '대천교' },
-// { siteId: '00-200-0012', siteName: '삼락22호교' },
- { siteId: '00-200-0013', siteName: '청천교' },
- { siteId: '00-200-0014', siteName: '용상교' },
- { siteId: '00-210-0001', siteName: '장전동역' },
- { siteId: '00-210-0002', siteName: '연안교' },
- { siteId: '00-210-0003', siteName: '원동교' },
- { siteId: '00-210-0004', siteName: '온천천 하류' },
- { siteId: '00-210-0007', siteName: '중앙여고' },
- { siteId: '00-210-0008', siteName: '온천장역 북측' },
+  { site_code: '00-200-0001', site_name: '동천교' },
+  { site_code: '00-200-0002', site_name: '범5호교' },
+  { site_code: '00-200-0003', site_name: '화명교' },
+  { site_code: '00-200-0004', site_name: '학장교' },
+//  { site_code: '00-200-0005', site_name: '동백천' },
+//  { site_code: '00-200-0006', site_name: '임기천' },
+//  { site_code: '00-200-0007', site_name: '용소천' },
+//  { site_code: '00-200-0008', site_name: '효암천' },
+//  { site_code: '00-200-0009', site_name: '고래골천' },
+//  { site_code: '00-200-0010', site_name: '이곡천' },
+ { site_code: '00-200-0011', site_name: '대천교' },
+// { site_code: '00-200-0012', site_name: '삼락22호교' },
+ { site_code: '00-200-0013', site_name: '청천교' },
+ { site_code: '00-200-0014', site_name: '용상교' },
+ { site_code: '00-210-0001', site_name: '장전동역' },
+ { site_code: '00-21₀-₀₀₀₂', site_name: '연안교' },
+ { site_code: '₀₀-₂₁₀-₀₀₀₃', site_name: '원동교' },
+ { site_code: '00-210-0004', site_name: '온천천 하류' },
+ { site_code: '00-210-0007', site_name: '중앙여고' },
+ { site_code: '00-210-0008', site_name: '온천장역 북측' },
 ];
 
 // ── 1차 메뉴 컴포넌트 ────────────────────────────────
@@ -197,16 +215,16 @@ export default function Sidebar() {
 
         <MenuItem label="서울">
           {SEOUL_STATIONS.map(s => (
-            <SubItem key={s.watgCd} href={`/seoul/${s.watgCd}`}>
-              {s.rvrNm} {s.watgNm}
+            <SubItem key={s.site_code} href={`/seoul/${s.site_code}`}>
+              {s.site_name}
             </SubItem>
           ))}
         </MenuItem>
 
         <MenuItem label="부산">
           {BUSAN_STATIONS.map(s => (
-            <SubItem key={s.siteId} href={`/busan/${s.siteId}`}>
-              {s.siteName}
+            <SubItem key={s.site_code} href={`/busan/${s.site_code}`}>
+              {s.site_name}
             </SubItem>
           ))}
         </MenuItem>

@@ -341,7 +341,7 @@ export default function HistoryPage() {
           수위 이력 조회
         </h2>
         <p style={{ color: '#ffffff', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-          본 사이트가 만들어진 2026년 7월 13일 0시 이후의 데이터만 제공됩니다.
+          데이터를 집계하기 시작한 2026년 7월 22일 0시 이후의 데이터만 제공됩니다.
         </p>
         {/* 검색 폼 */}
         <div style={{
