@@ -244,7 +244,9 @@ const load = () => {
               color: '#d8d8d8', 
               fontSize: 12 
             }}>
-              <>CCTV가 없거나<br/>다른 곳을 바라보고 있을 수 있습니다</>
+              <>카카오 지도로 연결됩니다.<br/>
+              CCTV가 없거나<br/>
+              다른 곳을 바라보고 있을 수 있습니다</>
             </span>
           </button>
         </div>

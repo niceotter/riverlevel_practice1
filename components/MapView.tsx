@@ -70,7 +70,30 @@ const MARKERS = [
   { id: '00-210-0003',  region: 'busan', lat: 35.194163, lng: 129.114211, title: '원동교' },
   { id: '00-210-0004',  region: 'busan', lat: 35.189647, lng: 129.112711, title: '온천천 하류' },
   { id: '00-210-0007',  region: 'busan', lat: 35.208352, lng: 129.078565, title: '중앙여고' },
-  { id: '00-210-0008',  region: 'busan', lat: 35.222176, lng: 129.087439, title: '온천장역 북측' }
+  { id: '00-210-0008',  region: 'busan', lat: 35.222176, lng: 129.087439, title: '온천장역 북측' },
+
+  { id: '2022678', region: 'busan', lat: 35.225000, lng: 128.976111, title: '대동낙동강교' },
+  { id: '2022680', region: 'busan', lat: 35.203611, lng: 128.993333, title: '구포대교' },
+  { id: '2022682', region: 'busan', lat: 35.181944, lng: 128.981389, title: '삼덕교' },
+  { id: '2022688', region: 'busan', lat: 35.197500, lng: 128.931111, title: '동서교' },
+  { id: '2022690', region: 'busan', lat: 35.191944, lng: 128.905556, title: '강동교' },
+  { id: '2022692', region: 'busan', lat: 35.142778, lng: 128.985556, title: '학장3호교' },
+  { id: '2022693', region: 'busan', lat: 35.139167, lng: 128.858056, title: '지사천1교' },
+  { id: '2022696', region: 'busan', lat: 35.108056, lng: 128.950556, title: '낙동강하구언(내)' },
+  { id: '2022697', region: 'busan', lat: 35.106667, lng: 128.950556, title: '낙동강하구언(외)' },
+  { id: '2302635', region: 'busan', lat: 35.236111, lng: 129.118056, title: '회동저수지' },
+  { id: '2302640', region: 'busan', lat: 35.217500, lng: 129.118333, title: '동천교' },
+  { id: '2302647', region: 'busan', lat: 35.223611, lng: 129.088333, title: '뉴타운교' },
+  { id: '2302650', region: 'busan', lat: 35.193889, lng: 129.114167, title: '원동교' },
+  { id: '2302651', region: 'busan', lat: 35.319444, lng: 129.197500, title: '달음교' },
+  { id: '2302655', region: 'busan', lat: 35.196667, lng: 129.082778, title: '세병교' },
+  { id: '2302661', region: 'busan', lat: 35.174722, lng: 129.120833, title: '좌수영교' },
+  { id: '2302670', region: 'busan', lat: 35.150000, lng: 129.061389, title: '범천동' },
+  { id: '2302690', region: 'busan', lat: 35.061667, lng: 128.955556, title: '다대포' },
+  { id: '2302695', region: 'busan', lat: 35.091111, lng: 128.953889, title: '신평동' },
+
+
+
 ];
 
 export default function MapView() {

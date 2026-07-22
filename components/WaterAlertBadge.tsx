@@ -139,7 +139,8 @@ async function fetchBusanAlerts(): Promise<AlertItem[]> {
   return rows
     .map((row): AlertItem | null => {
       const siteCode = String(row.site_code ?? '');
-      const id = siteCode.replace(/^00-/, '');
+      const id = String(row.site_code ?? '');
+//      const id = siteCode.replace(/^00-/, '');
       const name = String(row.site_name ?? '').trim();
       const current = toNumber(row.water_level);
       const danger = toNumber(row.danger_level); // alertLevel4(위험수위) 기준
@@ -246,7 +247,7 @@ export default function WaterAlertBadge() {
         }}>
           {items.length === 0 && (
             <div style={{ padding: '0.9rem 1rem', fontSize: '0.85rem', color: '#888' }}>
-              현재 위험 수위에 근접한 곳이 없습니다.
+              <>현재 위험 수위에 근접한 곳이<br/>없습니다.</>
             </div>
           )}
           {items.map((it) => (
