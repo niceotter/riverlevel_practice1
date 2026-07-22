@@ -165,7 +165,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
       ? [{ key: 'warn', label: `경고 수위 ${calibratedWarn.toFixed(1)}m`, value: calibratedWarn, color: '#f5820a', right: 26, bottom: -6 }]
       : []),
     { key: 'current', label: `현재 수위 ${calibratedCurrent.toFixed(1)}m`, value: calibratedCurrent, color: '#1e00ff', right: 70, bottom: 10 },
-    { key: 'floor', label: `바닥 ${floorLevel.toFixed(1)}m`, value: 0, color: '#1a1a1a', right: 26, bottom: -14 },
+    { key: 'floor', label: `해발고도 ${floorLevel.toFixed(1)}m를 영점으로 하여 측정합니다.\n(부산의 일부 측정소는 영점표고 정보가 없습니다.)`, value: 0, color: '#000000', right: 26, bottom: -14 },
   ];  
 
   return (
