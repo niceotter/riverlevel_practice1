@@ -124,7 +124,9 @@ async function collectSeoul() {
     // CNTRL_WATL이 0이면 경고수위 없는 것으로 처리
     const warn   = parseFloat(row.CNTRL_WATL);
     const danger = parseFloat(row.PLAN_FLDE);
-    const floor = parseFloat(row.RBH);
+
+    const rawFloor = parseFloat(row.RBH);
+    const floor = isNaN(rawFloor) || rawFloor === 0 ? 0 : rawFloor;
     if (isNaN(level)) continue;
 
     // 이전 관측시간과 동일하면 저장 안 함
