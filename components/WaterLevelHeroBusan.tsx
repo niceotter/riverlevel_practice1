@@ -127,25 +127,12 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
   if (loading) return <p style={{ padding: '2rem', color: '#888' }}>데이터 불러오는 중…</p>;
   if (error || !station) return <p style={{ padding: '2rem', color: '#ef4444' }}>데이터를 불러올 수 없습니다.</p>;
 
-  // ── 바닥(alertLevel1) 기준 보정 ──────────────────────────────
-  // const floorLevel = 0;
-  // const rawCurrent = parseFloat(station.waterLevel);
-  // const rawDanger = parseFloat(station.alertLevel4);
-  // const rawWarn = parseFloat(station.alertLevel3);
-
-  // const calibratedCurrent = rawCurrent - floorLevel;
-  // const calibratedDanger = rawDanger - floorLevel;
-  // const showWarn = rawWarn > floorLevel;
-  // const calibratedWarn = showWarn ? rawWarn - floorLevel : null;
+// ── 바닥(floor_level) 기준 보정 ──────────────────────────────
   const floorLevel = station.floor_level ?? 0;
-  const rawCurrent = station.water_level;
-  const rawDanger = station.danger_level ?? 0;
-  const rawWarn = station.warn_level ?? 0;
-
-  const calibratedCurrent = rawCurrent - floorLevel;
-  const calibratedDanger = rawDanger - floorLevel;
-  const showWarn = rawWarn > floorLevel;
-  const calibratedWarn = showWarn ? rawWarn - floorLevel : null;
+  const calibratedCurrent = station.water_level - floorLevel;
+  const calibratedDanger = (station.danger_level ?? 0) - floorLevel;
+  const showWarn = (station.warn_level ?? 0) > floorLevel;
+  const calibratedWarn = showWarn ? (station.warn_level ?? 0) - floorLevel : null;
 
   const scaleMin = 0;
   const scaleMax = calibratedDanger * 1.18;
@@ -169,7 +156,7 @@ export default function WaterLevelHeroBusan({ id, externalLink }: Props) {
       key: 'floor',
       label:
         floorLevel === 0 ? '영점표고 정보가 없습니다'
-        : `해발고도 ${floorLevel.toFixed(1)}m를 영점으로 하여 측정합니다.`,
+        : `해발고도 ${floorLevel.toFixed(1)}m를\n영점으로 하여 측정합니다.`,
       value: 0,
       color: '#000000',
       right: 26,

@@ -122,7 +122,7 @@ const load = () => {
   const calibratedCurrent = station.water_level - floorLevel;
   const calibratedDanger = (station.danger_level ?? 0) - floorLevel;
   const showWarn = (station.warn_level ?? 0) > floorLevel;
-  const calibratedWarn = showWarn ? (station.warn_level as number) - floorLevel : null;
+  const calibratedWarn = showWarn ? (station.warn_level ?? 0) - floorLevel : null;
 //  const floorLevel = station.RBH;
 //  const calibratedCurrent = station.RLTM_RVR_WATL_CNT - floorLevel;
 //  const calibratedDanger = station.PLAN_FLDE - floorLevel;
@@ -152,7 +152,7 @@ const load = () => {
       key: 'floor',
       label:
         floorLevel === 0 ? '영점표고 정보가 없습니다'
-        : `해발고도 ${floorLevel.toFixed(1)}m를 영점으로 하여 측정합니다.`,
+        : `해발고도 ${floorLevel.toFixed(1)}m를\n영점으로 하여 측정합니다.`,
       value: 0,
       color: '#000000',
       right: 26,

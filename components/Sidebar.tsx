@@ -78,8 +78,8 @@ const BUSAN_STATIONS = [
   { point_code: '2022690', point_name: '강동교' },
   { point_code: '2022692', point_name: '학장3호교' },
   { point_code: '2022693', point_name: '지사천1교' },
-  { point_code: '2022696', point_name: '낙동강하구언(내)' },
-  { point_code: '2022697', point_name: '낙동강하구언(외)' },
+//  { point_code: '2022696', point_name: '낙동강하구언(내)' },
+//  { point_code: '2022697', point_name: '낙동강하구언(외)' },
   { point_code: '2302635', point_name: '회동저수지' },
   { point_code: '2302640', point_name: '동천교' },
   { point_code: '2302647', point_name: '뉴타운교' },
@@ -89,7 +89,7 @@ const BUSAN_STATIONS = [
   { point_code: '2302661', point_name: '좌수영교' },
   { point_code: '2302670', point_name: '범천동' },
   { point_code: '2302690', point_name: '다대포' },
-  { point_code: '2302695', point_name: '신평동' },
+//  { point_code: '2302695', point_name: '신평동' },
 
 ];
 
