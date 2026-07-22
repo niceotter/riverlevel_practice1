@@ -7,52 +7,72 @@ import Sidebar from '@/components/Sidebar';
 
 // ── 관측소 목록 ───────────────────────────────────────
 const SEOUL_STATIONS = [
-  { id: '2301', name: '도림천 신대방역' },
-  { id: '2303', name: '도림천 양산교' },
-  { id: '2002', name: '도림천 도림교' },
-  { id: '2003', name: '목감천 광화교' },
-  { id: '301',  name: '방학천 모래말옆' },
-  { id: '1401', name: '불광천 증산교' },
-  { id: '2001', name: '안양천 고척교' },
-  { id: '2201', name: '안양천 기아대교' },
-  { id: '303',  name: '우이천 계성교' },
-  { id: '401',  name: '우이천 장월교' },
-  { id: '801',  name: '정릉천 용두교' },
-  { id: '302',  name: '중랑천 노원교' },
-  { id: '402',  name: '중랑천 신의교' },
-  { id: '403',  name: '중랑천 월계1교' },
-  { id: '901',  name: '중랑천 성동교' },
-  { id: '101',  name: '탄천 여수대교' },
-  { id: '102',  name: '탄천 대곡교' },
-  { id: '103',  name: '탄천 탄천2교' },
-  { id: '2502', name: '탄천 봉은교' },
-  { id: '902',  name: '청계천 마장2교' },
-  { id: '903',  name: '청계천 사근용답' },
-  { id: '1501', name: '홍제천 성산2교' },
+  { point_code: '2002', point_name: '도림천 도림교' },
+  { point_code: '2301', point_name: '도림천 신대방역' },
+  { point_code: '1018698', point_name: '도림천 신대방1교' },
+  { point_code: '1018692', point_name: '도림천 신림5교' },
+  { point_code: '2303', point_name: '도림천 양산교' },
+  { point_code: '2003', point_name: '목감천 광화교' },
+  { point_code: '1018695', point_name: '목감천 너부대교' },
+//  { point_code: '1018681', point_name: '반포천 반포2교' },
+  { point_code: '301',  point_name: '방학천 모래말옆' },
+  { point_code: '1401', point_name: '불광천 증산교' },
+  { point_code: '2001', point_name: '안양천 고척교' },
+  { point_code: '2201', point_name: '안양천 기아대교' },
+  { point_code: '1018697', point_name: '안양천 오금교' },
+  { point_code: '1018658', point_name: '양재천 대치교' },
+  { point_code: '303',  point_name: '우이천 계성교' },
+  { point_code: '1018670', point_name: '우이천 월계2교' },
+  { point_code: '401',  point_name: '우이천 장월교' },
+  { point_code: '302',  point_name: '중랑천 노원교' },
+  { point_code: '901',  point_name: '중랑천 성동교' },
+  { point_code: '402',  point_name: '중랑천 신의교' },
+  { point_code: '801',  point_name: '정릉천 용두교' },
+  { point_code: '403',  point_name: '중랑천 월계1교' },
+  { point_code: '1018675', point_name: '중랑천 중랑교' },
+  { point_code: '1018669', point_name: '중랑천 창동교' },
+  { point_code: '101',  point_name: '탄천 여수대교' },
+  { point_code: '102',  point_name: '탄천 대곡교' },
+  { point_code: '1018655', point_name: '탄천 대곡교' },
+  { point_code: '103',  point_name: '탄천 탄천2교' },
+  { point_code: '2502', point_name: '탄천 봉은교' },
+  { point_code: '902',  point_name: '청계천 마장2교' },
+  { point_code: '903',  point_name: '청계천 사근용답' },
+  { point_code: '1501', point_name: '홍제천 성산2교' },
+  { point_code: '1018686', point_name: '홍제천 홍남교' },
+  { point_code: '1018640', point_name: '한강 광진교' },
+  { point_code: '1018680', point_name: '한강 잠수교' },
+  { point_code: '1018662', point_name: '한강 청담대교' },
+  { point_code: '1018683', point_name: '한강 한강대교' },
+  { point_code: '1019630', point_name: '한강 행주대교' },
+
 ];
 
+// ── 부산 수위계 정적 데이터 ───────────────────────────
 const BUSAN_STATIONS = [
-  { id: '00-200-0001', name: '동천교' },
-  { id: '00-200-0002', name: '범5호교' },
-  { id: '00-200-0003', name: '화명교' },
-  { id: '00-200-0004', name: '학장교' },
-//  { id: '00-200-0005', name: '동백천' },
-//  { id: '00-200-0006', name: '임기천' },
-//  { id: '00-200-0007', name: '용소천' },
-//  { id: '00-200-0008', name: '효암천' },
-//  { id: '00-200-0009', name: '고래골천' },
-//  { id: '00-200-0010', name: '이곡천' },
- { id: '00-200-0011', name: '대천교' },
-// { id: '00-200-0012', name: '삼락22호교' },
- { id: '00-200-0013', name: '청천교' },
- { id: '00-200-0014', name: '용상교' },
- { id: '00-210-0001', name: '장전동역' },
- { id: '00-210-0002', name: '연안교' },
- { id: '00-210-0003', name: '원동교' },
- { id: '00-210-0004', name: '온천천 하류' },
- { id: '00-210-0007', name: '중앙여고' },
- { id: '00-210-0008', name: '온천장역 북측' },
+  { point_code: '00-200-0001', point_name: '동천교' },
+  { point_code: '00-200-0002', point_name: '범5호교' },
+  { point_code: '00-200-0003', point_name: '화명교' },
+  { point_code: '00-200-0004', point_name: '학장교' },
+//  { point_code: '00-200-0005', point_name: '동백천' },
+//  { point_code: '00-200-0006', point_name: '임기천' },
+//  { point_code: '00-200-0007', point_name: '용소천' },
+//  { point_code: '00-200-0008', point_name: '효암천' },
+//  { point_code: '00-200-0009', point_name: '고래골천' },
+//  { point_code: '00-200-0010', point_name: '이곡천' },
+ { point_code: '00-200-0011', point_name: '대천교' },
+// { point_code: '00-200-0012', point_name: '삼락22호교' },
+ { point_code: '00-200-0013', point_name: '청천교' },
+ { point_code: '00-200-0014', point_name: '용상교' },
+ { point_code: '00-210-0001', point_name: '장전동역' },
+ { point_code: '00-210-0002', point_name: '연안교' },
+ { point_code: '00-210-0003', point_name: '원동교' },
+ { point_code: '00-210-0004', point_name: '온천천 하류' },
+ { point_code: '00-210-0007', point_name: '중앙여고' },
+ { point_code: '00-210-0008', point_name: '온천장역 북측' },
 ];
+
+
 
 interface WaterRecord {
   recorded_at:  string;
@@ -60,7 +80,7 @@ interface WaterRecord {
   water_level:  number;
   warn_level:   number | null;
   danger_level: number | null;
-  site_name:    string;
+  point_name:    string;
   floor_level:  number | null;
 
 }
@@ -243,7 +263,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
             {formatKoreanDateTime(hovered.observed_at ?? hovered.recorded_at)}
           </text>
           <text x={boxX + 10} y={boxY + 36} fontSize="10" fontWeight="600" fill="#333">
-            {hovered.site_name}
+            {hovered.point_name}
           </text>
           <text x={boxX + 10} y={boxY + 54} fontSize="11" fontWeight="700" fill="#63adf8">
             당시 수위 : {hovered.water_level.toFixed(2)} m
@@ -301,7 +321,7 @@ export default function HistoryPage() {
       if (!res.ok) throw new Error();
       const json: WaterRecord[] = await res.json();
       setData(json);
-      setSiteName(json[0]?.site_name ?? siteId);
+      setSiteName(json[0]?.point_name ?? siteId);
       if (json.length === 0) setError('해당 기간에 데이터가 없습니다.');
     } catch {
       setError('데이터를 불러올 수 없습니다.');
@@ -364,7 +384,7 @@ export default function HistoryPage() {
           <select value={siteId} onChange={e => setSiteId(e.target.value)} style={inputStyle}>
             <option value="">관측소 선택</option>
             {stations.map(s => (
-              <option key={s.id} value={s.id}>{s.name}</option>
+              <option key={s.point_code} value={s.point_code}>{s.point_name}</option>
             ))}
           </select>
 
