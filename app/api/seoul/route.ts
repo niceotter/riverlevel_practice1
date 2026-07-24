@@ -37,7 +37,7 @@ export async function GET() {
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      next: { revalidate: 30 },
+      next: { revalidate: 300 },
     });
 
     if (!upstream.ok) {

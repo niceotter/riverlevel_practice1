@@ -10,27 +10,27 @@ declare global {
 
 const MARKERS = [
   { id: '101',  region: 'seoul', lat: 37.422093, lng: 127.117576, title: '탄천 여수대교' },
-  { id: '102',  region: 'seoul', lat: 37.468873, lng: 127.122695, title: '탄천 대곡교' },
-  { id: '103',  region: 'seoul', lat: 37.502442, lng: 127.071609, title: '탄천 탄천2교' },
+  { id: '102',  region: 'seoul', lat: 37.468873, lng: 127.122695, title: '탄천 대곡교' }, //리밋 1개
+  { id: '103',  region: 'seoul', lat: 37.502442, lng: 127.071609, title: '탄천 탄천2교' }, //리밋 1개
   { id: '1401', region: 'seoul', lat: 37.576384, lng: 126.902668, title: '불광천 증산교' },
-  { id: '1501', region: 'seoul', lat: 37.565590, lng: 126.911468, title: '홍제천 성산2교' },
-  { id: '2001', region: 'seoul', lat: 37.499342, lng: 126.870129, title: '안양천 고척교' },
-  { id: '2002', region: 'seoul', lat: 37.510590, lng: 126.891129, title: '도림천 도림교' },
-  { id: '2003', region: 'seoul', lat: 37.474382, lng: 126.845366, title: '목감천 광화교' },
-  { id: '2201', region: 'seoul', lat: 37.438683, lng: 126.900006, title: '안양천 기아대교' },
-  { id: '2301', region: 'seoul', lat: 37.487552, lng: 126.913354, title: '도림천 신대방역' },
-  { id: '2303', region: 'seoul', lat: 37.473849, lng: 126.933797, title: '도림천 양산교' },
-  { id: '2502', region: 'seoul', lat: 37.515530, lng: 127.067782, title: '탄천 봉은교' },
-  { id: '301',  region: 'seoul', lat: 37.661418, lng: 127.048815, title: '방학천 모래말옆' },
-  { id: '302',  region: 'seoul', lat: 37.678949, lng: 127.050930, title: '중랑천 노원교' },
-  { id: '303',  region: 'seoul', lat: 37.647929, lng: 127.022414, title: '우이천 계성교' },
-  { id: '401',  region: 'seoul', lat: 37.617957, lng: 127.057091, title: '우이천 장월교' },
-  { id: '402',  region: 'seoul', lat: 37.733274, lng: 127.053999, title: '중랑천 신의교' },
+  { id: '1501', region: 'seoul', lat: 37.565590, lng: 126.911468, title: '홍제천 성산2교' }, //리밋 1개
+  { id: '2001', region: 'seoul', lat: 37.499342, lng: 126.870129, title: '안양천 고척교' }, //리밋 1개
+  { id: '2002', region: 'seoul', lat: 37.510590, lng: 126.891129, title: '도림천 도림교' }, //리밋 1개
+  { id: '2003', region: 'seoul', lat: 37.474382, lng: 126.845366, title: '목감천 광화교' }, //리밋 1개
+  { id: '2201', region: 'seoul', lat: 37.438683, lng: 126.900006, title: '안양천 기아대교' }, //리밋 1개
+  { id: '2301', region: 'seoul', lat: 37.487552, lng: 126.913354, title: '도림천 신대방역' }, //리밋 1개
+  { id: '2303', region: 'seoul', lat: 37.473849, lng: 126.933797, title: '도림천 양산교' }, //리밋 1개
+  { id: '2502', region: 'seoul', lat: 37.515530, lng: 127.067782, title: '탄천 봉은교' }, //리밋 1개
+  { id: '301',  region: 'seoul', lat: 37.661418, lng: 127.048815, title: '방학천 모래말옆' }, //리밋 1개
+  { id: '302',  region: 'seoul', lat: 37.678949, lng: 127.050930, title: '중랑천 노원교' }, //리밋 1개
+  { id: '303',  region: 'seoul', lat: 37.647929, lng: 127.022414, title: '우이천 계성교' }, //리밋 1개
+  { id: '401',  region: 'seoul', lat: 37.617957, lng: 127.057091, title: '우이천 장월교' }, //리밋 1개
+  { id: '402',  region: 'seoul', lat: 37.733274, lng: 127.053999, title: '중랑천 신의교' }, //리밋 1개
   { id: '403',  region: 'seoul', lat: 37.632790, lng: 127.063223, title: '중랑천 월계1교' },
-  { id: '801',  region: 'seoul', lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' },
-  { id: '901',  region: 'seoul', lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' },
-  { id: '902',  region: 'seoul', lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' },
-  { id: '903',  region: 'seoul', lat: 37.562504, lng: 127.050055, title: '청계천 사근용답' },
+  { id: '801',  region: 'seoul', lat: 37.578166, lng: 127.034456, title: '정릉천 용두교' }, //리밋 1개
+  { id: '901',  region: 'seoul', lat: 37.552871, lng: 127.043917, title: '중랑천 성동교' }, //리밋 1개
+  { id: '902',  region: 'seoul', lat: 37.568649, lng: 127.046776, title: '청계천 마장2교' }, //리밋 1개
+  { id: '903',  region: 'seoul', lat: 37.562504, lng: 127.050055, title: '청계천 사근용답' }, //리밋 1개
 
 
   { id: '1018640', region: 'seoul', lat: 37.545556, lng: 127.110278, title: '한강 광진교' },
@@ -81,7 +81,7 @@ const MARKERS = [
   { id: '2022693', region: 'busan', lat: 35.139167, lng: 128.858056, title: '지사천1교' },
 //  { id: '2022696', region: 'busan', lat: 35.108056, lng: 128.950556, title: '낙동강하구언(내)' },
 //  { id: '2022697', region: 'busan', lat: 35.106667, lng: 128.950556, title: '낙동강하구언(외)' },
-  { id: '2302635', region: 'busan', lat: 35.236111, lng: 129.118056, title: '회동저수지' },
+  { id: '2302635', region: 'busan', lat: 35.236111, lng: 129.118056, title: '회동저수지' }, //리밋 1개
   { id: '2302640', region: 'busan', lat: 35.217500, lng: 129.118333, title: '동천교' },
   { id: '2302647', region: 'busan', lat: 35.223611, lng: 129.088333, title: '뉴타운교' },
   { id: '2302650', region: 'busan', lat: 35.193889, lng: 129.114167, title: '원동교' },
@@ -89,7 +89,7 @@ const MARKERS = [
   { id: '2302655', region: 'busan', lat: 35.196667, lng: 129.082778, title: '세병교' },
   { id: '2302661', region: 'busan', lat: 35.174722, lng: 129.120833, title: '좌수영교' },
   { id: '2302670', region: 'busan', lat: 35.150000, lng: 129.061389, title: '범천동' },
-  { id: '2302690', region: 'busan', lat: 35.061667, lng: 128.955556, title: '다대포' },
+  { id: '2302690', region: 'busan', lat: 35.061667, lng: 128.955556, title: '다대포' }, //리밋 1개
 //  { id: '2302695', region: 'busan', lat: 35.091111, lng: 128.953889, title: '신평동' },
 
 
