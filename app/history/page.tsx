@@ -382,11 +382,12 @@ export default function HistoryPage() {
         overflow: 'auto',
         padding: '1.5rem 2rem',
       }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#333', marginBottom: '1.2rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#333', marginBottom: '1.0rem' }}>
           수위 이력 조회
         </h2>
-        <p style={{ color: '#ffffff', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-          데이터를 집계하기 시작한 2026년 7월 22일 0시 이후의 데이터만 제공됩니다.
+        <p style={{ color: '#ffffff', fontSize: '0.85rem', marginBottom: '1.2rem' }}>
+          데이터를 수집하기 시작한 2026년 7월 22일 0시 이후의 데이터만 제공됩니다.
+          또한, 수집 과정의 오류로 일부 시점의 데이터가 누락될 수 있습니다.
         </p>
         {/* 검색 폼 */}
         <div style={{
@@ -460,7 +461,7 @@ export default function HistoryPage() {
             border: '1px solid #e0e0e0', padding: '1.5rem',
           }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#333', marginBottom: '1rem' }}>
-              {siteName} 수위 이력
+              {`<<${siteName}>>`} 수위 이력
               <span style={{ fontSize: '0.75rem', fontWeight: 400, color: '#888', marginLeft: '0.5rem' }}>
                 ({data.length}건)
               </span>
