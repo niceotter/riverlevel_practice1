@@ -387,7 +387,7 @@ export default function HistoryPage() {
         </h2>
         <p style={{ color: '#ffffff', fontSize: '0.85rem', marginBottom: '1.2rem' }}>
           데이터를 수집하기 시작한 2026년 7월 22일 0시 이후의 데이터만 제공됩니다.
-          또한, 수집 과정의 오류로 일부 시점의 데이터가 누락될 수 있습니다.
+          <br />또한, 수집 과정의 오류로 일부 시점의 데이터가 누락될 수 있습니다.
         </p>
         {/* 검색 폼 */}
         <div style={{
