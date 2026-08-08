@@ -8,13 +8,18 @@
 대학 시절 2019년부터 구상해 온 서비스였는데, 개발 능력의 한계로 구상 단계에서 중단했었습니다.
 졸업하고 회사를 다니고 있는 도중, AI의 발달을 목도하고 퇴사 후에 드디어 개발을 해보게 되었습니다.
 
-실시간 수위 정보는 이미 [한강홍수통제소](https://www.hrfco.go.kr/main.do#none)에서 제공되고 있습니다만,
-직관성과 가독성이 떨어집니다.
+실시간 수위 정보는 이미 [한강홍수통제소](https://www.hrfco.go.kr/main.do#none)에서 제공되고 있습니다.
+<img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20main.png">
 
+하지만 직관성과 가독성이 떨어집니다.
+
+<img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20RAW%20data.png">
+<img width="800" alt="image" src="">
 한강홍수통제소 중랑교의 수위 자료를 예시로 보겠습니다.
 이 자료에는 2가지 그래프가 같이 표시되어 있습니다.
 
 1. 먼저 하천의 단면도입니다.
+<img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20data%20-%20section%20view.png">
 윗 눈금에 하천의 너비가 표시되어 있습니다.
 그런데 오른쪽 눈금에는 해발수위, 왼쪽 눈금에는 수위가 표시되어 있습니다.
 (수평·수직 축적은 상이하니 유의)
@@ -23,6 +28,7 @@
 그래서 해발수위의 각 눈금은 수위의 각 눈금에 9.165를 더한 값과 같습니다.
 
 2. 수위의 시계열 그래프입니다.
+<img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20data%20-%20level.png">
 아래 눈금에 시간 정보가 표시되어 있고, 맨 오른쪽 데이터가 가장 최신입니다.
 수위가 상승하면 관심단계 수위보다 높아질 수 있습니다.
 
@@ -33,6 +39,7 @@
 
 그래서 직관적으로 알 수 있도록, 또한 데이터 통합을 위해 사이트를 개발하게 되었습니다.
 
+<img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/main.png">
 메인 사이트로 들어가면, 바로 보이는 지도에 핀을 꽂아 수위계 위치를 나타내었습니다.
 핀을 클릭하면 무슨 하천의 수위계인지 나옵니다.
 현재 수위 보기를 클릭하면

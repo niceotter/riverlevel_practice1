@@ -345,7 +345,7 @@ export default function HistoryPage() {
       if (!res.ok) throw new Error();
       const json: WaterRecord[] = await res.json();
       setData(json);
-      setSiteName(json[0]?.point_name ?? siteId);
+      setSiteName(json[0]?.point_name ?? siteName);
       if (json.length === 0) setError('해당 기간에 데이터가 없습니다.');
     } catch {
       setError('데이터를 불러올 수 없습니다.');
