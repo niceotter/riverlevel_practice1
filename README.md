@@ -19,26 +19,26 @@ Claude와 함께 한 1인 개발입니다.
 <img width="600" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20RAW%20data.png">
 
 한강홍수통제소 중랑교의 수위 자료를 예시로 보겠습니다.
-이 자료에는 2가지 그래프가 같이 표시되어 있습니다.
+<br>이 자료에는 2가지 그래프가 같이 표시되어 있습니다.
 
 1. 먼저 하천의 단면도입니다.
 <img width="600" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20data%20-%20section%20view.png">
 
 윗 눈금에 하천의 너비가 표시되어 있습니다.
-그리고 오른쪽 눈금에는 해발수위, 왼쪽 눈금에는 수위가 표시되어 있습니다.
-(수평·수직 축적은 상이하니 유의)
-해발수위의 영점은 인천 앞바다의 평균 해수면, 수위의 영점은 하천 바닥이라고 생각하시면 됩니다.
-이때 하천 바닥의 해발수위를 영점표고라고 하며, 중랑교의 경우 9.165EL.m입니다.
-그래서 해발수위의 각 눈금은 수위의 각 눈금에 9.165를 더한 값과 같습니다.
+<br>그리고 오른쪽 눈금에는 해발수위, 왼쪽 눈금에는 수위가 표시되어 있습니다.
+<br>(수평·수직 축적은 상이하니 유의)
+<br>해발수위의 영점은 인천 앞바다의 평균 해수면, 수위의 영점은 하천 바닥이라고 생각하시면 됩니다.
+<br>이때 하천 바닥의 해발수위를 영점표고라고 하며, 중랑교의 경우 9.165EL.m입니다.
+<br>그래서 해발수위의 각 눈금은 수위의 각 눈금에 9.165를 더한 값과 같습니다.
 
 2. 수위의 시계열 그래프입니다.
 <img width="600" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/HRFCO%20data%20-%20level.png">
 
 아래 눈금에 시간 정보가 표시되어 있고, 맨 오른쪽 데이터가 가장 최신입니다.
-수위가 상승하면 관심단계 수위보다 높아질 수 있습니다.
+<br>수위가 상승하면 관심단계 수위보다 높아질 수 있습니다.
 
 이렇게 보면 그래프의 정보가 보이지만, 모르고 보면 '그래서 현재 수위가 얼마인데? 위험한거야?' 하게 됩니다.
-(솔직히 하천 단면이나 해발수위 알게 뭐임.. 지금 출입 통제될지만 알면 되는데)
+<br>(솔직히 하천 단면이나 해발수위 알게 뭐임.. 지금 출입 통제될지만 알면 되는데)
 
 또한, 지자체에서 관리하기 때문에 한강홍수통제소에서 서비스 되지 않는 수위계도 있습니다.
 
@@ -49,7 +49,7 @@ Claude와 함께 한 1인 개발입니다.
 <img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/main.png">
 
 메인 사이트로 들어가면, 바로 보이는 지도에 핀을 꽂아 수위계 위치를 나타내었습니다.
-핀을 클릭하면 무슨 하천의 수위계인지 나옵니다.
+<br>핀을 클릭하면 무슨 하천의 수위계인지 나옵니다.
 
 <img width="800" alt="image" src="https://github.com/niceotter/riverlevel_practice1/blob/main/public/readme/main_close%20up%20map.png">
 

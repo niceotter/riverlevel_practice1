@@ -104,7 +104,8 @@ interface WaterRecord {
   water_level:  number;
   warn_level:   number | null;
   danger_level: number | null;
-  point_name:    string;
+  point_name:   string;
+  site_name:    string;
   floor_level:  number | null;
 
 }
@@ -287,7 +288,7 @@ function LineChart({ data }: { data: WaterRecord[] }) {
             {formatKoreanDateTime(hovered.observed_at ?? hovered.recorded_at)}
           </text>
           <text x={boxX + 10} y={boxY + 36} fontSize="10" fontWeight="600" fill="#333">
-            {hovered.point_name}
+            {hovered.site_name}
           </text>
           <text x={boxX + 10} y={boxY + 54} fontSize="11" fontWeight="700" fill="#63adf8">
             당시 수위 : {hovered.water_level.toFixed(2)} m
@@ -345,7 +346,7 @@ export default function HistoryPage() {
       if (!res.ok) throw new Error();
       const json: WaterRecord[] = await res.json();
       setData(json);
-      setSiteName(json[0]?.point_name ?? siteName);
+      setSiteName(json[0]?.site_name ?? siteName);
       if (json.length === 0) setError('해당 기간에 데이터가 없습니다.');
     } catch {
       setError('데이터를 불러올 수 없습니다.');
