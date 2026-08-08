@@ -32,18 +32,46 @@ export async function GET(request: Request) {
   if (from) query += `&observed_at=gte.${encodeURIComponent(toKstIso(from)!)}`;
   if (to)   query += `&observed_at=lte.${encodeURIComponent(toKstIso(to)!)}`;
 
-
-  const res = await fetch(`${SUPABASE_URL}/rest/v1${query}`, {
-    headers: {
-      'apikey': SUPABASE_API_KEY,
-      'Authorization': `Bearer ${SUPABASE_API_KEY}`,
-    },
-  });
-
-  if (!res.ok) {
-    return NextResponse.json({ error: '조회 실패' }, { status: 500 });
+  // PostgREST는 기본적으로 한 번에 최대 1000건만 반환한다.
+  // Range 헤더로 페이지를 나눠서 반환 건수가 PAGE_SIZE보다 작아질 때까지 반복 조회한다.
+  const PAGE_SIZE = 1000;
+  const allData: unknown[] = [];
+  let offset = 0;
+    
+  while (true) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1${query}`, {
+      headers: {
+        'apikey': SUPABASE_API_KEY,
+        'Authorization': `Bearer ${SUPABASE_API_KEY}`,
+        'Range-Unit': 'items',
+        'Range': `${offset}-${offset + PAGE_SIZE - 1}`,
+      },
+    });
+    
+    if (!res.ok) {
+      return NextResponse.json({ error: '조회 실패' }, { status: 500 });
+    }
+       
+    const page = await res.json();
+    allData.push(...page);
+     
+    if (page.length < PAGE_SIZE) break; // 마지막 페이지
+    offset += PAGE_SIZE;
   }
-
-  const data = await res.json();
-  return NextResponse.json(data);
+  
+  return NextResponse.json(allData);
 }
+//     const res = await fetch(`${SUPABASE_URL}/rest/v1${query}`, {
+//     headers: {
+//       'apikey': SUPABASE_API_KEY,
+//       'Authorization': `Bearer ${SUPABASE_API_KEY}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     return NextResponse.json({ error: '조회 실패' }, { status: 500 });
+//   }
+
+//   const data = await res.json();
+//   return NextResponse.json(data);
+// }
