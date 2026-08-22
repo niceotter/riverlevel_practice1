@@ -318,6 +318,8 @@ export default function Sidebar() {
           <>유지보수 기여<br />- 카카오페이 송금</>
       </a>
 
+      <Divider />
+
 
       <div style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 1.5rem 0.25rem' }}>
         <a
