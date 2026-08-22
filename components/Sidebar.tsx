@@ -318,6 +318,24 @@ export default function Sidebar() {
           <>유지보수 기여<br />- 카카오페이 송금</>
       </a>
 
+
+      <Divider />
+
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 1.5rem 0.25rem' }}>
+        
+          <a href="https://github.com/사용자명/리포지토리명"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="GitHub 저장소"
+          style={{ display: 'inline-flex', opacity: 0.75, transition: 'opacity var(--transition)' }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.75')}
+        >
+          <img src="/GitHub_Invertocat_White_1.png" alt="GitHub" width="22" height="22" />
+        </a>
+      </div>
+      
+
       </nav>
 
       <style>{`
