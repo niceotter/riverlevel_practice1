@@ -1,4 +1,6 @@
 /* app/globals.css */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
 
 :root {
   --bg-water:      #63adf8; /* background color for the main app container */
