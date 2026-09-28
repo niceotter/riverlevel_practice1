@@ -294,7 +294,8 @@ export default function Sidebar() {
 
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSculavkKLqlbaxQeB7iM5horoVSCi0amN-1h4vmRT38mxG_Yw/viewform?usp=publish-editor"
-        target="_blank" title="새 창에서 구글폼 열기"
+        target="_blank"
+        title="새 창에서 구글폼 열기"
         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
         onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
@@ -316,6 +317,20 @@ export default function Sidebar() {
           <polyline points="15 18 9 12 15 6" />
         </svg>
           <>유지보수 기여<br />- 카카오페이 송금</>
+      </a>
+
+      <a
+        href="https://the-soldier.creat43.chatgpt.site"
+        target="_blank"
+        title="새 창에서 게임하기"
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+          <>뜬금 없지만 gpt 아스트라로 만들어 본 1인칭 슈팅게임..<br />혹시 해보지 않으시겠습니까?</>
       </a>
 
       <Divider />
