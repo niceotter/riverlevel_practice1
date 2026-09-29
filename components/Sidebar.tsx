@@ -227,7 +227,7 @@ export default function Sidebar() {
       background: 'linear-gradient(180deg, var(--bg-water) 0%, #2f7fd6 100%), var(--bg-water)', //사이드바 기본 배경
       borderRight: '1px solid var(--border)',
       overflowY: 'auto', overflowX: 'hidden',
-      padding: '1.5rem 0', zIndex: 50,
+      padding: '1.5rem 0 3rem', zIndex: 50,
     }}>
 
       {/* ── 지역 분류 ── */}
@@ -394,7 +394,7 @@ export default function Sidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ display: 'block', padding: '0.2rem 1.5rem 8rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+    <span style={{ display: 'block', padding: '0.2rem 1.5rem 0.5rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
       {children}
     </span>
   );
