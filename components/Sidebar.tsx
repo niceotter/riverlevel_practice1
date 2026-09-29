@@ -323,14 +323,14 @@ export default function Sidebar() {
         href="https://the-soldier.creat43.chatgpt.site"
         target="_blank"
         title="새 창에서 게임하기"
-        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
+        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontSize: '0.7rem', fontWeight: 500, color: 'var(--text-body)', textDecoration: 'none', transition: 'background var(--transition)' }}
         onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="15 18 9 12 15 6" />
         </svg>
-          <>뜬금 없지만 gpt 아스트라로 만들어 본 1인칭 슈팅게임..<br />혹시 해보지 않으시겠습니까?</>
+          <>뜬금 없지만<br />gpt 아스트라로 만들어 본 1인칭 슈팅게임..<br />혹시 해보지 않으시겠습니까?</>
       </a>
 
       <Divider />
@@ -394,7 +394,7 @@ export default function Sidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ display: 'block', padding: '0.2rem 1.5rem 0.5rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+    <span style={{ display: 'block', padding: '0.2rem 1.5rem 1.5rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
       {children}
     </span>
   );
