@@ -394,7 +394,7 @@ export default function Sidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ display: 'block', padding: '0.2rem 1.5rem 1.5rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+    <span style={{ display: 'block', padding: '0.2rem 1.5rem 8rem', fontSize: '0.63rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
       {children}
     </span>
   );
